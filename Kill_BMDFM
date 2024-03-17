@@ -1,0 +1,8 @@
+#!/bin/sh
+
+killall -9 *PROC* BMDFM* 2>/dev/null
+
+rm /tmp/.BMDFMsrv /tmp/.BMDFMsrv_npipe 2>/dev/null
+
+freeIPC
+

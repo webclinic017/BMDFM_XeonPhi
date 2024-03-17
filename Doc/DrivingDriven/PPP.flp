@@ -1,0 +1,277 @@
+# PPP.flp
+# Parallel PreProcessor by Sancho Mining.
+
+# Two types of macros are preprocessed:
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#   USE CASE 0: Single-threaded invocation of an asynchronous UDF returning 0.
+#   ~~~~~~~~~~~
+#      (UDF arg0'wr arg1'rd arg2'wr arg3'rd)  # multiple wr/rd args allowed
+#    ==>
+#      (progn
+#        (setq sync_arg0
+#          (UDF (| sync_arg0 arg0) arg1 (| sync_arg2 arg2) arg3)
+#        )
+#        (setq sync_arg1 sync_arg0)
+#        (setq sync_arg2 sync_arg0)
+#        (setq sync_arg3 sync_arg0)
+#        (setq arg0 (| sync_arg0 arg0))
+#        (setq arg2 (| sync_arg2 arg2))
+#        sync_arg0
+#      )
+#
+#   USE CASE 1: Multithreaded invocation of an asynchronous UDF returning 0.
+#   ~~~~~~~~~~~
+#      (UDF'par arg0'wr arg1'rd arg2'wr arg3'rd)  # multiple wr/rd args allowed
+#    ==>
+#      (progn
+#        (setq arg0 (| sync_arg0 arg0))
+#        (setq arg2 (| sync_arg2 arg2))
+#        (for thread 1 1 threads
+#          (setq sync_arg0 (| sync_arg0
+#            (UDF (-- thread) threads arg0 arg1 arg2 arg3)  # interleaved
+#          ))                                               # args first
+#        )
+#        (setq sync_arg1 sync_arg0)
+#        (setq sync_arg2 sync_arg0)
+#        (setq sync_arg3 sync_arg0)
+#        (setq arg0 (| sync_arg0 arg0))
+#        (setq arg2 (| sync_arg2 arg2))
+#        sync_arg0
+#      )
+
+(defun remove_comments (progn
+  (setq temp (cat $1 "\n"))
+  (setq flag 1)
+  (setq info "")
+  (while (setq i (at "\n" temp)) (progn
+    (setq l (len (setq temp2 (alltrim (left temp i)))))
+    (setq temp (rightl temp i))
+    (if (at "#" temp2)
+      (progn
+        (setq i 1)
+        (while (<= i l) (progn
+          (setq temp3 (substr temp2 i 1))
+          (if (== temp3 "\"")
+            (setq flag (! flag))
+            (if flag
+              (if (== temp3 "#")
+                (break)
+                nil
+              )
+              (if (== temp3 "\\")
+                (setq i (++ i))
+                nil
+              )
+            )
+          )
+          (setq i (++ i))
+        ))
+        (setq info (cat info (cat (rtrim (left temp2 (-- i))) " ")))
+      )
+      (setq info (cat info (cat temp2 " ")))
+    )
+  ))
+  info
+))
+
+(defun par_prep (progn
+  (setq flp_fnc (cat "" $1))
+  (if (== (left flp_fnc 1) "(")
+    (progn
+      (setq flp_fnc (substr flp_fnc 2 (- (len flp_fnc) 2)))
+      (setq fnc_name (lsp_head flp_fnc))
+      (setq flp_fnc (lsp_tail flp_fnc))
+      (setq parms "")
+      (setq flag "")
+      (while (len flp_fnc) (progn
+        (setq parm (par_prep (lsp_head flp_fnc)))
+        (if (|| (== (upper (right parm 3)) "'WR")
+           (== (upper (right parm 3)) "'RD"))
+          (if (len flag)
+            nil
+            (setq flag (leftr parm 3))
+          )
+          nil
+        )
+        (setq parms (cat parms (cat " " parm)))
+        (setq flp_fnc (lsp_tail flp_fnc))
+      ))
+      (if (len flag)
+        (if (== (upper (right fnc_name 4)) "'PAR")
+                  ##################
+          (progn  ##  USE CASE 1  ##
+                  ##################
+            (setq parms1 (setq parms2 (setq parms3 "")))
+            (while (len parms) (progn
+              (setq parm (lsp_head parms))
+              (setq parms (lsp_tail parms))
+              (if (|| (== (upper (right parm 3)) "'WR")
+                 (== (upper (right parm 3)) "'RD"))
+                (progn
+                  (setq parms1 (cat parms1 (cat " " (leftr parm 3))))
+                  (if (== (upper (right parm 3)) "'WR")
+                    (progn
+                      (setq parm (leftr parm 3))
+                      (setq parms2 (cat parms2 (cat " " parm)))
+                    )
+                    (setq parm (leftr parm 3))
+                  )
+                )
+                nil
+              )
+              (setq parms3 (cat parms3 (cat " " parm)))
+            ))
+            (setq flp_fnc "(progn")
+            (setq parms4 parms2)
+            (while (len parms2) (progn
+              (setq parm (lsp_head parms2))
+              (setq parms2 (lsp_tail parms2))
+              (setq flp_fnc (cat flp_fnc (cat " (setq " (cat parm (cat
+                " (| sync_" (cat parm (cat " " (cat parm "))"))))))))
+            ))
+            (setq flp_fnc (cat flp_fnc (cat
+              " (for thread 1 1 threads (setq sync_" (cat flag (cat " (| sync_"
+              flag)))))
+            (setq flp_fnc (cat flp_fnc (cat " (" (cat (leftr fnc_name 4) (cat
+              " (-- thread) threads" parms3)))))
+            (setq flp_fnc (cat flp_fnc "))))"))
+            (setq parms1 (lsp_tail parms1))
+            (while (len parms1) (progn
+              (setq parm (lsp_head parms1))
+              (setq parms1 (lsp_tail parms1))
+              (setq flp_fnc (cat flp_fnc (cat " (setq sync_" (cat parm (cat
+                " sync_" (cat flag ")"))))))
+            ))
+            (while (len parms4) (progn
+              (setq parm (lsp_head parms4))
+              (setq parms4 (lsp_tail parms4))
+              (setq flp_fnc (cat flp_fnc (cat " (setq " (cat parm (cat
+                " (| sync_" (cat parm (cat " " (cat parm "))"))))))))
+            ))
+            (setq flp_fnc (cat flp_fnc (cat " sync_" (cat flag ")"))))
+          )
+                  ##################
+          (progn  ##  USE CASE 0  ##
+                  ##################
+            (setq flp_fnc (cat "(progn (setq sync_" (cat flag " (")))
+            (setq flp_fnc (cat flp_fnc fnc_name))
+            (setq parms1 (setq parms2 ""))
+            (while (len parms) (progn
+              (setq parm (lsp_head parms))
+              (setq parms (lsp_tail parms))
+              (if (|| (== (upper (right parm 3)) "'WR")
+                 (== (upper (right parm 3)) "'RD"))
+                (progn
+                  (setq parms1 (cat parms1 (cat " " (leftr parm 3))))
+                  (if (== (upper (right parm 3)) "'WR")
+                    (progn
+                      (setq parm (leftr parm 3))
+                      (setq parms2 (cat parms2 (cat " " parm)))
+                      (setq parm (cat "(| sync_" (cat parm (cat " " (cat parm
+                        ")")))))
+                    )
+                    (setq parm (leftr parm 3))
+                  )
+                )
+                nil
+              )
+              (setq flp_fnc (cat flp_fnc (cat " " parm)))
+            ))
+            (setq flp_fnc (cat flp_fnc "))"))
+            (setq parms1 (lsp_tail parms1))
+            (while (len parms1) (progn
+              (setq parm (lsp_head parms1))
+              (setq parms1 (lsp_tail parms1))
+              (setq flp_fnc (cat flp_fnc (cat " (setq sync_" (cat parm (cat
+                " sync_" (cat flag ")"))))))
+            ))
+            (while (len parms2) (progn
+              (setq parm (lsp_head parms2))
+              (setq parms2 (lsp_tail parms2))
+              (setq flp_fnc (cat flp_fnc (cat " (setq " (cat parm (cat
+                " (| sync_" (cat parm (cat " " (cat parm "))"))))))))
+            ))
+            (setq flp_fnc (cat flp_fnc (cat " sync_" (cat flag ")"))))
+          )
+        )
+        (setq flp_fnc (cat "(" (cat fnc_name (cat parms ")"))))
+      )
+    )
+    nil
+  )
+  flp_fnc
+))
+
+(defun lsp_format (progn
+  (setq info (cat "" $1))
+  (setq pos (+ 0 $2))
+  (setq output "")
+  (setq temp (space pos))
+  (if (> (+ (len info) pos) 79)
+    (progn
+      (setq temp1 (substr info 2 (- (len info) 2)))
+      (setq temp2 (lsp_head temp1))
+      (setq temp1 (lsp_tail temp1))
+      (setq output (cat temp (cat "(" (cat temp2 "\n"))))
+      (setq temp (space (+ pos 2)))
+      (while (len temp1) (progn
+        (setq temp2 (lsp_head temp1))
+        (setq temp1 (lsp_tail temp1))
+        (if (== (left temp2 1) "(")
+          (setq output (cat output (lsp_format temp2 (+ pos 2))))
+          (progn
+            (while (&& (len (setq temp3 (lsp_head temp1))) (&& (!= (left temp3
+               1) "(") (< (+ (len temp3) (+ (len temp2) (+ pos 2))) 79)))
+               (progn
+              (setq temp2 (cat temp2 " "))
+              (setq temp3 (lsp_head temp1))
+              (setq temp2 (cat temp2 temp3))
+              (setq temp1 (lsp_tail temp1))
+            ))
+            (setq output (cat output (cat temp (cat temp2 "\n"))))
+          )
+        )
+      ))
+      (cat output (cat (space pos) ")\n"))
+    )
+    (cat temp (cat info "\n"))
+  )
+))
+
+
+####################
+##  0. Open file  ##
+####################
+(if (== (setq file_descriptor (file_open $1)) -1)
+  (progn
+    (outf "*** Error while opening the file!\n" nil)
+    (exit)
+  )
+  nil
+)
+
+####################
+##  1. Read file  ##
+####################
+(setq file_contents "")
+(while (> (len (setq get_string (file_read file_descriptor 1024))) 0)
+  (setq file_contents (cat file_contents get_string))
+)
+(file_close file_descriptor)
+
+#############################
+##  2. Filter to pure flp  ##
+#############################
+(setq lisp_code (remove_comments file_contents))
+(setq lisp_code (cat "(progn " (cat lisp_code ")")))
+
+#########################
+##  3. Preprocess flp  ##
+#########################
+(setq lisp_code (par_prep lisp_code))
+
+########################
+##  4. Format output  ##
+########################
+(lsp_format lisp_code 0)
+

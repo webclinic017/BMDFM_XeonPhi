@@ -1,0 +1,68 @@
+# Fibonacci.flp
+# Recursive Fibonacci calculation.
+# FastLisp program example by Sancho Mining.
+
+# SLO _dffib_FibonacciSeamless(SLO n){
+#   return noterror()&&n>1?_dffib_FibonacciSeamless(n-1)+
+#     _dffib_FibonacciSeamless(n-2):n;
+# }
+#
+# void dffib_FibonacciSeamless(const ULO *dat_ptr,
+#    struct fastlisp_data *ret_dat){
+#   SLO n;
+#   ret_ival(dat_ptr,&n);
+#   if(noterror()){
+#     ret_dat->single=1;
+#     ret_dat->type='I';
+#     ret_dat->value.ival=_dffib_FibonacciSeamless(n);
+#   }
+#   return;
+# }
+#
+# INSTRUCTION_STRU INSTRUCTION_SET[]={
+#   {"FIBONACCISEAMLESS",1,'I',(UCH*)"I",&dffib_FibonacciSeamless}
+# };
+
+
+#(defun FibonacciSeamless  # to be placed into .cfg
+#  (progn
+#    (setq n (+ 0 $1))
+#    (if (< n 2)
+#      n
+#      (+ (FibonacciSeamless (-- n))
+#         (FibonacciSeamless (- n 2))
+#      )
+#    )
+#  )
+#)
+
+(defun FibonacciCoordinator  # to be placed into .flp
+  (progn
+    (setq n (+ 0 $1))
+    (setq spawn (+ 0 $2))
+    (if (< n 2)
+      n
+      (if (> spawn 0)
+        (+ (FibonacciCoordinator (-- n) (>> spawn 1))
+           (FibonacciCoordinator (- n 2) (>> spawn 1))
+        )
+        (+ (FibonacciSeamless (-- n))
+           (FibonacciSeamless (- n 2))
+        )
+      )
+    )
+  )
+)
+
+(defun Fibonacci
+  (progn
+    (setq n (+ 0 $1))
+    (setq spawn (n_cpuproc))
+    (FibonacciCoordinator n spawn)
+  )
+)
+
+# main() begins here
+(setq n (ival (accept "")))  # reads from stdin
+(Fibonacci n)
+

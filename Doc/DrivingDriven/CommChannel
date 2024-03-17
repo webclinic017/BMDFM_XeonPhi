@@ -1,0 +1,144 @@
+#!/bin/sh
+
+# CommChannel
+
+# In this example, we run two instances of BMDFM: a Driving BMDFM and a Driven
+# BMDFM.
+# The Driving BMDFM is fed with parallel cluster flows by a single BMDFMldr
+# instance. The Driven BMDFM is fed with *multiple* parallel cluster flows by
+# the Driving BMDFM instance achieving an even higher level of parallelization
+# (see "Offload Extension" below):
+#
+# BMDFM Classic:
+#   .--------------.          .--------------.
+#   | BMDFMldr     |          | BMDFMsrv     |
+#   | (Von-Neumann | Parallel | (Dataflow    |
+#   |  Arch.)      <---------->  Arch.)      |
+#   |              |  Cluster |              |
+#   |              <---------->              |
+#   |              |   Flow   |              |
+#   |              |          |              |
+#   `--------------'          `--------------'
+#
+# Offload Extension (Driving BMDFM Drives Driven BMDFM):
+#   .--------------.          .--------------.          .--------------.
+#   | BMDFMldr     |          | BMDFMsrv     |          | BMDFMsrv     |
+#   | (Von-Neumann | Parallel | (Dataflow    | Parallel | (Dataflow    |
+#   |  Arch.)      <---------->  Arch.)      <---------->  Arch.)      |
+#   |              |  Cluster |              |  Cluster |              |
+#   |              <---------->              <---------->              |
+#   |              |   Flow   |              |   Flow   |              |
+#   |              |          |              |          |              |
+#   `--------------'          |              |*multiple*|              |
+#                             |              |          |              |
+#                             |              | Parallel |              |
+#                             |              <---------->              |
+#                             |              |  Cluster |              |
+#                             |              <---------->              |
+#                             |              |   Flow   |              |
+#                             | Driving      |          | Driven       |
+#                             `--------------'          `--------------'
+
+
+#* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+# IMPLEMENTATION:
+#
+# .---------------------------------------------------------------------.
+# | 0. DRIVING SENDS SHELL COMMANDS TO PIPE BMDFMpipeDriving2Driven<i>  |
+# |      "echo args | fastlisp -q exec.flx"                             |
+# |      "echo args | BMDFMldr -q exec.flz"                             |
+# | 1. SHELL EXECUTES COMMANDS                                          |
+# |      "echo args | fastlisp -q exec.flx >BMDFMpipeDriven2Driving<i>" |
+# |      "echo args | BMDFMldr -q exec.flz >BMDFMpipeDriven2Driving<i>" |
+# | 2. DRIVING RECEIVES RESULTS FROM DRIVEN                             |
+# `---------------------------------------------------------------------'
+#
+#* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+#
+# .---------------------.                            .---------------------.
+# | Driving fastlisp    |                            | Driven fastlisp     |
+# |                     |                            |                     |
+# |                     | CommChannel 0              |                     |
+# |                     <---------------------------->                     |
+# |                     | BMDFMpipeDriving2Driven<0> |                     |
+# |                     | BMDFMpipeDriven2Driving<0> |                     |
+# `---------------------'                            `---------------------'
+# .--------------------------.
+# | Driving fastlisp         |
+# |   (Single instance)      |
+# |                          |
+# | fastlisp exec_master.flp |
+# `--------------------------'
+#           .--------------------------------------------------------------.
+#           | Driven fastlisp                                              |
+#           |   (Single instance)                                          |
+#           |                                                              |
+#           | echo args | fastlisp -q exec.flx >BMDFMpipeDriven2Driving<0> |
+#           `--------------------------------------------------------------'
+#
+#* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+#
+# .---------------------.                            .---------------------.
+# | Driving BMDFMsrv    |                            | Driven BMDFMsrv     |
+# |   (N_CPUPROC = <N>) |                            |   (N_IORBP > <N>)   |
+# |                     |                            |                     |
+# |                     | CommChannel 0              |                     |
+# |           CPUPROC 0 <---------------------------->Socket j             |
+# |                     | BMDFMpipeDriving2Driven<0> |           CPUPROC 0 |
+# |                     | BMDFMpipeDriven2Driving<0> |           CPUPROC 1 |
+# |                     |                            |           CPUPROC 2 |
+# |                     | CommChannel 1              |           CPUPROC 3 |
+# |           CPUPROC 1 <---------------------------->Socket k   CPUPROC 4 |
+# |                     | BMDFMpipeDriving2Driven<1> |           CPUPROC 5 |
+# |                     | BMDFMpipeDriven2Driving<1> |           CPUPROC   |
+# |                     |                            |           CPUPROC a |
+# |                     | CommChannel i              |           CPUPROC b |
+# |           CPUPROC i <---------------------------->Socket l   CPUPROC c |
+# |                     | BMDFMpipeDriving2Driven<i> |           CPUPROC x |
+# |                     | BMDFMpipeDriven2Driving<i> |           CPUPROC y |
+# |                     |                            |           CPUPROC z |
+# |                     |                            |Socket m             |
+# `---------------------'                            `---------------------'
+# .--------------------------.
+# | Driving BMDFMldr         |
+# |   (Single instance)      |
+# |                          |
+# | BMDFMldr exec_master.flp |
+# `--------------------------'
+#           .--------------------------------------------------------------.
+#           | Driven BMDFMldr                                              |
+#           |   (Multiple dynamically-created instances)                   |
+#           |                                                              |
+#           | echo args | BMDFMldr -q exec.flz >BMDFMpipeDriven2Driving<0> |
+#           | echo args | BMDFMldr -q exec.flz >BMDFMpipeDriven2Driving<1> |
+#           | echo args | BMDFMldr -q exec.flz >BMDFMpipeDriven2Driving<i> |
+#           `--------------------------------------------------------------'
+#
+#* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+
+
+# ChannelNumber for BMDFMpipeDriving2Driven<i> and BMDFMpipeDriven2Driving<i>
+if [[ "$1" == "" ]]; then
+  echo "Usage: $0 <ChannelNumber>"
+  exit
+fi
+chan_num=$1
+
+# Driving BMDFM instance is by default. Driven BMDFM instance is different.
+export BM_DFM_CONNECTION_FILE_path="./.BMDFMsrv"
+export BM_DFM_CONNECTION_NPIP_path="./.BMDFMsrv_npipe"
+
+rm -rf BMDFMpipeDriving2Driven$chan_num
+mknod  BMDFMpipeDriving2Driven$chan_num p
+
+rm -rf BMDFMpipeDriven2Driving$chan_num
+mknod  BMDFMpipeDriven2Driving$chan_num p
+
+while true; do
+  read cmd_line <BMDFMpipeDriving2Driven$chan_num;
+  echo $chan_num: $cmd_line;
+  sh -c "$cmd_line" >BMDFMpipeDriven2Driving$chan_num;
+done
+
+# <EOF>
+

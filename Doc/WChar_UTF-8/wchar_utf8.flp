@@ -1,0 +1,33 @@
+# wchar_utf8.flp
+# WChar/UTF-8 String Processing.
+# FastLisp program example by Sancho Mining.
+
+# UTF-8 strings are right-aligned for print. Output:
+# =============================================================================
+# 12 12                                                            Schöne Grüße
+# 18 18                                                      Schöne Grüße, Саша
+# 06 10                                                              問候, 薩沙
+# Sancho \0 Mining
+# =============================================================================
+
+
+(defun utf8_prn (progn
+  (setq str (cat "" $1))
+  (setq wstr (wfromstr str))
+  (outf "%02ld " (wlen wstr))
+  (outf "%02ld " (wprnwidth wstr))
+  (outf "%s\n" (wtostr (wpadr wstr 73)))
+  1
+))
+
+(setq a "Schöne Grüße")
+        # UTF-8: "Sch\0xC3\0xB6ne Gr\0xC3\0xBC\0xC3\0x9Fe"
+(setq b ", Саша")
+        # UTF-8: ", \0xD0\0xA1\0xD0\0xB0\0xD1\0x88\0xD0\0xB0"
+(utf8_prn a)
+(utf8_prn (cat a b))
+(utf8_prn (wtostr (w "問候, 薩沙")))
+                     # UTF-8: "\0xE5\0x95\0x8F\0xE5\0x80\0x99"
+                     # UTF-8: ", \0xE8\0x96\0xA9\0xE6\0xB2\0x99"
+(wtostr (wcat (w "Sancho") (w " \0x00 Mining")))
+

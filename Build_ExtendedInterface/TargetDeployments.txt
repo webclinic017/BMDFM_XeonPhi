@@ -1,0 +1,1389 @@
+# TargetDeployments.txt
+
+
+##########################
+##                      ##
+##  Target deployments  ##
+##                      ##
+##########################
+
+ Arch_OS_Bits_Compiler[_Feat.]    | Build         | License Model
+----------------------------------+---------------+----------------------------
+ x86_WindowsCygnus_32_gccV291     | ST-Engine     | EULA/no_license_key_needed
+ x86_WindowsCygwin_32_gccV640     | ST/MT-Engines | EULA/no_license_key_needed
+ x86_WindowsUWIN_32_gccV295       | ST/MT-Engines | EULA/no_license_key_needed
+ x86_WindowsSFU-SUA_32_gccV33     | ST/MT-Engines | EULA/no_license_key_needed
+ x86_Linux_32_gccV485             | ST/MT-Engines | EULA/no_license_key_needed
+ x86_Linux_32_gccV1021            | ST/MT-Engines | EULA/no_license_key_needed
+ x86_Linux_32_clangV1101          | ST/MT-Engines | EULA/no_license_key_needed
+ x86_Linux_32_iccVxe2019u3        | ST/MT-Engines | EULA/no_license_key_needed
+ x86_FreeBSD_32_gccV920           | ST/MT-Engines | EULA/no_license_key_needed
+ x86_FreeBSD_32_clangV801         | ST/MT-Engines | EULA/no_license_key_needed
+ x86_OpenBSD_32_gccV830           | ST/MT-Engines | EULA/no_license_key_needed
+ x86_OpenBSD_32_clangV801         | ST/MT-Engines | EULA/no_license_key_needed
+ x86_NetBSD_32_gccV830            | ST/MT-Engines | EULA/no_license_key_needed
+ x86_NetBSD_32_clangV900          | ST/MT-Engines | EULA/no_license_key_needed
+ x86_MacOS_32_clangV702           | ST/MT-Engines | EULA/no_license_key_needed
+ x86_SunOS_32_ccV510              | ST/MT-Engines | EULA/no_license_key_needed
+ x86_SunOS_32_gccV343             | ST/MT-Engines | EULA/no_license_key_needed
+ x86_UnixwareSCO_32_ccsV42        | ST/MT-Engines | EULA/no_license_key_needed
+ x86_UnixwareSCO_32_gccV295       | ST/MT-Engines | EULA/no_license_key_needed
+ x86_Minix_32_clangV36            | ST/MT-Engines | EULA/no_license_key_needed
+ x86_Android_32_gccV49x           | ST/MT-Engines | EULA/no_license_key_needed
+ x86_Android_32_clangV503         | ST/MT-Engines | EULA/no_license_key_needed
+ x86-64_WindowsCygwin_64_gccV640  | ST/MT-Engines | EULA/no_license_key_needed
+ x86-64_Linux_64_gccV485          | ST/MT-Engines | EULA/no_license_key_needed
+ x86-64_Linux_64_gccV1021         | ST/MT-Engines | EULA/no_license_key_needed
+ x86-64_Linux_64_clangV1101       | ST/MT-Engines | EULA/no_license_key_needed
+ x86-64_Linux_64_iccVxe2019u3     | ST/MT-Engines | EULA/no_license_key_needed
+ x86-64_FreeBSD_64_gccV920        | ST/MT-Engines | EULA/no_license_key_needed
+ x86-64_FreeBSD_64_clangV801      | ST/MT-Engines | EULA/no_license_key_needed
+ x86-64_OpenBSD_64_gccV830        | ST/MT-Engines | EULA/no_license_key_needed
+ x86-64_OpenBSD_64_clangV801      | ST/MT-Engines | EULA/no_license_key_needed
+ x86-64_NetBSD_64_gccV830         | ST/MT-Engines | EULA/no_license_key_needed
+ x86-64_NetBSD_64_clangV900       | ST/MT-Engines | EULA/no_license_key_needed
+ x86-64_MacOS_64_clangV702        | ST/MT-Engines | EULA/no_license_key_needed
+ x86-64_MacOS_64_clangV1200       | ST/MT-Engines | EULA/no_license_key_needed
+ x86-64_SunOS_64_ccV510           | ST/MT-Engines | EULA/no_license_key_needed
+ x86-64_SunOS_64_gccV343          | ST/MT-Engines | EULA/no_license_key_needed
+ x86-64_Android_64_gccV49x        | ST/MT-Engines | EULA/no_license_key_needed
+ x86-64_Android_64_clangV503      | ST/MT-Engines | EULA/no_license_key_needed
+ VAX_Ultrix_32_gccV272            | ST/MT-Engines | EULA/no_license_key_needed
+ Alpha_Tru64OSF1_64_ccV65303      | ST/MT-Engines | EULA/no_license_key_needed
+ Alpha_Tru64OSF1_64_gccV423       | ST/MT-Engines | EULA/no_license_key_needed
+ Alpha_Linux_64_gccV424           | ST/MT-Engines | EULA/no_license_key_needed
+ Alpha_Linux_64_gccV1021          | ST/MT-Engines | EULA/no_license_key_needed
+ Alpha_FreeBSD_64_gccV346         | ST/MT-Engines | EULA/no_license_key_needed
+ Alpha_OpenBSD_64_gccV421         | ST/MT-Engines | EULA/no_license_key_needed
+ IA-64_HP-UX_32_ccVa0628          | ST/MT-Engines | EULA/no_license_key_needed
+ IA-64_HP-UX_32_gccV472           | ST/MT-Engines | EULA/no_license_key_needed
+ IA-64_HP-UX_64_ccVa0628          | ST/MT-Engines | EULA/no_license_key_needed
+ IA-64_HP-UX_64_gccV472           | ST/MT-Engines | EULA/no_license_key_needed
+ IA-64_Linux_64_gccV412           | ST/MT-Engines | EULA/no_license_key_needed
+ IA-64_Linux_64_gccV463           | ST/MT-Engines | EULA/no_license_key_needed
+ IA-64_Linux_64_gccV1021          | ST/MT-Engines | EULA/no_license_key_needed
+ IA-64_FreeBSD_64_gccV421         | ST/MT-Engines | EULA/no_license_key_needed
+ XeonPhiMIC_Linux_64_iccVxe2017u5 | ST/MT-Engines | EULA/no_license_key_needed
+ XeonPhiMIC_Linux_64_gccV470      | ST/MT-Engines | EULA/no_license_key_needed
+ MCSTelbrus_Linux_32_lccV120      | ST/MT-Engines | EULA/no_license_key_needed
+ MCSTelbrus_Linux_32_lccV125      | ST/MT-Engines | EULA/no_license_key_needed
+ MCSTelbrus_Linux_64_lccV120      | ST/MT-Engines | EULA/no_license_key_needed
+ MCSTelbrus_Linux_64_lccV125      | ST/MT-Engines | EULA/no_license_key_needed
+ PA-RISC_HP-UX_32_ccVc0370        | ST/MT-Engines | EULA/no_license_key_needed
+ PA-RISC_HP-UX_32_gccV471         | ST/MT-Engines | EULA/no_license_key_needed
+ PA-RISC_HP-UX_64_ccVc0370        | ST/MT-Engines | EULA/no_license_key_needed
+ PA-RISC_HP-UX_64_gccV471         | ST/MT-Engines | EULA/no_license_key_needed
+ PA-RISC_Linux_32_gccV492         | ST/MT-Engines | EULA/no_license_key_needed
+ PA-RISC_Linux_32_gccV1021        | ST/MT-Engines | EULA/no_license_key_needed
+ SPARC_SunOS_32_ccV510            | ST/MT-Engines | EULA/no_license_key_needed
+ SPARC_SunOS_32_gccV343           | ST/MT-Engines | EULA/no_license_key_needed
+ SPARC_SunOS_64_ccV510            | ST/MT-Engines | EULA/no_license_key_needed
+ SPARC_SunOS_64_gccV343           | ST/MT-Engines | EULA/no_license_key_needed
+ SPARC_Linux_32_gccV1021          | ST/MT-Engines | EULA/no_license_key_needed
+ SPARC_Linux_32_clangV1101        | ST/MT-Engines | EULA/no_license_key_needed
+ SPARC_Linux_64_gccV1021          | ST/MT-Engines | EULA/no_license_key_needed
+ SPARC_Linux_64_clangV1101        | ST/MT-Engines | EULA/no_license_key_needed
+ SPARC_FreeBSD_64_gccV421         | ST/MT-Engines | EULA/no_license_key_needed
+ SPARC_OpenBSD_64_gccV830         | ST/MT-Engines | EULA/no_license_key_needed
+ SPARC_OpenBSD_64_clangV801       | ST/MT-Engines | EULA/no_license_key_needed
+ MIPS_IRIX_32_ccV744m             | ST/MT-Engines | EULA/no_license_key_needed
+ MIPS_IRIX_32_gccV471             | ST/MT-Engines | EULA/no_license_key_needed
+ MIPS_IRIX_32_gccV471_TLS         | ST/MT-Engines | EULA/no_license_key_needed
+ MIPS_IRIX_64_ccV744m             | ST/MT-Engines | EULA/no_license_key_needed
+ MIPS_IRIX_64_gccV471             | ST/MT-Engines | EULA/no_license_key_needed
+ MIPS_IRIX_64_gccV471_TLS         | ST/MT-Engines | EULA/no_license_key_needed
+ MIPS_Linux_32_gccV930            | ST/MT-Engines | EULA/no_license_key_needed
+ MIPS_Linux_32_gccV830_sgi        | ST/MT-Engines | EULA/no_license_key_needed
+ MIPS_Linux_64_gccV930            | ST/MT-Engines | EULA/no_license_key_needed
+ MIPSel_Linux_32_gccV930          | ST/MT-Engines | EULA/no_license_key_needed
+ MIPSel_Linux_64_gccV930          | ST/MT-Engines | EULA/no_license_key_needed
+ MIPSel_Android_32_gccV49x        | ST/MT-Engines | EULA/no_license_key_needed
+ MIPSel_Android_32_clangV503      | ST/MT-Engines | EULA/no_license_key_needed
+ MIPSel_Android_64_gccV49x        | ST/MT-Engines | EULA/no_license_key_needed
+ MIPSel_Android_64_clangV503      | ST/MT-Engines | EULA/no_license_key_needed
+ PowerPC_AIX_32_xlcV1313          | ST/MT-Engines | EULA/no_license_key_needed
+ PowerPC_AIX_32_gccV494           | ST/MT-Engines | EULA/no_license_key_needed
+ PowerPC_AIX_64_xlcV1313          | ST/MT-Engines | EULA/no_license_key_needed
+ PowerPC_AIX_64_gccV494           | ST/MT-Engines | EULA/no_license_key_needed
+ PowerPC_MacOS_32_gccV421         | ST/MT-Engines | EULA/no_license_key_needed
+ PowerPC_MacOS_64_gccV421         | ST/MT-Engines | EULA/no_license_key_needed
+ PowerPC_Linux_32_gccV492         | ST/MT-Engines | EULA/no_license_key_needed
+ PowerPC_Linux_32_gccV1021        | ST/MT-Engines | EULA/no_license_key_needed
+ PowerPC_Linux_32_clangV350       | ST/MT-Engines | EULA/no_license_key_needed
+ PowerPC_Linux_32_clangV1101      | ST/MT-Engines | EULA/no_license_key_needed
+ PowerPC_Linux_64_gccV492         | ST/MT-Engines | EULA/no_license_key_needed
+ PowerPC_Linux_64_gccV1021        | ST/MT-Engines | EULA/no_license_key_needed
+ PowerPC_Linux_64_clangV350       | ST/MT-Engines | EULA/no_license_key_needed
+ PowerPC_Linux_64_clangV1101      | ST/MT-Engines | EULA/no_license_key_needed
+ PowerPC_FreeBSD_32_gccV920       | ST/MT-Engines | EULA/no_license_key_needed
+ PowerPC_FreeBSD_32_clangV801     | ST/MT-Engines | EULA/no_license_key_needed
+ PowerPC_FreeBSD_64_gccV920       | ST/MT-Engines | EULA/no_license_key_needed
+ PowerPC_FreeBSD_64_clangV801     | ST/MT-Engines | EULA/no_license_key_needed
+ PowerPCle_Linux_32_gccV930       | ST/MT-Engines | EULA/no_license_key_needed
+ PowerPCle_Linux_64_gccV1021      | ST/MT-Engines | EULA/no_license_key_needed
+ PowerPCle_Linux_64_clangV1101    | ST/MT-Engines | EULA/no_license_key_needed
+ PowerPCle_Linux_64_xlcV1611      | ST/MT-Engines | EULA/no_license_key_needed
+ S390_Linux_32_gccV930            | ST/MT-Engines | EULA/no_license_key_needed
+ S390_Linux_64_gccV930            | ST/MT-Engines | EULA/no_license_key_needed
+ S390_Linux_64_clangV381          | ST/MT-Engines | EULA/no_license_key_needed
+ M68000_Linux_32_gccV930          | ST/MT-Engines | EULA/no_license_key_needed
+ ARMeabi_Linux_32_gccV1021        | ST/MT-Engines | EULA/no_license_key_needed
+ ARMeabihf_Linux_32_gccV1021      | ST/MT-Engines | EULA/no_license_key_needed
+ ARMeabihf_Linux_32_clangV381     | ST/MT-Engines | EULA/no_license_key_needed
+ ARM_Linux_64_gccV1021            | ST/MT-Engines | EULA/no_license_key_needed
+ ARM_Linux_64_clangV1101          | ST/MT-Engines | EULA/no_license_key_needed
+ ARM_FreeBSD_64_gccV920           | ST/MT-Engines | EULA/no_license_key_needed
+ ARM_FreeBSD_64_clangV801         | ST/MT-Engines | EULA/no_license_key_needed
+ ARM_Android_32_gccV49x           | ST/MT-Engines | EULA/no_license_key_needed
+ ARM_Android_32_clangV503         | ST/MT-Engines | EULA/no_license_key_needed
+ ARM_Android_64_gccV49x           | ST/MT-Engines | EULA/no_license_key_needed
+ ARM_Android_64_clangV503         | ST/MT-Engines | EULA/no_license_key_needed
+ ARM_MacOS_64_clangV1200          | ST/MT-Engines | EULA/no_license_key_needed
+ ARMe_MacOS_64_clangV1200         | ST/MT-Engines | EULA/no_license_key_needed
+ ARMbe_Linux_64_gccV930           | ST/MT-Engines | EULA/no_license_key_needed
+ RISCV_Linux_32_gccV930           | ST/MT-Engines | EULA/no_license_key_needed
+ RISCV_Linux_64_gccV930           | ST/MT-Engines | EULA/no_license_key_needed
+ LoongArch_Linux_64_gccV1300      | ST/MT-Engines | EULA/no_license_key_needed
+
+
+##########################################
+##                                      ##
+##  Target deployments (Build details)  ##
+##                                      ##
+##########################################
+
+ Deployment                       | Build_ExtendedInterface Details
+----------------------------------+--------------------------------------------
+ x86_WindowsCygnus_32_gccV291     | gcc version egcs-2.91.57 19980901 (egcs-1.
+                                  | 1 release) as [PE32 executable (console) I
+                                  | ntel 80386, for MS Windows] at systime Fri
+                                  |  Jun 13 13:01:06 CEST 2025 on [CYGWIN_NT-6
+                                  | .1 WINDOWS7VM 20.1 (0.3/1/1) 1998-12-3 20:
+                                  | 39:18 i686]
+----------------------------------+--------------------------------------------
+ x86_WindowsCygwin_32_gccV640     | gcc version 6.4.0 (GCC) as [PE32 executabl
+                                  | e (console) Intel 80386 (stripped to exter
+                                  | nal PDB), for MS Windows] at systime Fri J
+                                  | un 13 13:01:15 CEST 2025 on [CYGWIN_NT-6.1
+                                  | -WOW WINDOWS7VM 2.10.0(0.325/5/3) 2018-02-
+                                  | 02 15:21 i686 Cygwin]
+----------------------------------+--------------------------------------------
+ x86_WindowsUWIN_32_gccV295       | gcc version 2.95.2 19991024 (release) as [
+                                  | win32 386 executable] at systime Fri Jun 1
+                                  | 3 13:01:23 CEST 2025 on [UWIN-XP WINXPVM 3
+                                  | .1-5.1 2600 i586]
+----------------------------------+--------------------------------------------
+ x86_WindowsSFU-SUA_32_gccV33     | gcc version 3.3 as [Windows NT PE format (
+                                  | EXE), dynamically linked executable Intel
+                                  | Posix-CUI] at systime Fri Jun 13 13:01:25
+                                  | CEST 2025 on [Interix WINDOWS7VM 6.1 10.0.
+                                  | 7063.0 x86]
+----------------------------------+--------------------------------------------
+ x86_Linux_32_gccV485             | gcc version 4.8.5 20150623 (Red Hat 4.8.5-
+                                  | 4) (GCC) as [ELF 32-bit LSB executable, In
+                                  | tel 80386, version 1 (SYSV), dynamically l
+                                  | inked (uses shared libs), for GNU/Linux 2.
+                                  | 6.32, stripped] at systime Fri Jun 13 13:0
+                                  | 1:09 CEST 2025 on [Linux RedHatELS72VM 3.1
+                                  | 0.0-327.el7.x86_64 #1 SMP Thu Oct 29 17:29
+                                  | :29 EDT 2015 x86_64]
+----------------------------------+--------------------------------------------
+ x86_Linux_32_gccV1021            | gcc version 10.2.1 20210110 (Debian 10.2.1
+                                  | -6) as [ELF 32-bit LSB executable, Intel 8
+                                  | 0386, version 1 (SYSV), dynamically linked
+                                  |  (uses shared libs), for GNU/Linux 3.2.0,
+                                  | stripped] at systime Fri Jun 13 13:01:15 C
+                                  | EST 2025 on [Linux Linux64core 5.10.0-6-am
+                                  | d64 #1 SMP Debian 5.10.28-1 (2021-04-09) x
+                                  | 86_64]
+----------------------------------+--------------------------------------------
+ x86_Linux_32_clangV1101          | Debian clang version 11.0.1-2 as [ELF 32-b
+                                  | it LSB executable, Intel 80386, version 1
+                                  | (SYSV), dynamically linked (uses shared li
+                                  | bs), for GNU/Linux 3.2.0, stripped] at sys
+                                  | time Fri Jun 13 13:01:15 CEST 2025 on [Lin
+                                  | ux Linux64core 5.10.0-6-amd64 #1 SMP Debia
+                                  | n 5.10.28-1 (2021-04-09) x86_64]
+----------------------------------+--------------------------------------------
+ x86_Linux_32_iccVxe2019u3        | icc version 19.0.3.199 (gcc version 4.8.5
+                                  | compatibility) Intel(R) C Intel(R) 64 Comp
+                                  | iler for applications running on Intel(R)
+                                  | 64, Version 19.0.3.199 Build 20190206 (Cop
+                                  | yright (C) 1985-2019 Intel Corporation. Al
+                                  | l rights reserved.) as [ELF 32-bit LSB exe
+                                  | cutable, Intel 80386, version 1 (SYSV), dy
+                                  | namically linked (uses shared libs), for G
+                                  | NU/Linux 2.6.32, stripped] at systime Fri
+                                  | Jun 13 13:01:17 CEST 2025 on [Linux RedHat
+                                  | ELS72VM 3.10.0-327.el7.x86_64 #1 SMP Thu O
+                                  | ct 29 17:29:29 EDT 2015 x86_64]
+----------------------------------+--------------------------------------------
+ x86_FreeBSD_32_gccV920           | gcc version 9.2.0 (FreeBSD Ports Collectio
+                                  | n) as [ELF 32-bit LSB executable, Intel 80
+                                  | 386, version 1 (FreeBSD), dynamically link
+                                  | ed (uses shared libs), for FreeBSD 12.1, F
+                                  | reeBSD-style, stripped] at systime Fri Jun
+                                  |  13 13:01:11 CEST 2025 on [FreeBSD FreeBSD
+                                  | 12VM 12.1-RELEASE FreeBSD 12.1-RELEASE r35
+                                  | 4233 GENERIC amd64]
+----------------------------------+--------------------------------------------
+ x86_FreeBSD_32_clangV801         | FreeBSD clang version 8.0.1 (tags/RELEASE_
+                                  | 801/final 366581) (based on LLVM 8.0.1) as
+                                  |  [ELF 32-bit LSB executable, Intel 80386,
+                                  | version 1 (FreeBSD), dynamically linked (u
+                                  | ses shared libs), for FreeBSD 12.1, FreeBS
+                                  | D-style, stripped] at systime Fri Jun 13 1
+                                  | 3:01:09 CEST 2025 on [FreeBSD FreeBSD12VM
+                                  | 12.1-RELEASE FreeBSD 12.1-RELEASE r354233
+                                  | GENERIC amd64]
+----------------------------------+--------------------------------------------
+ x86_OpenBSD_32_gccV830           | gcc version 8.3.0 (GCC) as [ELF 32-bit LSB
+                                  |  executable, Intel 80386, version 1, dynam
+                                  | ically linked (uses shared libs), for Open
+                                  | BSD 6.6, stripped] at systime Fri Jun 13 1
+                                  | 3:01:35 CEST 2025 on [OpenBSD OpenBSD66VM.
+                                  | ESXsrv.net 6.6 (GENERIC.MP) #304: Sat Oct
+                                  | 12 11:18:21 MDT 2019 deraadt@i386.openbsd.
+                                  | org:/usr/src/sys/arch/i386/compile/GENERIC
+                                  | .MP i386]
+----------------------------------+--------------------------------------------
+ x86_OpenBSD_32_clangV801         | clang version 8.0.1 (tags/RELEASE_801/fina
+                                  | l) (based on LLVM 8.0.1) as [ELF 32-bit LS
+                                  | B executable, Intel 80386, version 1, dyna
+                                  | mically linked (uses shared libs), for Ope
+                                  | nBSD 6.6, stripped] at systime Fri Jun 13
+                                  | 13:01:30 CEST 2025 on [OpenBSD OpenBSD66VM
+                                  | .ESXsrv.net 6.6 (GENERIC.MP) #304: Sat Oct
+                                  |  12 11:18:21 MDT 2019 deraadt@i386.openbsd
+                                  | .org:/usr/src/sys/arch/i386/compile/GENERI
+                                  | C.MP i386]
+----------------------------------+--------------------------------------------
+ x86_NetBSD_32_gccV830            | gcc version 8.3.0 (GCC) as [ELF 32-bit LSB
+                                  |  executable, Intel 80386, version 1 (SYSV)
+                                  | , dynamically linked (uses shared libs), f
+                                  | or NetBSD 8.1, stripped] at systime Fri Ju
+                                  | n 13 13:01:13 CEST 2025 on [NetBSD NetBSD8
+                                  | 1VM.ESXsrv.net 8.1 NetBSD 8.1 (GENERIC) #0
+                                  | : Fri May 31 08:43:59 UTC 2019 mkrepro@mkr
+                                  | epro.NetBSD.org:/usr/src/sys/arch/amd64/co
+                                  | mpile/GENERIC amd64]
+----------------------------------+--------------------------------------------
+ x86_NetBSD_32_clangV900          | clang version 9.0.0 (tags/RELEASE_900/fina
+                                  | l) (based on LLVM 9.0.0) as [ELF 32-bit LS
+                                  | B executable, Intel 80386, version 1 (SYSV
+                                  | ), dynamically linked (uses shared libs),
+                                  | for NetBSD 8.1, stripped] at systime Fri J
+                                  | un 13 13:01:16 CEST 2025 on [NetBSD NetBSD
+                                  | 81VM.ESXsrv.net 8.1 NetBSD 8.1 (GENERIC) #
+                                  | 0: Fri May 31 08:43:59 UTC 2019 mkrepro@mk
+                                  | repro.NetBSD.org:/usr/src/sys/arch/amd64/c
+                                  | ompile/GENERIC amd64]
+----------------------------------+--------------------------------------------
+ x86_MacOS_32_clangV702           | Apple LLVM version 7.0.2 (clang-700.1.81)
+                                  | as [Mach-O executable i386] at systime Fri
+                                  |  Jun 13 13:01:10 CEST 2025 on [Darwin MacI
+                                  | ntel 14.5.0 Darwin Kernel Version 14.5.0:
+                                  | Tue Apr 11 16:12:42 PDT 2017; root:xnu-278
+                                  | 2.50.9.2.3~1/RELEASE_X86_64 x86_64]
+----------------------------------+--------------------------------------------
+ x86_SunOS_32_ccV510              | cc: Sun C 5.10 SunOS_i386 Patch 142363-09
+                                  | 2012/08/15 as [ELF 32-bit LSB executable 8
+                                  | 0386 Version 1 [FPU], dynamically linked,
+                                  | stripped] at systime Fri Jun 13 13:01:16 C
+                                  | EST 2025 on [SunOS SunOSx86 5.11 11.1 i86p
+                                  | c i386 Solaris]
+----------------------------------+--------------------------------------------
+ x86_SunOS_32_gccV343             | gcc version 3.4.3 (csl-sol210-3_4-branch+s
+                                  | ol_rpath) as [ELF 32-bit LSB executable 80
+                                  | 386 Version 1, dynamically linked, strippe
+                                  | d] at systime Fri Jun 13 13:01:02 CEST 202
+                                  | 5 on [SunOS SunOSx86 5.11 11.1 i86pc i386
+                                  | Solaris]
+----------------------------------+--------------------------------------------
+ x86_UnixwareSCO_32_ccsV42        | Optimizing C Compilation System (CCS) 4.2
+                                  | 05/13/08 (uw714mp4.bl3h) as [ELF 32-bit LS
+                                  | B executable 80386, dynamically linked, st
+                                  | ripped, no debug (SVR5 ABI)] at systime Fr
+                                  | i Jun 13 13:13:11 CET 2025 on [UnixWare un
+                                  | ixware 5 7.1.4 i386 x86at SCO UNIX_SVR5]
+----------------------------------+--------------------------------------------
+ x86_UnixwareSCO_32_gccV295       | gcc version 2.95.2 19991024 (release) as [
+                                  | ELF 32-bit LSB executable 80386, dynamical
+                                  | ly linked, stripped, no debug (SVR5 ABI)]
+                                  | at systime Fri Jun 13 13:14:00 CET 2025 on
+                                  |  [UnixWare unixware 5 7.1.4 i386 x86at SCO
+                                  |  UNIX_SVR5]
+----------------------------------+--------------------------------------------
+ x86_Minix_32_clangV36            | clang version 3.6 (branches/release_36 237
+                                  | 755) [i386-elf32-minix] as [ELF 32-bit LSB
+                                  |  executable (Minix), Intel 80386, version
+                                  | 1 (SYSV), dynamically linked, stripped] at
+                                  |  systime Fri Jun 13 13:02:07 CEST 2025 on
+                                  | [Minix MinixVM.ESXsrv.net 3.4.0 (GENERIC)
+                                  | i386]
+----------------------------------+--------------------------------------------
+ x86_Android_32_gccV49x           | gcc version 4.9.x 20150123 (prerelease) (G
+                                  | CC) (cross-toolchain) (m32 i686-linux-andr
+                                  | oid -D__ANDROID_API__=26) as [ELF 32-bit L
+                                  | SB executable, Intel 80386, version 1 (SYS
+                                  | V), dynamically linked (uses shared libs),
+                                  |  stripped] at systime Fri Jun 13 13:01:16
+                                  | CEST 2025 on [Linux Linux64core 5.10.0-6-a
+                                  | md64 #1 SMP Debian 5.10.28-1 (2021-04-09)
+                                  | x86_64 GNU/Linux]
+----------------------------------+--------------------------------------------
+ x86_Android_32_clangV503         | clang version 5.0.300080 (based on LLVM 5.
+                                  | 0.300080) (cross-toolchain) (m32 i686-linu
+                                  | x-android -D__ANDROID_API__=26) as [ELF 32
+                                  | -bit LSB executable, Intel 80386, version
+                                  | 1 (SYSV), dynamically linked (uses shared
+                                  | libs), stripped] at systime Fri Jun 13 13:
+                                  | 01:11 CEST 2025 on [Linux Linux64core 5.10
+                                  | .0-6-amd64 #1 SMP Debian 5.10.28-1 (2021-0
+                                  | 4-09) x86_64 GNU/Linux]
+----------------------------------+--------------------------------------------
+ x86-64_WindowsCygwin_64_gccV640  | gcc version 6.4.0 (GCC) as [PE32+ executab
+                                  | le (console) x86-64 (stripped to external
+                                  | PDB), for MS Windows] at systime Fri Jun 1
+                                  | 3 13:01:17 CEST 2025 on [CYGWIN_NT-6.1 WIN
+                                  | DOWS7VM 2.10.0(0.325/5/3) 2018-02-02 15:16
+                                  |  x86_64 Cygwin]
+----------------------------------+--------------------------------------------
+ x86-64_Linux_64_gccV485          | gcc version 4.8.5 20150623 (Red Hat 4.8.5-
+                                  | 4) (GCC) as [ELF 64-bit LSB executable, x8
+                                  | 6-64, version 1 (SYSV), dynamically linked
+                                  |  (uses shared libs), for GNU/Linux 2.6.32,
+                                  |  stripped] at systime Fri Jun 13 13:01:09
+                                  | CEST 2025 on [Linux RedHatELS72VM 3.10.0-3
+                                  | 27.el7.x86_64 #1 SMP Thu Oct 29 17:29:29 E
+                                  | DT 2015 x86_64]
+----------------------------------+--------------------------------------------
+ x86-64_Linux_64_gccV1021         | gcc version 10.2.1 20210110 (Debian 10.2.1
+                                  | -6) as [ELF 64-bit LSB executable, x86-64,
+                                  |  version 1 (SYSV), dynamically linked (use
+                                  | s shared libs), for GNU/Linux 3.2.0, strip
+                                  | ped] at systime Fri Jun 13 13:01:19 CEST 2
+                                  | 025 on [Linux Linux64core 5.10.0-6-amd64 #
+                                  | 1 SMP Debian 5.10.28-1 (2021-04-09) x86_64
+                                  | ]
+----------------------------------+--------------------------------------------
+ x86-64_Linux_64_clangV1101       | Debian clang version 11.0.1-2 as [ELF 64-b
+                                  | it LSB executable, x86-64, version 1 (SYSV
+                                  | ), dynamically linked (uses shared libs),
+                                  | for GNU/Linux 3.2.0, stripped] at systime
+                                  | Fri Jun 13 13:01:22 CEST 2025 on [Linux Li
+                                  | nux64core 5.10.0-6-amd64 #1 SMP Debian 5.1
+                                  | 0.28-1 (2021-04-09) x86_64]
+----------------------------------+--------------------------------------------
+ x86-64_Linux_64_iccVxe2019u3     | icc version 19.0.3.199 (gcc version 4.8.5
+                                  | compatibility) Intel(R) C Intel(R) 64 Comp
+                                  | iler for applications running on Intel(R)
+                                  | 64, Version 19.0.3.199 Build 20190206 (Cop
+                                  | yright (C) 1985-2019 Intel Corporation. Al
+                                  | l rights reserved.) as [ELF 64-bit LSB exe
+                                  | cutable, x86-64, version 1 (SYSV), dynamic
+                                  | ally linked (uses shared libs), for GNU/Li
+                                  | nux 2.6.32, stripped] at systime Fri Jun 1
+                                  | 3 13:01:19 CEST 2025 on [Linux RedHatELS72
+                                  | VM 3.10.0-327.el7.x86_64 #1 SMP Thu Oct 29
+                                  |  17:29:29 EDT 2015 x86_64]
+----------------------------------+--------------------------------------------
+ x86-64_FreeBSD_64_gccV920        | gcc version 9.2.0 (FreeBSD Ports Collectio
+                                  | n) as [ELF 64-bit LSB executable, x86-64,
+                                  | version 1 (FreeBSD), dynamically linked (u
+                                  | ses shared libs), for FreeBSD 12.1, FreeBS
+                                  | D-style, stripped] at systime Fri Jun 13 1
+                                  | 3:01:14 CEST 2025 on [FreeBSD FreeBSD12VM
+                                  | 12.1-RELEASE FreeBSD 12.1-RELEASE r354233
+                                  | GENERIC amd64]
+----------------------------------+--------------------------------------------
+ x86-64_FreeBSD_64_clangV801      | FreeBSD clang version 8.0.1 (tags/RELEASE_
+                                  | 801/final 366581) (based on LLVM 8.0.1) as
+                                  |  [ELF 64-bit LSB executable, x86-64, versi
+                                  | on 1 (FreeBSD), dynamically linked (uses s
+                                  | hared libs), for FreeBSD 12.1, FreeBSD-sty
+                                  | le, stripped] at systime Fri Jun 13 13:01:
+                                  | 13 CEST 2025 on [FreeBSD FreeBSD12VM 12.1-
+                                  | RELEASE FreeBSD 12.1-RELEASE r354233 GENER
+                                  | IC amd64]
+----------------------------------+--------------------------------------------
+ x86-64_OpenBSD_64_gccV830        | gcc version 8.3.0 (GCC) as [ELF 64-bit LSB
+                                  |  executable, x86-64, version 1, dynamicall
+                                  | y linked (uses shared libs), for OpenBSD 6
+                                  | .6, stripped] at systime Fri Jun 13 13:01:
+                                  | 18 CEST 2025 on [OpenBSD OpenBSD66VM.ESXsr
+                                  | v.net 6.6 (GENERIC.MP) #372: Sat Oct 12 10
+                                  | :56:27 MDT 2019 deraadt@amd64.openbsd.org:
+                                  | /usr/src/sys/arch/amd64/compile/GENERIC.MP
+                                  |  amd64]
+----------------------------------+--------------------------------------------
+ x86-64_OpenBSD_64_clangV801      | clang version 8.0.1 (tags/RELEASE_801/fina
+                                  | l) (based on LLVM 8.0.1) as [ELF 64-bit LS
+                                  | B executable, x86-64, version 1, dynamical
+                                  | ly linked (uses shared libs), for OpenBSD
+                                  | 6.6, stripped] at systime Fri Jun 13 13:01
+                                  | :18 CEST 2025 on [OpenBSD OpenBSD66VM.ESXs
+                                  | rv.net 6.6 (GENERIC.MP) #372: Sat Oct 12 1
+                                  | 0:56:27 MDT 2019 deraadt@amd64.openbsd.org
+                                  | :/usr/src/sys/arch/amd64/compile/GENERIC.M
+                                  | P amd64]
+----------------------------------+--------------------------------------------
+ x86-64_NetBSD_64_gccV830         | gcc version 8.3.0 (GCC) as [ELF 64-bit LSB
+                                  |  executable, x86-64, version 1 (SYSV), dyn
+                                  | amically linked (uses shared libs), for Ne
+                                  | tBSD 8.1, stripped] at systime Fri Jun 13
+                                  | 13:01:13 CEST 2025 on [NetBSD NetBSD81VM.E
+                                  | SXsrv.net 8.1 NetBSD 8.1 (GENERIC) #0: Fri
+                                  |  May 31 08:43:59 UTC 2019 mkrepro@mkrepro.
+                                  | NetBSD.org:/usr/src/sys/arch/amd64/compile
+                                  | /GENERIC amd64]
+----------------------------------+--------------------------------------------
+ x86-64_NetBSD_64_clangV900       | clang version 9.0.0 (tags/RELEASE_900/fina
+                                  | l) (based on LLVM 9.0.0) as [ELF 64-bit LS
+                                  | B executable, x86-64, version 1 (SYSV), dy
+                                  | namically linked (uses shared libs), for N
+                                  | etBSD 8.1, stripped] at systime Fri Jun 13
+                                  |  13:01:21 CEST 2025 on [NetBSD NetBSD81VM.
+                                  | ESXsrv.net 8.1 NetBSD 8.1 (GENERIC) #0: Fr
+                                  | i May 31 08:43:59 UTC 2019 mkrepro@mkrepro
+                                  | .NetBSD.org:/usr/src/sys/arch/amd64/compil
+                                  | e/GENERIC amd64]
+----------------------------------+--------------------------------------------
+ x86-64_MacOS_64_clangV702        | Apple LLVM version 7.0.2 (clang-700.1.81)
+                                  | as [Mach-O 64-bit executable x86_64] at sy
+                                  | stime Fri Jun 13 13:01:11 CEST 2025 on [Da
+                                  | rwin MacIntel 14.5.0 Darwin Kernel Version
+                                  |  14.5.0: Tue Apr 11 16:12:42 PDT 2017; roo
+                                  | t:xnu-2782.50.9.2.3~1/RELEASE_X86_64 x86_6
+                                  | 4]
+----------------------------------+--------------------------------------------
+ x86-64_MacOS_64_clangV1200       | Apple clang version 12.0.0 (clang-1200.0.3
+                                  | 2.29) (Target: x86_64-apple-darwin20.0.0)
+                                  | as [Mach-O 64-bit executable x86_64] at sy
+                                  | stime Fri Jun 13 13:01:49 CEST 2025 on [Da
+                                  | rwin MacOS11_BigSur 20.0.0 Darwin Kernel V
+                                  | ersion 20.0.0: Thu Jul 30 22:49:28 PDT 202
+                                  | 0; root:xnu-7195.0.0.141.5~1/RELEASE_X86_6
+                                  | 4 x86_64]
+----------------------------------+--------------------------------------------
+ x86-64_SunOS_64_ccV510           | cc: Sun C 5.10 SunOS_i386 Patch 142363-09
+                                  | 2012/08/15 as [ELF 64-bit LSB executable A
+                                  | MD64 Version 1 [SSE2 SSE FXSR CMOV FPU], d
+                                  | ynamically linked, stripped] at systime Fr
+                                  | i Jun 13 13:01:16 CEST 2025 on [SunOS SunO
+                                  | Sx86 5.11 11.1 i86pc i386 Solaris]
+----------------------------------+--------------------------------------------
+ x86-64_SunOS_64_gccV343          | gcc version 3.4.3 (csl-sol210-3_4-branch+s
+                                  | ol_rpath) as [ELF 64-bit LSB executable AM
+                                  | D64 Version 1, dynamically linked, strippe
+                                  | d] at systime Fri Jun 13 13:01:02 CEST 202
+                                  | 5 on [SunOS SunOSx86 5.11 11.1 i86pc i386
+                                  | Solaris]
+----------------------------------+--------------------------------------------
+ x86-64_Android_64_gccV49x        | gcc version 4.9.x 20150123 (prerelease) (G
+                                  | CC) (cross-toolchain) (m64 x86_64-linux-an
+                                  | droid -D__ANDROID_API__=26) as [ELF 64-bit
+                                  |  LSB executable, x86-64, version 1 (SYSV),
+                                  |  dynamically linked (uses shared libs), st
+                                  | ripped] at systime Fri Jun 13 13:01:17 CES
+                                  | T 2025 on [Linux Linux64core 5.10.0-6-amd6
+                                  | 4 #1 SMP Debian 5.10.28-1 (2021-04-09) x86
+                                  | _64 GNU/Linux]
+----------------------------------+--------------------------------------------
+ x86-64_Android_64_clangV503      | clang version 5.0.300080 (based on LLVM 5.
+                                  | 0.300080) (cross-toolchain) (m64 x86_64-li
+                                  | nux-android -D__ANDROID_API__=26) as [ELF
+                                  | 64-bit LSB executable, x86-64, version 1 (
+                                  | SYSV), dynamically linked (uses shared lib
+                                  | s), stripped] at systime Fri Jun 13 13:01:
+                                  | 13 CEST 2025 on [Linux Linux64core 5.10.0-
+                                  | 6-amd64 #1 SMP Debian 5.10.28-1 (2021-04-0
+                                  | 9) x86_64 GNU/Linux]
+----------------------------------+--------------------------------------------
+ VAX_Ultrix_32_gccV272            | gcc version 2.7.2 as [VAX demand paged pur
+                                  | e executable] at systime Fri Jun 13 13:13:
+                                  | 26 MET 2025 on [ULTRIX DECultrixVAX 4.5 0
+                                  | VAX]
+----------------------------------+--------------------------------------------
+ Alpha_Tru64OSF1_64_ccV65303      | Compaq C V6.5-303 (dtk) on HP Tru64 UNIX V
+                                  | 5.1B (Rev. 2650) Compiler Driver V6.5-302
+                                  | (dtk) cc Driver as [COFF format alpha dyna
+                                  | mically linked, demand paged executable or
+                                  |  object module stripped - version 3.14-2]
+                                  | at systime Fri Jun 13 13:01:28 CEST 2025 o
+                                  | n [OSF1 DECtru64alpha V5.1 2650 alpha]
+----------------------------------+--------------------------------------------
+ Alpha_Tru64OSF1_64_gccV423       | gcc version 4.2.3 (alpha-dec-osf5.1b) as [
+                                  | COFF format alpha dynamically linked, dema
+                                  | nd paged executable or object module strip
+                                  | ped - version 3.14-2] at systime Fri Jun 1
+                                  | 3 13:01:47 CEST 2025 on [OSF1 DECtru64alph
+                                  | a V5.1 2650 alpha]
+----------------------------------+--------------------------------------------
+ Alpha_Linux_64_gccV424           | gcc version 4.2.4 (Debian 4.2.4-6) as [ELF
+                                  |  64-bit LSB executable, Alpha (unofficial)
+                                  | , version 1 (SYSV), dynamically linked (us
+                                  | es shared libs), for GNU/Linux 2.6.9, stri
+                                  | pped] at systime Fri Jun 13 13:01:45 CEST
+                                  | 2025 on [Linux AlphaLinux 2.6.26-2-alpha-g
+                                  | eneric #1 Sun Mar 4 21:08:03 UTC 2012 alph
+                                  | a]
+----------------------------------+--------------------------------------------
+ Alpha_Linux_64_gccV1021          | gcc version 10.2.1 20210110 (Debian 10.2.1
+                                  | -6) as [ELF 64-bit LSB executable, Alpha (
+                                  | unofficial), version 1 (SYSV), dynamically
+                                  |  linked (uses shared libs), for GNU/Linux
+                                  | 3.2.0, stripped] at systime Fri Jun 13 13:
+                                  | 03:38 CEST 2025 on [Linux AlphaServer 5.10
+                                  | .0-8-alpha-smp #1 SMP Debian 5.10.46-1 (20
+                                  | 21-06-24) alpha]
+----------------------------------+--------------------------------------------
+ Alpha_FreeBSD_64_gccV346         | gcc version 3.4.6 [FreeBSD] 20060305 (Conf
+                                  | igured with: FreeBSD/alpha system compiler
+                                  | ) as [ELF 64-bit LSB executable, Alpha (un
+                                  | official), version 1 (FreeBSD), for FreeBS
+                                  | D 6.4, dynamically linked (uses shared lib
+                                  | s), FreeBSD-style, stripped] at systime Fr
+                                  | i Jun 13 13:02:00 CEST 2025 on [FreeBSD Al
+                                  | phaBSD 6.4-RELEASE FreeBSD 6.4-RELEASE #0:
+                                  |  Sun Nov 30 07:00:37 UTC 2008 root@ds10.wb
+                                  | net:/usr/obj/usr/src/sys/GENERIC alpha]
+----------------------------------+--------------------------------------------
+ Alpha_OpenBSD_64_gccV421         | gcc version 4.2.1 20070719 (OpenBSD/alpha
+                                  | system compiler) as [ELF 64-bit LSB execut
+                                  | able, Alpha (unofficial), version 1, dynam
+                                  | ically linked (uses shared libs), for Open
+                                  | BSD 6.6, stripped] at systime Fri Jun 13 1
+                                  | 3:02:22 CEST 2025 on [OpenBSD OpenBSD66alp
+                                  | ha.ALPHApurgatory.net 6.6 (GENERIC.MP) #74
+                                  | 1: Sat Oct 12 05:34:08 MDT 2019 deraadt@al
+                                  | pha.openbsd.org:/usr/src/sys/arch/alpha/co
+                                  | mpile/GENERIC.MP alpha]
+----------------------------------+--------------------------------------------
+ IA-64_HP-UX_32_ccVa0628          | cc: HP C/aC++ B3910B A.06.28 [Nov 21 2013]
+                                  |  as [ELF-32 executable object file - IA64]
+                                  |  at systime Fri Jun 13 13:04:24 MESZ 2025
+                                  | on [HP-UX IA64hpux B.11.31 U ia64 28971902
+                                  | 01]
+----------------------------------+--------------------------------------------
+ IA-64_HP-UX_32_gccV472           | gcc version 4.7.2 (GCC) (ia64-hp-hpux11.31
+                                  | ) as [ELF-32 executable object file - IA64
+                                  | ] at systime Fri Jun 13 13:01:21 MESZ 2025
+                                  |  on [HP-UX IA64hpux B.11.31 U ia64 2897190
+                                  | 201]
+----------------------------------+--------------------------------------------
+ IA-64_HP-UX_64_ccVa0628          | cc: HP C/aC++ B3910B A.06.28 [Nov 21 2013]
+                                  |  as [ELF-64 executable object file - IA64]
+                                  |  at systime Fri Jun 13 13:04:19 MESZ 2025
+                                  | on [HP-UX IA64hpux B.11.31 U ia64 28971902
+                                  | 01]
+----------------------------------+--------------------------------------------
+ IA-64_HP-UX_64_gccV472           | gcc version 4.7.2 (GCC) (ia64-hp-hpux11.31
+                                  | ) as [ELF-64 executable object file - IA64
+                                  | ] at systime Fri Jun 13 13:02:29 MESZ 2025
+                                  |  on [HP-UX IA64hpux B.11.31 U ia64 2897190
+                                  | 201]
+----------------------------------+--------------------------------------------
+ IA-64_Linux_64_gccV412           | gcc version 4.1.2 20080704 (Red Hat 4.1.2-
+                                  | 50) as [ELF 64-bit LSB executable, IA-64,
+                                  | version 1 (SYSV), dynamically linked (uses
+                                  |  shared libs), for GNU/Linux 2.6.9, stripp
+                                  | ed] at systime Fri Jun 13 13:01:24 CEST 20
+                                  | 25 on [Linux LinuxIA64 2.6.18-238.el5 #1 S
+                                  | MP Sun Dec 19 14:23:48 EST 2010 ia64]
+----------------------------------+--------------------------------------------
+ IA-64_Linux_64_gccV463           | gcc version 4.6.3 (Debian 4.6.3-14) as [EL
+                                  | F 64-bit LSB executable, IA-64, version 1
+                                  | (SYSV), dynamically linked (uses shared li
+                                  | bs), for GNU/Linux 2.6.26, stripped] at sy
+                                  | stime Fri Jun 13 13:02:14 CEST 2025 on [Li
+                                  | nux IA64-Linux 2.6.32-5-mckinley #1 SMP Tu
+                                  | e May 13 19:10:46 UTC 2014 ia64]
+----------------------------------+--------------------------------------------
+ IA-64_Linux_64_gccV1021          | gcc version 10.2.1 20210110 (Debian 10.2.1
+                                  | -6+b1) as [ELF 64-bit LSB executable, IA-6
+                                  | 4, version 1 (SYSV), dynamically linked (u
+                                  | ses shared libs), for GNU/Linux 3.2.18, st
+                                  | ripped] at systime Fri Jun 13 13:02:05 CES
+                                  | T 2025 on [Linux SR870BN4-Linux 5.10.0-8-m
+                                  | ckinley #1 SMP Debian 5.10.46-1 (2021-06-2
+                                  | 4) ia64]
+----------------------------------+--------------------------------------------
+ IA-64_FreeBSD_64_gccV421         | gcc version 4.2.1 20070831 patched [FreeBS
+                                  | D] (Configured with: FreeBSD/ia64 system c
+                                  | ompiler) as [ELF 64-bit LSB executable, IA
+                                  | -64, version 1 (FreeBSD), dynamically link
+                                  | ed (uses shared libs), for FreeBSD 10.3, s
+                                  | tripped] at systime Fri Jun 13 13:01:46 CE
+                                  | ST 2025 on [FreeBSD ItaniumBSD 10.3-RELEAS
+                                  | E FreeBSD 10.3-RELEASE #0 r297264: Fri Mar
+                                  |  25 04:43:22 UTC 2016 root@releng1.nyi.fre
+                                  | ebsd.org:/usr/obj/ia64.ia64/usr/src/sys/GE
+                                  | NERIC ia64]
+----------------------------------+--------------------------------------------
+ XeonPhiMIC_Linux_64_iccVxe2017u5 | icc version 17.0.5 (gcc version 4.8.5 comp
+                                  | atibility) Intel(R) C Intel(R) 64 Compiler
+                                  |  for applications running on Intel(R) 64,
+                                  | Version 17.0.5.239 Build 20170817 (Copyrig
+                                  | ht (C) 1985-2017 Intel Corporation. All ri
+                                  | ghts reserved.) as [ELF 64-bit LSB executa
+                                  | ble, Intel K1OM, version 1 (SYSV), dynamic
+                                  | ally linked (uses shared libs), for GNU/Li
+                                  | nux 2.6.32, stripped] at systime Fri Jun 1
+                                  | 3 13:01:27 CEST 2025 on [Linux RedHatELS72
+                                  | VM 3.10.0-327.el7.x86_64 #1 SMP Thu Oct 29
+                                  |  17:29:29 EDT 2015 x86_64]
+----------------------------------+--------------------------------------------
+ XeonPhiMIC_Linux_64_gccV470      | gcc version 4.7.0 20110509 (experimental)
+                                  | 4.7.0 (GCC) (cross-toolchain) as [ELF 64-b
+                                  | it LSB executable, Intel K1OM, version 1 (
+                                  | SYSV), dynamically linked (uses shared lib
+                                  | s), for GNU/Linux 2.6.32, stripped] at sys
+                                  | time Fri Jun 13 13:01:18 CEST 2025 on [Lin
+                                  | ux RedHatELS72VM 3.10.0-327.el7.x86_64 #1
+                                  | SMP Thu Oct 29 17:29:29 EDT 2015 x86_64]
+----------------------------------+--------------------------------------------
+ MCSTelbrus_Linux_32_lccV120      | lcc:1.20.17:Mar-3-2016:e2k-generic-linux (
+                                  | gcc version 4.4.0 compatible) as [ELF 32-b
+                                  | it LSB executable, MCST Elbrus, version 1
+                                  | (SYSV), dynamically linked (uses shared li
+                                  | bs), for GNU/Linux 2.6.33, stripped] at sy
+                                  | stime Fri Jun 13 14:04:24 MSK 2025 on [Lin
+                                  | ux debian4babayan-64 2.6.33-elbrus.033.3.4
+                                  | 2 #1 SMP Thu Apr 23 22:28:28 MSK 2015 e2k]
+----------------------------------+--------------------------------------------
+ MCSTelbrus_Linux_32_lccV125      | lcc:1.25.14:Feb-13-2021:e2k-v4-linux (gcc
+                                  | version 7.3.0 compatible) as [ELF 32-bit L
+                                  | SB executable, MCST Elbrus, version 1 (SYS
+                                  | V), dynamically linked (uses shared libs),
+                                  |  for GNU/Linux 2.6.33, stripped] at systim
+                                  | e Fri Jun 13 14:07:14 MSK 2025 on [Linux c
+                                  | hassis0CF-babayan-elbrus804 5.4.0-1.9-e8c
+                                  | #1 SMP Thu Oct 29 07:34:25 GMT 2020 e2k E8
+                                  | C]
+----------------------------------+--------------------------------------------
+ MCSTelbrus_Linux_64_lccV120      | lcc:1.20.17:Mar-3-2016:e2k-generic-linux (
+                                  | gcc version 4.4.0 compatible) as [ELF 64-b
+                                  | it LSB executable, MCST Elbrus, version 1
+                                  | (SYSV), dynamically linked (uses shared li
+                                  | bs), for GNU/Linux 2.6.33, stripped] at sy
+                                  | stime Fri Jun 13 14:03:27 MSK 2025 on [Lin
+                                  | ux debian4babayan-64 2.6.33-elbrus.033.3.4
+                                  | 2 #1 SMP Thu Apr 23 22:28:28 MSK 2015 e2k]
+----------------------------------+--------------------------------------------
+ MCSTelbrus_Linux_64_lccV125      | lcc:1.25.14:Feb-13-2021:e2k-v4-linux (gcc
+                                  | version 7.3.0 compatible) as [ELF 64-bit L
+                                  | SB executable, MCST Elbrus, version 1 (SYS
+                                  | V), dynamically linked (uses shared libs),
+                                  |  for GNU/Linux 2.6.33, stripped] at systim
+                                  | e Fri Jun 13 14:07:30 MSK 2025 on [Linux c
+                                  | hassis0CF-babayan-elbrus804 5.4.0-1.9-e8c
+                                  | #1 SMP Thu Oct 29 07:34:25 GMT 2020 e2k E8
+                                  | C]
+----------------------------------+--------------------------------------------
+ PA-RISC_HP-UX_32_ccVc0370        | HP ANSI C / C++ B3910B C.03.70 (HP92453-01
+                                  |  B.11.11.16 HP C Compiler) as [PA-RISC1.1
+                                  | shared executable dynamically linked] at s
+                                  | ystime Fri Jun 13 13:02:02 METDST 2025 on
+                                  | [HP-UX c8k-HPUX B.11.23 U 9000/785 4042425
+                                  | 048]
+----------------------------------+--------------------------------------------
+ PA-RISC_HP-UX_32_gccV471         | gcc version 4.7.1 (GCC) (hppa1.1-hp-hpux11
+                                  | .11) as [PA-RISC1.1 shared executable dyna
+                                  | mically linked] at systime Fri Jun 13 13:0
+                                  | 2:09 METDST 2025 on [HP-UX c8k-HPUX B.11.2
+                                  | 3 U 9000/785 4042425048]
+----------------------------------+--------------------------------------------
+ PA-RISC_HP-UX_64_ccVc0370        | HP ANSI C / C++ B3910B C.03.70 (HP92453-01
+                                  |  B.11.11.16 HP C Compiler) as [ELF-64 exec
+                                  | utable object file - PA-RISC 2.0 (LP64) /
+                                  | HPPA64 (PA-RISC2.0W)] at systime Fri Jun 1
+                                  | 3 13:02:01 METDST 2025 on [HP-UX c8k-HPUX
+                                  | B.11.23 U 9000/785 4042425048]
+----------------------------------+--------------------------------------------
+ PA-RISC_HP-UX_64_gccV471         | gcc version 4.7.1 (GCC) (hppa64-hp-hpux11.
+                                  | 11) as [ELF-64 executable object file - PA
+                                  | -RISC 2.0 (LP64) / HPPA64 (PA-RISC2.0W)] a
+                                  | t systime Fri Jun 13 13:02:00 METDST 2025
+                                  | on [HP-UX c8k-HPUX B.11.23 U 9000/785 4042
+                                  | 425048]
+----------------------------------+--------------------------------------------
+ PA-RISC_Linux_32_gccV492         | gcc version 4.9.2 (Debian 4.9.2-10+b2) as
+                                  | [ELF 32-bit MSB executable, PA-RISC, versi
+                                  | on 1 (GNU/Linux), dynamically linked (uses
+                                  |  shared libs), for GNU/Linux 2.6.32, strip
+                                  | ped] at systime Fri Jun 13 13:01:59 CEST 2
+                                  | 025 on [Linux c8k-Linux 3.16.0-4-parisc64-
+                                  | smp #1 SMP Debian 3.16.7-ckt4-3 (2015-02-0
+                                  | 3) parisc64]
+----------------------------------+--------------------------------------------
+ PA-RISC_Linux_32_gccV1021        | gcc version 10.2.1 20210110 (Debian 10.2.1
+                                  | -6) as [ELF 32-bit MSB executable, PA-RISC
+                                  | , version 1 (GNU/Linux), dynamically linke
+                                  | d (uses shared libs), for GNU/Linux 3.2.0,
+                                  |  stripped] at systime Fri Jun 13 13:02:25
+                                  | CEST 2025 on [Linux c8k-Linux 5.10.0-8-par
+                                  | isc64 #1 SMP Debian 5.10.46-1 (2021-06-24)
+                                  |  parisc64]
+----------------------------------+--------------------------------------------
+ SPARC_SunOS_32_ccV510            | cc: Sun C 5.10 SunOS_sparc Patch 141861-09
+                                  |  2012/08/15 as [ELF 32-bit MSB executable
+                                  | SPARC32PLUS Version 1, V8+ Required, dynam
+                                  | ically linked, stripped] at systime Fri Ju
+                                  | n 13 13:02:31 CEST 2025 on [SunOS SunOS_Ul
+                                  | tra45 5.10 Generic_147147-26 sun4u sparc]
+----------------------------------+--------------------------------------------
+ SPARC_SunOS_32_gccV343           | gcc version 3.4.3 (csl-sol210-3_4-branch+s
+                                  | ol_rpath) as [ELF 32-bit MSB executable SP
+                                  | ARC Version 1, dynamically linked, strippe
+                                  | d] at systime Fri Jun 13 13:01:08 CEST 202
+                                  | 5 on [SunOS SunOS_Ultra45 5.10 Generic_147
+                                  | 147-26 sun4u sparc]
+----------------------------------+--------------------------------------------
+ SPARC_SunOS_64_ccV510            | cc: Sun C 5.10 SunOS_sparc Patch 141861-09
+                                  |  2012/08/15 as [ELF 64-bit MSB executable
+                                  | SPARCV9 Version 1, dynamically linked, str
+                                  | ipped] at systime Fri Jun 13 13:02:31 CEST
+                                  |  2025 on [SunOS SunOS_Ultra45 5.10 Generic
+                                  | _147147-26 sun4u sparc]
+----------------------------------+--------------------------------------------
+ SPARC_SunOS_64_gccV343           | gcc version 3.4.3 (csl-sol210-3_4-branch+s
+                                  | ol_rpath) as [ELF 64-bit MSB executable SP
+                                  | ARCV9 Version 1, dynamically linked, strip
+                                  | ped] at systime Fri Jun 13 13:01:08 CEST 2
+                                  | 025 on [SunOS SunOS_Ultra45 5.10 Generic_1
+                                  | 47147-26 sun4u sparc]
+----------------------------------+--------------------------------------------
+ SPARC_Linux_32_gccV1021          | gcc version 10.2.1 20210110 (Debian 10.2.1
+                                  | -6) as [ELF 32-bit MSB executable, SPARC32
+                                  | PLUS, V8+ Required, total store ordering,
+                                  | version 1 (SYSV), dynamically linked (uses
+                                  |  shared libs), for GNU/Linux 3.2.0, stripp
+                                  | ed] at systime Fri Jun 13 13:01:28 CEST 20
+                                  | 25 on [Linux LinuxSPARC64 5.10.0-8-sparc64
+                                  | -smp #1 SMP Debian 5.10.46-1 (2021-06-24)
+                                  | sparc64]
+----------------------------------+--------------------------------------------
+ SPARC_Linux_32_clangV1101        | Debian clang version 11.0.1-2 as [ELF 32-b
+                                  | it MSB executable, SPARC32PLUS, V8+ Requir
+                                  | ed, total store ordering, version 1 (SYSV)
+                                  | , dynamically linked (uses shared libs), f
+                                  | or GNU/Linux 3.2.0, stripped] at systime F
+                                  | ri Jun 13 13:01:28 CEST 2025 on [Linux Lin
+                                  | uxSPARC64 5.10.0-8-sparc64-smp #1 SMP Debi
+                                  | an 5.10.46-1 (2021-06-24) sparc64]
+----------------------------------+--------------------------------------------
+ SPARC_Linux_64_gccV1021          | gcc version 10.2.1 20210110 (Debian 10.2.1
+                                  | -6) as [ELF 64-bit MSB executable, SPARC V
+                                  | 9, relaxed memory ordering, version 1 (SYS
+                                  | V), dynamically linked (uses shared libs),
+                                  |  for GNU/Linux 3.2.0, stripped] at systime
+                                  |  Fri Jun 13 13:02:59 CEST 2025 on [Linux L
+                                  | inuxSPARC64 5.10.0-8-sparc64-smp #1 SMP De
+                                  | bian 5.10.46-1 (2021-06-24) sparc64]
+----------------------------------+--------------------------------------------
+ SPARC_Linux_64_clangV1101        | Debian clang version 11.0.1-2 as [ELF 64-b
+                                  | it MSB executable, SPARC V9, relaxed memor
+                                  | y ordering, version 1 (SYSV), dynamically
+                                  | linked (uses shared libs), for GNU/Linux 3
+                                  | .2.0, stripped] at systime Fri Jun 13 13:0
+                                  | 3:28 CEST 2025 on [Linux LinuxSPARC64 5.10
+                                  | .0-8-sparc64-smp #1 SMP Debian 5.10.46-1 (
+                                  | 2021-06-24) sparc64]
+----------------------------------+--------------------------------------------
+ SPARC_FreeBSD_64_gccV421         | gcc version 4.2.1 20070831 patched [FreeBS
+                                  | D] (Configured with: FreeBSD/sparc64 syste
+                                  | m compiler) as [ELF 64-bit MSB executable,
+                                  |  SPARC V9, relaxed memory ordering, versio
+                                  | n 1 (FreeBSD), dynamically linked, FreeBSD
+                                  | -style, for FreeBSD 12.1, stripped] at sys
+                                  | time Fri Jun 13 13:05:38 CEST 2025 on [Fre
+                                  | eBSD SparcBSD 12.1-RELEASE FreeBSD 12.1-RE
+                                  | LEASE r354233 GENERIC sparc64]
+----------------------------------+--------------------------------------------
+ SPARC_OpenBSD_64_gccV830         | gcc version 8.3.0 (GCC) as [ELF 64-bit MSB
+                                  |  executable, SPARC V9, version 1, dynamica
+                                  | lly linked (uses shared libs), for OpenBSD
+                                  |  6.6, stripped] at systime Fri Jun 13 13:1
+                                  | 0:23 CEST 2025 on [OpenBSD OpenBSD66VM.ESX
+                                  | srv.net 6.6 (GENERIC.MP) #86: Sat Oct 12 0
+                                  | 9:59:04 MDT 2019 deraadt@sparc64.openbsd.o
+                                  | rg:/usr/src/sys/arch/sparc64/compile/GENER
+                                  | IC.MP sparc64]
+----------------------------------+--------------------------------------------
+ SPARC_OpenBSD_64_clangV801       | clang version 8.0.1 (tags/RELEASE_801/fina
+                                  | l) (based on LLVM 8.0.1) as [ELF 64-bit MS
+                                  | B executable, SPARC V9, version 1, dynamic
+                                  | ally linked (uses shared libs), for OpenBS
+                                  | D 6.6, stripped] at systime Fri Jun 13 13:
+                                  | 07:44 CEST 2025 on [OpenBSD OpenBSD66VM.ES
+                                  | Xsrv.net 6.6 (GENERIC.MP) #86: Sat Oct 12
+                                  | 09:59:04 MDT 2019 deraadt@sparc64.openbsd.
+                                  | org:/usr/src/sys/arch/sparc64/compile/GENE
+                                  | RIC.MP sparc64]
+----------------------------------+--------------------------------------------
+ MIPS_IRIX_32_ccV744m             | MIPSpro Compilers: Version 7.4.4m as [ELF
+                                  | N32 MSB mips-4 dynamic executable MIPS - v
+                                  | ersion 1] at systime Fri Jun 13 13:02:11 M
+                                  | ET DST 2025 on [IRIX64 SGImipsIRIX 6.5 072
+                                  | 02013 IP35]
+----------------------------------+--------------------------------------------
+ MIPS_IRIX_32_gccV471             | gcc version 4.7.1 (GCC) (mips-sgi-irix6.5)
+                                  |  as [ELF N32 MSB mips-4 dynamic executable
+                                  |  MIPS - version 1] at systime Fri Jun 13 1
+                                  | 3:01:42 MET DST 2025 on [IRIX64 SGImipsIRI
+                                  | X 6.5 07202013 IP35]
+----------------------------------+--------------------------------------------
+ MIPS_IRIX_32_gccV471_TLS         | gcc version 4.7.1 (GCC) (mips-sgi-irix6.5)
+                                  |  as [ELF N32 MSB mips-4 dynamic executable
+                                  |  MIPS - version 1] at systime Fri Jun 13 1
+                                  | 3:01:42 MET DST 2025 on [IRIX64 SGImipsIRI
+                                  | X 6.5 07202013 IP35]
+----------------------------------+--------------------------------------------
+ MIPS_IRIX_64_ccV744m             | MIPSpro Compilers: Version 7.4.4m as [ELF
+                                  | 64-bit MSB mips-4 dynamic executable MIPS
+                                  | - version 1] at systime Fri Jun 13 13:02:1
+                                  | 1 MET DST 2025 on [IRIX64 SGImipsIRIX 6.5
+                                  | 07202013 IP35]
+----------------------------------+--------------------------------------------
+ MIPS_IRIX_64_gccV471             | gcc version 4.7.1 (GCC) (mips-sgi-irix6.5)
+                                  |  as [ELF 64-bit MSB mips-4 dynamic executa
+                                  | ble MIPS - version 1] at systime Fri Jun 1
+                                  | 3 13:03:50 MET DST 2025 on [IRIX64 SGImips
+                                  | IRIX 6.5 07202013 IP35]
+----------------------------------+--------------------------------------------
+ MIPS_IRIX_64_gccV471_TLS         | gcc version 4.7.1 (GCC) (mips-sgi-irix6.5)
+                                  |  as [ELF 64-bit MSB mips-4 dynamic executa
+                                  | ble MIPS - version 1] at systime Fri Jun 1
+                                  | 3 13:03:50 MET DST 2025 on [IRIX64 SGImips
+                                  | IRIX 6.5 07202013 IP35]
+----------------------------------+--------------------------------------------
+ MIPS_Linux_32_gccV930            | gcc version 9.3.0 (GCC) (cross-toolchain)
+                                  | as [ELF 32-bit MSB executable, MIPS, MIPS-
+                                  | I version 1 (SYSV), dynamically linked (us
+                                  | es shared libs), for GNU/Linux 3.2.0, stri
+                                  | pped] at systime Fri Jun 13 13:01:20 CEST
+                                  | 2025 on [Linux IBMpowerCHRP 5.10.0-8-power
+                                  | pc64 #1 SMP Debian 5.10.46-1 (2021-06-24)
+                                  | ppc64]
+----------------------------------+--------------------------------------------
+ MIPS_Linux_32_gccV830_sgi        | gcc version 8.3.0 (Gentoo 8.3.0 p1.0) as [
+                                  | ELF 32-bit MSB executable, MIPS, N32 MIPS-
+                                  | IV version 1 (SYSV), dynamically linked (u
+                                  | ses shared libs), for GNU/Linux 3.2.0, str
+                                  | ipped] at systime Fri Jun 13 13:07:47 CEST
+                                  |  2025 on [Linux SGIserver 4.12.0 #1 SMP Mo
+                                  | n Feb 25 13:10:05 CET 2019 mips64 R12000 V
+                                  | 2.3 FPU V0.0 SGI Octane2]
+----------------------------------+--------------------------------------------
+ MIPS_Linux_64_gccV930            | gcc version 9.3.0 (GCC) (cross-toolchain)
+                                  | as [ELF 64-bit MSB executable, MIPS, MIPS-
+                                  | III version 1 (SYSV), dynamically linked (
+                                  | uses shared libs), for GNU/Linux 3.2.0, st
+                                  | ripped] at systime Fri Jun 13 13:01:18 CES
+                                  | T 2025 on [Linux IBMpowerCHRP 5.10.0-8-pow
+                                  | erpc64 #1 SMP Debian 5.10.46-1 (2021-06-24
+                                  | ) ppc64]
+----------------------------------+--------------------------------------------
+ MIPSel_Linux_32_gccV930          | gcc version 9.3.0 (GCC) (cross-toolchain)
+                                  | as [ELF 32-bit LSB executable, MIPS, MIPS-
+                                  | I version 1 (SYSV), dynamically linked (us
+                                  | es shared libs), for GNU/Linux 3.2.0, stri
+                                  | pped] at systime Fri Jun 13 13:01:20 CEST
+                                  | 2025 on [Linux IBMpowerCHRP 5.10.0-8-power
+                                  | pc64 #1 SMP Debian 5.10.46-1 (2021-06-24)
+                                  | ppc64]
+----------------------------------+--------------------------------------------
+ MIPSel_Linux_64_gccV930          | gcc version 9.3.0 (GCC) (cross-toolchain)
+                                  | as [ELF 64-bit LSB executable, MIPS, MIPS-
+                                  | III version 1 (SYSV), dynamically linked (
+                                  | uses shared libs), for GNU/Linux 3.2.0, st
+                                  | ripped] at systime Fri Jun 13 13:01:18 CES
+                                  | T 2025 on [Linux IBMpowerCHRP 5.10.0-8-pow
+                                  | erpc64 #1 SMP Debian 5.10.46-1 (2021-06-24
+                                  | ) ppc64]
+----------------------------------+--------------------------------------------
+ MIPSel_Android_32_gccV49x        | gcc version 4.9.x 20150123 (prerelease) (G
+                                  | CC) (cross-toolchain) (mips32 mipsel-linux
+                                  | -android -D__ANDROID_API__=26) as [ELF 32-
+                                  | bit LSB executable, MIPS, MIPS32 version 1
+                                  |  (SYSV), dynamically linked (uses shared l
+                                  | ibs), stripped] at systime Fri Jun 13 13:0
+                                  | 1:18 CEST 2025 on [Linux Linux64core 5.10.
+                                  | 0-6-amd64 #1 SMP Debian 5.10.28-1 (2021-04
+                                  | -09) x86_64 GNU/Linux]
+----------------------------------+--------------------------------------------
+ MIPSel_Android_32_clangV503      | clang version 5.0.300080 (based on LLVM 5.
+                                  | 0.300080) (cross-toolchain) (mips32 mipsel
+                                  | -linux-android -D__ANDROID_API__=26) as [E
+                                  | LF 32-bit LSB executable, MIPS, MIPS32 ver
+                                  | sion 1 (SYSV), dynamically linked (uses sh
+                                  | ared libs), stripped] at systime Fri Jun 1
+                                  | 3 13:01:09 CEST 2025 on [Linux Linux64core
+                                  |  5.10.0-6-amd64 #1 SMP Debian 5.10.28-1 (2
+                                  | 021-04-09) x86_64 GNU/Linux]
+----------------------------------+--------------------------------------------
+ MIPSel_Android_64_gccV49x        | gcc version 4.9.x 20150123 (prerelease) (G
+                                  | CC) (cross-toolchain) (mips64 mips64el-lin
+                                  | ux-android -D__ANDROID_API__=26) as [ELF 6
+                                  | 4-bit LSB executable, MIPS, version 1 (SYS
+                                  | V), dynamically linked (uses shared libs),
+                                  |  stripped] at systime Fri Jun 13 13:01:20
+                                  | CEST 2025 on [Linux Linux64core 5.10.0-6-a
+                                  | md64 #1 SMP Debian 5.10.28-1 (2021-04-09)
+                                  | x86_64 GNU/Linux]
+----------------------------------+--------------------------------------------
+ MIPSel_Android_64_clangV503      | clang version 5.0.300080 (based on LLVM 5.
+                                  | 0.300080) (cross-toolchain) (mips64 mips64
+                                  | el-linux-android -D__ANDROID_API__=26) as
+                                  | [ELF 64-bit LSB executable, MIPS, version
+                                  | 1 (SYSV), dynamically linked (uses shared
+                                  | libs), stripped] at systime Fri Jun 13 13:
+                                  | 01:11 CEST 2025 on [Linux Linux64core 5.10
+                                  | .0-6-amd64 #1 SMP Debian 5.10.28-1 (2021-0
+                                  | 4-09) x86_64 GNU/Linux]
+----------------------------------+--------------------------------------------
+ PowerPC_AIX_32_xlcV1313          | IBM XL C/C++ for AIX, V13.1.3 (5725-C72, 5
+                                  | 765-J07) Version: 13.01.0003.0000 as [exec
+                                  | utable (RISC System/6000) or object module
+                                  | ] at systime Fri Jun 13 13:02:39 CEST 2025
+                                  |  on [AIX IBMpowerCHRP 1 7 00F68D574C00]
+----------------------------------+--------------------------------------------
+ PowerPC_AIX_32_gccV494           | gcc version 4.9.4 (GCC) (powerpc-ibm-aix7.
+                                  | 1.0.0) as [executable (RISC System/6000) o
+                                  | r object module] at systime Fri Jun 13 13:
+                                  | 02:25 CEST 2025 on [AIX IBMpowerCHRP 1 7 0
+                                  | 0F68D574C00]
+----------------------------------+--------------------------------------------
+ PowerPC_AIX_64_xlcV1313          | IBM XL C/C++ for AIX, V13.1.3 (5725-C72, 5
+                                  | 765-J07) Version: 13.01.0003.0000 as [64-b
+                                  | it XCOFF executable or object module] at s
+                                  | ystime Fri Jun 13 13:02:30 CEST 2025 on [A
+                                  | IX IBMpowerCHRP 1 7 00F68D574C00]
+----------------------------------+--------------------------------------------
+ PowerPC_AIX_64_gccV494           | gcc version 4.9.4 (GCC) (powerpc-ibm-aix7.
+                                  | 1.0.0) as [64-bit XCOFF executable or obje
+                                  | ct module] at systime Fri Jun 13 13:02:12
+                                  | CEST 2025 on [AIX IBMpowerCHRP 1 7 00F68D5
+                                  | 74C00]
+----------------------------------+--------------------------------------------
+ PowerPC_MacOS_32_gccV421         | gcc version 4.2.1 (Apple Inc. build 5577)
+                                  | as [Mach-O executable ppc] at systime Fri
+                                  | Jun 13 13:01:35 CEST 2025 on [Darwin Power
+                                  | G5MacOSX 9.8.0 Darwin Kernel Version 9.8.0
+                                  | : Wed Jul 15 16:57:01 PDT 2009; root:xnu-1
+                                  | 228.15.4~1/RELEASE_PPC Power Macintosh]
+----------------------------------+--------------------------------------------
+ PowerPC_MacOS_64_gccV421         | gcc version 4.2.1 (Apple Inc. build 5577)
+                                  | as [Mach-O 64-bit executable ppc64] at sys
+                                  | time Fri Jun 13 13:01:35 CEST 2025 on [Dar
+                                  | win PowerG5MacOSX 9.8.0 Darwin Kernel Vers
+                                  | ion 9.8.0: Wed Jul 15 16:57:01 PDT 2009; r
+                                  | oot:xnu-1228.15.4~1/RELEASE_PPC Power Maci
+                                  | ntosh]
+----------------------------------+--------------------------------------------
+ PowerPC_Linux_32_gccV492         | gcc version 4.9.2 (Debian 4.9.2-10+deb8u1)
+                                  |  as [ELF 32-bit MSB executable, PowerPC or
+                                  |  cisco 4500, version 1 (SYSV), dynamically
+                                  |  linked (uses shared libs), for GNU/Linux
+                                  | 2.6.32, stripped] at systime Fri Jun 13 13
+                                  | :01:27 CEST 2025 on [Linux IBMpowerCHRP 3.
+                                  | 16.0-6-powerpc64 #1 SMP Debian 3.16.56-1+d
+                                  | eb8u1 (2018-05-08) ppc64]
+----------------------------------+--------------------------------------------
+ PowerPC_Linux_32_gccV1021        | gcc version 10.2.1 20210110 (Debian 10.2.1
+                                  | -6) as [ELF 32-bit MSB executable, PowerPC
+                                  |  or cisco 4500, version 1 (SYSV), dynamica
+                                  | lly linked (uses shared libs), for GNU/Lin
+                                  | ux 3.2.0, stripped] at systime Fri Jun 13
+                                  | 13:01:15 CEST 2025 on [Linux IBMpowerCHRP
+                                  | 5.10.0-8-powerpc64 #1 SMP Debian 5.10.46-1
+                                  |  (2021-06-24) ppc64]
+----------------------------------+--------------------------------------------
+ PowerPC_Linux_32_clangV350       | Debian clang version 3.5.0-10 (tags/RELEAS
+                                  | E_350/final) (based on LLVM 3.5.0) as [ELF
+                                  |  32-bit MSB executable, PowerPC or cisco 4
+                                  | 500, version 1 (SYSV), dynamically linked
+                                  | (uses shared libs), for GNU/Linux 2.6.32,
+                                  | stripped] at systime Fri Jun 13 13:01:12 C
+                                  | EST 2025 on [Linux IBMpowerCHRP 3.16.0-6-p
+                                  | owerpc64 #1 SMP Debian 3.16.56-1+deb8u1 (2
+                                  | 018-05-08) ppc64]
+----------------------------------+--------------------------------------------
+ PowerPC_Linux_32_clangV1101      | Debian clang version 11.0.1-2 as [ELF 32-b
+                                  | it MSB executable, PowerPC or cisco 4500,
+                                  | version 1 (SYSV), dynamically linked (uses
+                                  |  shared libs), for GNU/Linux 3.2.0, stripp
+                                  | ed] at systime Fri Jun 13 13:01:27 CEST 20
+                                  | 25 on [Linux IBMpowerCHRP 5.10.0-8-powerpc
+                                  | 64 #1 SMP Debian 5.10.46-1 (2021-06-24) pp
+                                  | c64]
+----------------------------------+--------------------------------------------
+ PowerPC_Linux_64_gccV492         | gcc version 4.9.2 (Debian 4.9.2-10+deb8u1)
+                                  |  as [ELF 64-bit MSB executable, 64-bit Pow
+                                  | erPC or cisco 7500, version 1 (SYSV), dyna
+                                  | mically linked (uses shared libs), for GNU
+                                  | /Linux 2.6.32, stripped] at systime Fri Ju
+                                  | n 13 13:01:27 CEST 2025 on [Linux IBMpower
+                                  | CHRP 3.16.0-6-powerpc64 #1 SMP Debian 3.16
+                                  | .56-1+deb8u1 (2018-05-08) ppc64]
+----------------------------------+--------------------------------------------
+ PowerPC_Linux_64_gccV1021        | gcc version 10.2.1 20210110 (Debian 10.2.1
+                                  | -6) as [ELF 64-bit MSB executable, 64-bit
+                                  | PowerPC or cisco 7500, version 1 (SYSV), d
+                                  | ynamically linked (uses shared libs), for
+                                  | GNU/Linux 3.2.0, stripped] at systime Fri
+                                  | Jun 13 13:01:16 CEST 2025 on [Linux IBMpow
+                                  | erCHRP 5.10.0-8-powerpc64 #1 SMP Debian 5.
+                                  | 10.46-1 (2021-06-24) ppc64]
+----------------------------------+--------------------------------------------
+ PowerPC_Linux_64_clangV350       | Debian clang version 3.5.0-10 (tags/RELEAS
+                                  | E_350/final) (based on LLVM 3.5.0) as [ELF
+                                  |  64-bit MSB executable, 64-bit PowerPC or
+                                  | cisco 7500, version 1 (SYSV), dynamically
+                                  | linked (uses shared libs), for GNU/Linux 2
+                                  | .6.32, stripped] at systime Fri Jun 13 13:
+                                  | 01:14 CEST 2025 on [Linux IBMpowerCHRP 3.1
+                                  | 6.0-6-powerpc64 #1 SMP Debian 3.16.56-1+de
+                                  | b8u1 (2018-05-08) ppc64]
+----------------------------------+--------------------------------------------
+ PowerPC_Linux_64_clangV1101      | Debian clang version 11.0.1-2 as [ELF 64-b
+                                  | it MSB executable, 64-bit PowerPC or cisco
+                                  |  7500, version 1 (SYSV), dynamically linke
+                                  | d (uses shared libs), for GNU/Linux 3.2.0,
+                                  |  stripped] at systime Fri Jun 13 13:01:28
+                                  | CEST 2025 on [Linux IBMpowerCHRP 5.10.0-8-
+                                  | powerpc64 #1 SMP Debian 5.10.46-1 (2021-06
+                                  | -24) ppc64]
+----------------------------------+--------------------------------------------
+ PowerPC_FreeBSD_32_gccV920       | gcc version 9.2.0 (FreeBSD Ports Collectio
+                                  | n) as [ELF 32-bit MSB executable, PowerPC
+                                  | or cisco 4500, version 1 (FreeBSD), dynami
+                                  | cally linked (uses shared libs), FreeBSD-s
+                                  | tyle, for FreeBSD 12.1, stripped] at systi
+                                  | me Fri Jun 13 13:13:51 CEST 2025 on [FreeB
+                                  | SD FreeBSD12VM 12.1-RELEASE FreeBSD 12.1-R
+                                  | ELEASE r354233 GENERIC powerpc]
+----------------------------------+--------------------------------------------
+ PowerPC_FreeBSD_32_clangV801     | clang version 8.0.1 (tags/RELEASE_801/fina
+                                  | l) (based on LLVM 8.0.1) as [ELF 32-bit MS
+                                  | B executable, PowerPC or cisco 4500, versi
+                                  | on 1 (FreeBSD), dynamically linked (uses s
+                                  | hared libs), FreeBSD-style, for FreeBSD 12
+                                  | .1, stripped] at systime Fri Jun 13 13:28:
+                                  | 05 CEST 2025 on [FreeBSD FreeBSD12VM 12.1-
+                                  | RELEASE FreeBSD 12.1-RELEASE r354233 GENER
+                                  | IC powerpc]
+----------------------------------+--------------------------------------------
+ PowerPC_FreeBSD_64_gccV920       | gcc version 9.2.0 (FreeBSD Ports Collectio
+                                  | n) as [ELF 64-bit MSB executable, 64-bit P
+                                  | owerPC or cisco 7500, version 1 (FreeBSD),
+                                  |  dynamically linked (uses shared libs), Fr
+                                  | eeBSD-style, for FreeBSD 12.1, stripped] a
+                                  | t systime Fri Jun 13 13:14:35 CEST 2025 on
+                                  |  [FreeBSD FreeBSD12VM 12.1-RELEASE FreeBSD
+                                  |  12.1-RELEASE r354233 GENERIC powerpc]
+----------------------------------+--------------------------------------------
+ PowerPC_FreeBSD_64_clangV801     | clang version 8.0.1 (tags/RELEASE_801/fina
+                                  | l) (based on LLVM 8.0.1) as [ELF 64-bit MS
+                                  | B executable, 64-bit PowerPC or cisco 7500
+                                  | , version 1 (FreeBSD), dynamically linked
+                                  | (uses shared libs), FreeBSD-style, for Fre
+                                  | eBSD 12.1, stripped] at systime Fri Jun 13
+                                  |  13:29:49 CEST 2025 on [FreeBSD FreeBSD12V
+                                  | M 12.1-RELEASE FreeBSD 12.1-RELEASE r35423
+                                  | 3 GENERIC powerpc]
+----------------------------------+--------------------------------------------
+ PowerPCle_Linux_32_gccV930       | gcc version 9.3.0 (GCC) (cross-toolchain)
+                                  | as [ELF 32-bit LSB executable, PowerPC or
+                                  | cisco 4500, version 1 (SYSV), dynamically
+                                  | linked (uses shared libs), for GNU/Linux 3
+                                  | .2.0, stripped] at systime Fri Jun 13 13:0
+                                  | 1:16 CEST 2025 on [Linux IBMpowerCHRP 5.10
+                                  | .0-8-powerpc64 #1 SMP Debian 5.10.46-1 (20
+                                  | 21-06-24) ppc64]
+----------------------------------+--------------------------------------------
+ PowerPCle_Linux_64_gccV1021      | gcc version 10.2.1 20210110 (Debian 10.2.1
+                                  | -6) as [ELF 64-bit LSB executable, 64-bit
+                                  | PowerPC or cisco 7500, version 1 (SYSV), d
+                                  | ynamically linked (uses shared libs), for
+                                  | GNU/Linux 3.10.0, stripped] at systime Fri
+                                  |  Jun 13 13:01:15 CEST 2025 on [Linux Linux
+                                  | PPC64le 5.10.0-20-powerpc64le #1 SMP Debia
+                                  | n 5.10.158-2 (2022-12-13) ppc64le]
+----------------------------------+--------------------------------------------
+ PowerPCle_Linux_64_clangV1101    | Debian clang version 11.0.1-2 as [ELF 64-b
+                                  | it LSB executable, 64-bit PowerPC or cisco
+                                  |  7500, version 1 (SYSV), dynamically linke
+                                  | d (uses shared libs), for GNU/Linux 3.10.0
+                                  | , stripped] at systime Fri Jun 13 13:01:27
+                                  |  CEST 2025 on [Linux LinuxPPC64le 5.10.0-2
+                                  | 0-powerpc64le #1 SMP Debian 5.10.158-2 (20
+                                  | 22-12-13) ppc64le]
+----------------------------------+--------------------------------------------
+ PowerPCle_Linux_64_xlcV1611      | IBM XL C/C++ for Linux, V16.1.1 (Community
+                                  |  Edition) Version: 16.01.0001.0003 as [ELF
+                                  |  64-bit LSB executable, 64-bit PowerPC or
+                                  | cisco 7500, version 1 (SYSV), dynamically
+                                  | linked (uses shared libs), for GNU/Linux 3
+                                  | .10.0, stripped] at systime Fri Jun 13 13:
+                                  | 01:43 CEST 2025 on [Linux LinuxPPC64le 5.1
+                                  | 0.0-20-powerpc64le #1 SMP Debian 5.10.158-
+                                  | 2 (2022-12-13) ppc64le]
+----------------------------------+--------------------------------------------
+ S390_Linux_32_gccV930            | gcc version 9.3.0 (GCC) (cross-toolchain)
+                                  | as [ELF 32-bit MSB executable, IBM S/390,
+                                  | version 1 (SYSV), dynamically linked (uses
+                                  |  shared libs), for GNU/Linux 3.2.0, stripp
+                                  | ed] at systime Fri Jun 13 13:01:16 CEST 20
+                                  | 25 on [Linux IBMpowerCHRP 5.10.0-8-powerpc
+                                  | 64 #1 SMP Debian 5.10.46-1 (2021-06-24) pp
+                                  | c64]
+----------------------------------+--------------------------------------------
+ S390_Linux_64_gccV930            | gcc version 9.3.0 (GCC) (cross-toolchain)
+                                  | as [ELF 64-bit MSB executable, IBM S/390,
+                                  | version 1 (SYSV), dynamically linked (uses
+                                  |  shared libs), for GNU/Linux 3.2.0, stripp
+                                  | ed] at systime Fri Jun 13 13:01:17 CEST 20
+                                  | 25 on [Linux IBMpowerCHRP 5.10.0-8-powerpc
+                                  | 64 #1 SMP Debian 5.10.46-1 (2021-06-24) pp
+                                  | c64]
+----------------------------------+--------------------------------------------
+ S390_Linux_64_clangV381          | clang version 3.8.1-24 (tags/RELEASE_381/f
+                                  | inal) as [ELF 64-bit MSB executable, IBM S
+                                  | /390, version 1 (SYSV), dynamically linked
+                                  |  (uses shared libs), for GNU/Linux 3.2.0,
+                                  | stripped] at systime Fri Jun 13 13:07:54 C
+                                  | EST 2025 on [Linux debian-QEMU 4.9.0-3-s39
+                                  | 0x #1 SMP Debian 4.9.30-2+deb9u1 (2017-06-
+                                  | 18) s390x]
+----------------------------------+--------------------------------------------
+ M68000_Linux_32_gccV930          | gcc version 9.3.0 (GCC) (cross-toolchain)
+                                  | as [ELF 32-bit MSB executable, Motorola m6
+                                  | 8k, 68020, version 1 (SYSV), dynamically l
+                                  | inked (uses shared libs), for GNU/Linux 3.
+                                  | 2.0, stripped] at systime Fri Jun 13 13:01
+                                  | :13 CEST 2025 on [Linux IBMpowerCHRP 5.10.
+                                  | 0-8-powerpc64 #1 SMP Debian 5.10.46-1 (202
+                                  | 1-06-24) ppc64]
+----------------------------------+--------------------------------------------
+ ARMeabi_Linux_32_gccV1021        | gcc version 10.2.1 20210110 (Debian 10.2.1
+                                  | -6) (cross-toolchain) as [ELF 32-bit LSB e
+                                  | xecutable, ARM, EABI5 version 1 (SYSV), dy
+                                  | namically linked (uses shared libs), for G
+                                  | NU/Linux 3.2.0, stripped] at systime Fri J
+                                  | un 13 13:01:22 CEST 2025 on [Linux Linux64
+                                  | core 5.10.0-6-amd64 #1 SMP Debian 5.10.28-
+                                  | 1 (2021-04-09) x86_64]
+----------------------------------+--------------------------------------------
+ ARMeabihf_Linux_32_gccV1021      | gcc version 10.2.1 20210110 (Debian 10.2.1
+                                  | -6) (cross-toolchain) as [ELF 32-bit LSB e
+                                  | xecutable, ARM, EABI5 version 1 (SYSV), dy
+                                  | namically linked (uses shared libs), for G
+                                  | NU/Linux 3.2.0, stripped] at systime Fri J
+                                  | un 13 13:01:17 CEST 2025 on [Linux Linux64
+                                  | core 5.10.0-6-amd64 #1 SMP Debian 5.10.28-
+                                  | 1 (2021-04-09) x86_64]
+----------------------------------+--------------------------------------------
+ ARMeabihf_Linux_32_clangV381     | clang version 3.8.1-24 (tags/RELEASE_381/f
+                                  | inal) as [ELF 32-bit LSB executable, ARM,
+                                  | EABI5 version 1 (SYSV), dynamically linked
+                                  |  (uses shared libs), for GNU/Linux 3.2.0,
+                                  | stripped] at systime Fri Jun 13 13:07:58 C
+                                  | EST 2025 on [Linux debian-QEMU 4.9.0-3-arm
+                                  | mp-lpae #1 SMP Debian 4.9.30-2+deb9u1 (201
+                                  | 7-06-18) armv7l]
+----------------------------------+--------------------------------------------
+ ARM_Linux_64_gccV1021            | gcc version 10.2.1 20210110 (Debian 10.2.1
+                                  | -6) as [ELF 64-bit LSB executable, ARM aar
+                                  | ch64, version 1 (SYSV), dynamically linked
+                                  |  (uses shared libs), for GNU/Linux 3.7.0,
+                                  | stripped] at systime Fri Jun 13 13:02:23 C
+                                  | EST 2025 on [Linux ARM64debian 5.10.0-8-ar
+                                  | m64 #1 SMP Debian 5.10.46-1 (2021-06-24) a
+                                  | arch64]
+----------------------------------+--------------------------------------------
+ ARM_Linux_64_clangV1101          | Debian clang version 11.0.1-2 as [ELF 64-b
+                                  | it LSB executable, ARM aarch64, version 1
+                                  | (SYSV), dynamically linked (uses shared li
+                                  | bs), for GNU/Linux 3.7.0, stripped] at sys
+                                  | time Fri Jun 13 13:02:15 CEST 2025 on [Lin
+                                  | ux ARM64debian 5.10.0-8-arm64 #1 SMP Debia
+                                  | n 5.10.46-1 (2021-06-24) aarch64]
+----------------------------------+--------------------------------------------
+ ARM_FreeBSD_64_gccV920           | gcc version 9.2.0 (FreeBSD Ports Collectio
+                                  | n) as [ELF 64-bit LSB executable, ARM aarc
+                                  | h64, version 1 (SYSV), dynamically linked,
+                                  |  (uses shared libs), for FreeBSD 12.1, Fre
+                                  | eBSD-style, stripped] at systime Fri Jun 1
+                                  | 3 13:07:32 CEST 2025 on [FreeBSD FreeBSD12
+                                  | VM 12.1-RELEASE FreeBSD 12.1-RELEASE r3542
+                                  | 33 GENERIC arm64]
+----------------------------------+--------------------------------------------
+ ARM_FreeBSD_64_clangV801         | FreeBSD clang version 8.0.1 (tags/RELEASE_
+                                  | 801/final 366581) (based on LLVM 8.0.1) as
+                                  |  [ELF 64-bit LSB executable, ARM aarch64,
+                                  | version 1 (SYSV), dynamically linked, (use
+                                  | s shared libs), for FreeBSD 12.1, FreeBSD-
+                                  | style, stripped] at systime Fri Jun 13 13:
+                                  | 06:55 CEST 2025 on [FreeBSD FreeBSD12VM 12
+                                  | .1-RELEASE FreeBSD 12.1-RELEASE r354233 GE
+                                  | NERIC arm64]
+----------------------------------+--------------------------------------------
+ ARM_Android_32_gccV49x           | gcc version 4.9.x 20150123 (prerelease) (G
+                                  | CC) (cross-toolchain) (arm arm-linux-andro
+                                  | ideabi -D__ANDROID_API__=26) as [ELF 32-bi
+                                  | t LSB executable, ARM, EABI5 version 1 (SY
+                                  | SV), dynamically linked (uses shared libs)
+                                  | , stripped] at systime Fri Jun 13 13:01:21
+                                  |  CEST 2025 on [Linux Linux64core 5.10.0-6-
+                                  | amd64 #1 SMP Debian 5.10.28-1 (2021-04-09)
+                                  |  x86_64 GNU/Linux]
+----------------------------------+--------------------------------------------
+ ARM_Android_32_clangV503         | clang version 5.0.300080 (based on LLVM 5.
+                                  | 0.300080) (cross-toolchain) (arm arm-linux
+                                  | -androideabi -D__ANDROID_API__=26) as [ELF
+                                  |  32-bit LSB executable, ARM, EABI5 version
+                                  |  1 (SYSV), dynamically linked (uses shared
+                                  |  libs), stripped] at systime Fri Jun 13 13
+                                  | :01:10 CEST 2025 on [Linux Linux64core 5.1
+                                  | 0.0-6-amd64 #1 SMP Debian 5.10.28-1 (2021-
+                                  | 04-09) x86_64 GNU/Linux]
+----------------------------------+--------------------------------------------
+ ARM_Android_64_gccV49x           | gcc version 4.9.x 20150123 (prerelease) (G
+                                  | CC) (cross-toolchain) (arm64 aarch64-linux
+                                  | -android -D__ANDROID_API__=26) as [ELF 64-
+                                  | bit LSB executable, ARM aarch64, version 1
+                                  |  (SYSV), dynamically linked (uses shared l
+                                  | ibs), stripped] at systime Fri Jun 13 13:0
+                                  | 1:20 CEST 2025 on [Linux Linux64core 5.10.
+                                  | 0-6-amd64 #1 SMP Debian 5.10.28-1 (2021-04
+                                  | -09) x86_64 GNU/Linux]
+----------------------------------+--------------------------------------------
+ ARM_Android_64_clangV503         | clang version 5.0.300080 (based on LLVM 5.
+                                  | 0.300080) (cross-toolchain) (arm64 aarch64
+                                  | -linux-android -D__ANDROID_API__=26) as [E
+                                  | LF 64-bit LSB executable, ARM aarch64, ver
+                                  | sion 1 (SYSV), dynamically linked (uses sh
+                                  | ared libs), stripped] at systime Fri Jun 1
+                                  | 3 13:01:13 CEST 2025 on [Linux Linux64core
+                                  |  5.10.0-6-amd64 #1 SMP Debian 5.10.28-1 (2
+                                  | 021-04-09) x86_64 GNU/Linux]
+----------------------------------+--------------------------------------------
+ ARM_MacOS_64_clangV1200          | Apple clang version 12.0.0 (clang-1200.0.3
+                                  | 2.29) (Target: arm64-apple-darwin20.0.0) a
+                                  | s [Mach-O 64-bit executable arm64] at syst
+                                  | ime Fri Jun 13 13:02:00 CEST 2025 on [Darw
+                                  | in MacOS11_BigSur 20.0.0 Darwin Kernel Ver
+                                  | sion 20.0.0: Thu Jul 30 22:49:28 PDT 2020;
+                                  |  root:xnu-7195.0.0.141.5~1/RELEASE_X86_64
+                                  | x86_64]
+----------------------------------+--------------------------------------------
+ ARMe_MacOS_64_clangV1200         | Apple clang version 12.0.0 (clang-1200.0.3
+                                  | 2.29) (Target: arm64e-apple-darwin20.0.0)
+                                  | as [Mach-O 64-bit executable arm64e] at sy
+                                  | stime Fri Jun 13 13:01:42 CEST 2025 on [Da
+                                  | rwin MacOS11_BigSur 20.0.0 Darwin Kernel V
+                                  | ersion 20.0.0: Thu Jul 30 22:49:28 PDT 202
+                                  | 0; root:xnu-7195.0.0.141.5~1/RELEASE_X86_6
+                                  | 4 x86_64]
+----------------------------------+--------------------------------------------
+ ARMbe_Linux_64_gccV930           | gcc version 9.3.0 (GCC) (cross-toolchain)
+                                  | as [ELF 64-bit MSB executable, ARM aarch64
+                                  | , version 1 (SYSV), dynamically linked (us
+                                  | es shared libs), for GNU/Linux 3.7.0, stri
+                                  | pped] at systime Fri Jun 13 13:01:20 CEST
+                                  | 2025 on [Linux IBMpowerCHRP 5.10.0-8-power
+                                  | pc64 #1 SMP Debian 5.10.46-1 (2021-06-24)
+                                  | ppc64]
+----------------------------------+--------------------------------------------
+ RISCV_Linux_32_gccV930           | gcc version 9.3.0 (GCC) (cross-toolchain)
+                                  | as [ELF 32-bit LSB executable, UCB RISC-V,
+                                  |  version 1 (SYSV), dynamically linked (use
+                                  | s shared libs), for GNU/Linux 5.4.0, strip
+                                  | ped] at systime Fri Jun 13 13:01:14 CEST 2
+                                  | 025 on [Linux IBMpowerCHRP 5.10.0-8-powerp
+                                  | c64 #1 SMP Debian 5.10.46-1 (2021-06-24) p
+                                  | pc64]
+----------------------------------+--------------------------------------------
+ RISCV_Linux_64_gccV930           | gcc version 9.3.0 (GCC) (cross-toolchain)
+                                  | as [ELF 64-bit LSB executable, UCB RISC-V,
+                                  |  version 1 (SYSV), dynamically linked (use
+                                  | s shared libs), for GNU/Linux 4.15.0, stri
+                                  | pped] at systime Fri Jun 13 13:01:15 CEST
+                                  | 2025 on [Linux IBMpowerCHRP 5.10.0-8-power
+                                  | pc64 #1 SMP Debian 5.10.46-1 (2021-06-24)
+                                  | ppc64]
+----------------------------------+--------------------------------------------
+ LoongArch_Linux_64_gccV1300      | gcc version 13.0.0 20221018 (experimental)
+                                  |  (GCC) (cross-toolchain) as [ELF 64-bit LS
+                                  | B executable, LoongArch, version 1 (SYSV),
+                                  |  dynamically linked (uses shared libs), fo
+                                  | r GNU/Linux 5.19.0, stripped] at systime F
+                                  | ri Jun 13 13:01:17 CEST 2025 on [Linux Lin
+                                  | ux64core 5.10.0-6-amd64 #1 SMP Debian 5.10
+                                  | .28-1 (2021-04-09) x86_64]
+
+
+########################################################
+##                                                    ##
+##  Obtaining license for legacy/retired deployments  ##
+##  (License Model is "Legacy/Retired; license key")  ##
+##                                                    ##
+########################################################
+
+  0. Read latest information on our http://www.bmdfm.com official web site.
+
+
+  1. Email the following information to bmdfm@bmdfm.de, your email should
+     have subject "BMDFM license request":
+
+                 My name: __________________________________________________
+         My organization: __________________________________________________
+                My email: __________________________________________________
+              My address: __________________________________________________
+         My INet-address: __________________________________________________
+           My IP-address: __________________________________________________
+           My HW-address: __________________________________________________
+       My UNIX system ID: __________________________________________________
+
+     For example:
+
+           Email subject: BMDFM license request
+
+                 My name: David Scott Freeman
+         My organization: Flight Navigator Research Inc.
+                My email: David.S.Freeman@flight-navigator-research.com
+              My address: 615 Idlewyld Drive, Fort Lauderdale, FL 33301, USA
+         My INet-address: big-iron.mainframes.flight-navigator-research.com
+           My IP-address: 140.150.160.170
+           My HW-address: 08:90:FE:A2:3B:55
+       My UNIX system ID: "AIX IBMp-RS6000 1 7 00DF8EB46F00"
+                          |this is the output of `uname -a`|
+
+  2. Receive your license key (sequence of digits) via email and insert
+     this license key to your BMDFMreg.inf file (you can also add/change the
+     corresponding "LICENSE_FILE = BMDFMreg.inf" record in your BMDFMsrv.cfg
+     file).
+
+
+  3. How do you check the license:
+
+       Start the BM_DFM Server. Type "STAT ON" at your BM_DFM Server console.
+       If your license is invalid a warning message will appear.
+
+
+#                         \\|//                         #
+#                         (@ @)                         #
+#  .-----------------oOO---(_)---OOo-----------------.  #
+#  |                                                 |  #
+#  |                  BMDFM PROJECT                  |  #
+#  |      Oleksandr Pochayevets (aka Sancho M.)      |  #
+#  |                                                 |  #
+#  `-------------------------------------------------'  #
+#                        |__|__|                        #
+#                         || ||                         #
+#                        ooO Ooo                        #
+
+# <EOF>
+

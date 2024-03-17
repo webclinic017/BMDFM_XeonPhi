@@ -1,0 +1,20 @@
+#!/bin/sh
+
+# Prepare dftest_in.dat
+# with single-threaded engine and log
+fastlisp dftest_prep.flp >dftest_prep.fastlisp
+
+# Prepare dftest_in.dat
+# with multithreaded dataflow engine and log
+BMDFMldr dftest_prep.flp >dftest_prep.BMDFMldr
+
+# Process dftest_in.dat to dftest_out.dat
+# with single-threaded engine and log
+fastlisp dftest_exec.flp >dftest_exec.fastlisp
+
+# Process dftest_in.dat to dftest_out.dat
+# with multithreaded dataflow engine and log
+BMDFMldr dftest_exec.flp >dftest_exec.BMDFMldr
+
+# Compare
+diff dftest_in.dat dftest_out.dat

@@ -1,0 +1,163 @@
+# cyrmania.flp
+# UTF-8 cyrillic mania.
+# FastLisp program example by Sancho Mining.
+
+# Табуляция функции sin(x).
+
+(функция кирилличное_время
+  (программный_блок
+    (присвоить_значение дата (время))
+    (присвоить_значение литералы (
+      "Sun Вск Mon Пнд Tue Втр Wed Срд Thu Чтв Fri Птн Sat Сбт"
+      " Jan Янв Feb Фев Mar Мар Apr Апр May Май Jun Июн"
+      " Jul Июл Aug Авг Sep Сен Oct Окт Nov Ноя Dec Дек"
+    ))
+    (цикл_с_предусловием (длина литералы)
+      (программный_блок
+        (присвоить_значение литерал1 (голова литералы))
+        (присвоить_значение литералы (хвост литералы))
+        (присвоить_значение литерал2 (голова литералы))
+        (присвоить_значение литералы (хвост литералы))
+        (присвоить_значение дата (замена дата литерал1 литерал2))
+      )
+    )
+    дата
+  )
+)
+
+(программный_блок
+  (форматированный_вывод "\0x22*** Табуляция функции sin(x) ***\0x22\n\n" 0)
+
+  (присвоить_значение мин (вещественное_преобразование
+    (ввод " Введите нижнюю границу [градусы]: ")))
+  (присвоить_значение макс (вещественное_преобразование
+    (ввод "Введите верхнюю границу [градусы]: ")))
+  (присвоить_значение шаг (вещественное_преобразование
+    (ввод "            Введите шаг [градусы]: ")))
+
+  (форматированный_вывод "\nx[градусы]      sin(x)                  график\n"
+    0)
+  (форматированный_вывод "%s\n" (повтор "+" 79))
+
+  (цикл_с_предусловием (<= мин макс)
+    (программный_блок
+      (форматированный_вывод "%f\t" мин)
+      (присвоить_значение результат (вещественный_синус (вещественное_деление
+        (вещественное_умножение (константа_пи) мин) 180)))
+      (форматированный_вывод "%.16E\t" результат)
+      (форматированный_вывод "%s*\n" (пробелы (целочисленное_сложение 19
+        (вещественное_округление_к_целому (вещественное_умножение 19
+        результат)))))
+      (присвоить_значение мин (вещественное_сложение мин шаг))
+    )
+  )
+
+  (форматированный_вывод "%s\n" (повтор "+" 79))
+  (форматированный_вывод "Табуляция функции sin(x) закончена.\n" 0)
+  (форматированный_вывод "Задача завершена в %s.\n" (кирилличное_время))
+  (пробелы 0)
+)
+
+(комментарии к программе
+
+  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+  *                                                               *
+  *     Mnemonic renaming in the virtual machine is required:     *
+  *                                                               *
+  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+
+  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+  *                                                               *
+  *   Необходимое переименование мнемоник в виртуальной машине:   *
+  *                                                               *
+  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+
+extern void _internal_ISA_COP_mnemonics_get(CHR **lst);
+extern void _internal_ISA_COP_mnemonics_set(const CHR *list);
+extern UCH _internal_ISA_COP_mnemonics_vars_ASCIIorUTF8_get(void);
+extern void _internal_ISA_COP_mnemonics_vars_ASCIIorUTF8_set(UCH ASCIIorUTF8);
+extern void _internal_ISA_COPs_get(CHR **tab);
+extern void _internal_ISA_COPs_set(const CHR *table);
+extern int _Main_(int argc, char *argv[]);
+
+int main(int argc, char *argv[]){
+  CHR *ISA_mnemonics=NULL,*temp=NULL,*temp1=NULL,*temp2=NULL,*temp3=NULL,
+      table[]={
+        " PROGN     ПРОГРАММНЫЙ_БЛОК"
+        " COMMENTS  КОММЕНТАРИИ"
+        " DEFUN     ФУНКЦИЯ"
+        " WHILE     ЦИКЛ_С_ПРЕДУСЛОВИЕМ"
+        " SETQ      ПРИСВОИТЬ_ЗНАЧЕНИЕ"
+        " ACCEPT    ВВОД"
+        " OUTF      ФОРМАТИРОВАННЫЙ_ВЫВОД"
+        " REPLICATE ПОВТОР"
+        " SPACE     ПРОБЕЛЫ"
+        " TIME      ВРЕМЯ"
+        " PI        КОНСТАНТА_ПИ"
+        " IADD      ЦЕЛОЧИСЛЕННОЕ_СЛОЖЕНИЕ"
+        " FROUND    ВЕЩЕСТВЕННОЕ_ОКРУГЛЕНИЕ_К_ЦЕЛОМУ"
+        " FVAL      ВЕЩЕСТВЕННОЕ_ПРЕОБРАЗОВАНИЕ"
+        " FADD      ВЕЩЕСТВЕННОЕ_СЛОЖЕНИЕ"
+        " FMUL      ВЕЩЕСТВЕННОЕ_УМНОЖЕНИЕ"
+        " FDIV      ВЕЩЕСТВЕННОЕ_ДЕЛЕНИЕ"
+        " FSIN      ВЕЩЕСТВЕННЫЙ_СИНУС"
+        " LEN       ДЛИНА"
+        " LSP_HEAD  ГОЛОВА"
+        " LSP_TAIL  ХВОСТ"
+        " STRTRAN   ЗАМЕНА"
+      };
+
+  _internal_ISA_COP_mnemonics_get(&ISA_mnemonics);
+  upper_utf8(&ISA_mnemonics,ISA_mnemonics);
+  lcat(&ISA_mnemonics,space(&temp3,1));
+  cat(&ISA_mnemonics,temp3);
+
+  upper_utf8(&temp,get_std_buff(&temp,(CHR*)&table));
+  while(len(temp)){
+    lsp_head(&temp1,temp);
+    lsp_tail(&temp,temp);
+    lcat(&temp1,temp3);
+    cat(&temp1,temp3);
+    lsp_head(&temp2,temp);
+    lsp_tail(&temp,temp);
+    lcat(&temp2,temp3);
+    cat(&temp2,temp3);
+    strtran(&ISA_mnemonics,ISA_mnemonics,temp1,temp2);
+  }
+
+  alltrim(&ISA_mnemonics,ISA_mnemonics);
+  _internal_ISA_COP_mnemonics_set(ISA_mnemonics);
+
+  if(!_internal_ISA_COP_mnemonics_vars_ASCIIorUTF8_get())
+    _internal_ISA_COP_mnemonics_vars_ASCIIorUTF8_set(1);
+
+  /* If needed, the following code fragment keeps original mnemonics too. */
+  _internal_ISA_COPs_get(&ISA_mnemonics);
+  upper_utf8(&ISA_mnemonics,ISA_mnemonics);
+  upper_utf8(&temp,get_std_buff(&temp,(CHR*)&table));
+  while(len(temp)){
+    lsp_head(&temp1,temp);
+    lsp_tail(&temp,temp);
+    lcat(&temp1,get_std_buff(&temp3,"("));
+    lsp_head(&temp2,temp);
+    lsp_tail(&temp,temp);
+    lcat(&temp2,temp3);
+    cat(&temp1,space(&temp3,1));
+    cat(&temp2,temp3);
+    if(at(temp2,ISA_mnemonics))
+      cat(&ISA_mnemonics,strtran(&temp3,lsp_head(&temp3,rightl(&temp3,
+        ISA_mnemonics,at(temp2,ISA_mnemonics)-1)),temp2,temp1));
+  }
+  _internal_ISA_COPs_set(ISA_mnemonics);
+
+  free_string(&ISA_mnemonics);
+  free_string(&temp);
+  free_string(&temp1);
+  free_string(&temp2);
+  free_string(&temp3);
+
+  return _Main_(argc,argv);
+}
+
+)
+

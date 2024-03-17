@@ -1,0 +1,208 @@
+# Fibonacci_master.flp
+# Recursive Fibonacci calculation.
+# FastLisp program example by Sancho Mining.
+
+# /* .---------------------------------------------------------------------.
+#    | 0. DRIVING SENDS SHELL COMMANDS TO PIPE BMDFMpipeDriving2Driven<i>  |
+#    |      "echo args | fastlisp -q exec.flx"                             |
+#    |      "echo args | BMDFMldr -q exec.flz"                             |
+#    | 1. SHELL EXECUTES COMMANDS                                          |
+#    |      "echo args | fastlisp -q exec.flx >BMDFMpipeDriven2Driving<i>" |
+#    |      "echo args | BMDFMldr -q exec.flz >BMDFMpipeDriven2Driving<i>" |
+#    | 2. DRIVING RECEIVES RESULTS FROM DRIVEN                             |
+#    `---------------------------------------------------------------------' */
+# void bmdfm2bmdfm_offload(const ULO *dat_ptr, struct fastlisp_data *ret_dat){
+#   CHR *exec=NULL,*args=NULL;  /* "echo args | fastlisp -q exec.flx" */
+#                               /* "echo args | BMDFMldr -q exec.flz" */
+#   CHR *temp=NULL,*temp1=NULL;
+#   CHR *Driving2Driven_pipe_name=NULL,*Driven2Driving_pipe_name=NULL,
+#       *result=NULL;
+#   int descr,Driving2Driven_pipe_descr,Driven2Driving_pipe_descr;
+#   ret_dat->disable_ptr=1;
+#   ret_sval(dat_ptr,&exec);
+#   ret_sval(dat_ptr+1,&args);
+#   if(noterror()){
+#     cat(&exec,get_std_buff(&temp,am_I_in_the_fastlisp_module()?
+#       ".flx":".flz"));
+#     if(-1==(descr=open(exec,O_RDONLY))){
+#       get_std_buff(&temp,"*** Error while opening the `");
+#       cat(&temp,exec);
+#       cat(&temp,get_std_buff(&temp1,"' file!"));
+#       rise_error_info(1,temp);
+#     }
+#     else{
+#       close(descr);
+#       lcat(&exec,get_std_buff(&temp,am_I_in_the_fastlisp_module()?
+#         "fastlisp -q ":"BMDFMldr -q "));
+#       get_std_buff(&Driving2Driven_pipe_name,"BMDFMpipeDriving2Driven");
+#       cat(&Driving2Driven_pipe_name,equ_num(&temp,get_id_cpuproc()));
+#       get_std_buff(&Driven2Driving_pipe_name,"BMDFMpipeDriven2Driving");
+#       cat(&Driven2Driving_pipe_name,temp);
+#       if(-1==(Driving2Driven_pipe_descr=open(Driving2Driven_pipe_name,
+#          O_RDWR))){
+#         get_std_buff(&temp,"*** Error while opening the `");
+#         cat(&temp,Driving2Driven_pipe_name);
+#         cat(&temp,get_std_buff(&temp1,"' pipe!"));
+#         rise_error_info(1,temp);
+#       }
+#       else
+#         if(-1==(Driven2Driving_pipe_descr=open(Driven2Driving_pipe_name,
+#            O_RDWR))){
+#           close(Driving2Driven_pipe_descr);
+#           get_std_buff(&temp,"*** Error while opening the `");
+#           cat(&temp,Driven2Driving_pipe_name);
+#           cat(&temp,get_std_buff(&temp1,"' pipe!"));
+#           rise_error_info(1,temp);
+#         }
+#         else{
+#           get_std_buff(&temp,"echo ");
+#           cat(&temp,args);
+#           cat(&temp,get_std_buff(&temp1," | "));
+#           cat(&temp,exec);
+#           cat(&temp,sch2str(&temp1,'\n'));
+#           write(Driving2Driven_pipe_descr,(void*)temp,len(temp));
+#           space(&result,0);
+#           while(noterror()&&!len(result))
+#             while(noterror()&&(1==read(Driven2Driving_pipe_descr,(void*)temp1,
+#                1))){
+#               if(*temp1=='\n')
+#                 break;
+#               cat(&result,temp1);
+#             }
+#           close(Driving2Driven_pipe_descr);
+#           close(Driven2Driving_pipe_descr);
+#         }
+#     }
+#     ret_dat->single=1;
+#     ret_dat->type='S';
+#     equ(&ret_dat->svalue,result);
+#     free_string(&exec);
+#     free_string(&args);
+#     free_string(&Driving2Driven_pipe_name);
+#     free_string(&Driven2Driving_pipe_name);
+#     free_string(&result);
+#     free_string(&temp);
+#     free_string(&temp1);
+#   }
+#   return;
+# }
+#
+# INSTRUCTION_STRU INSTRUCTION_SET[]={
+#   {"BMDFM2BMDFM_OFFLOAD",2,'S',(UCH*)"SS",&bmdfm2bmdfm_offload}
+# };
+
+
+#(defun bmdfm2bmdfm_offload (progn  # to be placed into .cfg
+## .---------------------------------------------------------------------.
+## | 0. DRIVING SENDS SHELL COMMANDS TO PIPE BMDFMpipeDriving2Driven<i>  |
+## |      "echo args | fastlisp -q exec.flx"                             |
+## |      "echo args | BMDFMldr -q exec.flz"                             |
+## | 1. SHELL EXECUTES COMMANDS                                          |
+## |      "echo args | fastlisp -q exec.flx >BMDFMpipeDriven2Driving<i>" |
+## |      "echo args | BMDFMldr -q exec.flz >BMDFMpipeDriven2Driving<i>" |
+## | 2. DRIVING RECEIVES RESULTS FROM DRIVEN                             |
+## `---------------------------------------------------------------------'
+#  (setq exec (cat "" $1))  # for "echo args | fastlisp -q exec.flx"
+#  (setq args (cat "" $2))  # for "echo args | BMDFMldr -q exec.flz"
+#
+#  (setq flp (cat     " (setq exec (cat \"\" \"" (cat exec "\"))         ")))
+#  (setq flp (cat flp " (setq args (cat \"\" \""                           ))
+#  (setq flp (cat flp   (cat args "\"))                                  ")))
+#
+#  (setq flp (cat flp " (setq exec (if (am_i_in_the_fastlisp_module)      "))
+#  (setq flp (cat flp "   (cat exec \".flx\")                             "))
+#  (setq flp (cat flp "   (cat exec \".flz\")                             "))
+#  (setq flp (cat flp " ))                                                "))
+#  (setq flp (cat flp " (if (== (setq descr (file_open exec)) -1)         "))
+#  (setq flp (cat flp "   (rise_error_info 1                              "))
+#  (setq flp (cat flp "     (cat \"*** Error while opening the `\"        "))
+#  (setq flp (cat flp "     (cat exec \"' file!\")))                      "))
+#  (setq flp (cat flp "   nil                                             "))
+#  (setq flp (cat flp " )                                                 "))
+#  (setq flp (cat flp " (file_close descr)                                "))
+#  (setq flp (cat flp " (setq exec (if (am_i_in_the_fastlisp_module)      "))
+#  (setq flp (cat flp "   (cat \"fastlisp -q \" exec)                     "))
+#  (setq flp (cat flp "   (cat \"BMDFMldr -q \" exec)                     "))
+#  (setq flp (cat flp " ))                                                "))
+#
+#  (setq flp (cat flp " (setq Driving2Driven_pipe_name                    "))
+#  (setq flp (cat flp "   (cat \"BMDFMpipeDriving2Driven\" (id_cpuproc))) "))
+#  (setq flp (cat flp " (setq Driven2Driving_pipe_name                    "))
+#  (setq flp (cat flp "   (cat \"BMDFMpipeDriven2Driving\" (id_cpuproc))) "))
+#
+#  (setq flp (cat flp " (if (== (setq Driving2Driven_pipe_descr           "))
+#  (setq flp (cat flp "    (file_open Driving2Driven_pipe_name)) -1)      "))
+#  (setq flp (cat flp "   (rise_error_info 1                              "))
+#  (setq flp (cat flp "     (cat \"*** Error while opening the `\"        "))
+#  (setq flp (cat flp "     (cat Driving2Driven_pipe_name \"' pipe!\")))  "))
+#  (setq flp (cat flp "   nil                                             "))
+#  (setq flp (cat flp " )                                                 "))
+#
+#  (setq flp (cat flp " (if (== (setq Driven2Driving_pipe_descr           "))
+#  (setq flp (cat flp "    (file_open Driven2Driving_pipe_name)) -1)      "))
+#  (setq flp (cat flp "   (progn                                          "))
+#  (setq flp (cat flp "     (file_close Driving2Driven_pipe_descr)        "))
+#  (setq flp (cat flp "     (rise_error_info 1                            "))
+#  (setq flp (cat flp "       (cat \"*** Error while opening the `\"      "))
+#  (setq flp (cat flp "       (cat Driven2Driving_pipe_name \"' pipe!\")))"))
+#  (setq flp (cat flp "   )                                               "))
+#  (setq flp (cat flp "   nil                                             "))
+#  (setq flp (cat flp " )                                                 "))
+#
+#  (setq flp (cat flp " (file_write Driving2Driven_pipe_descr             "))
+#  (setq flp (cat flp "   (cat \"echo \" (cat args                        "))
+#  (setq flp (cat flp "   (cat \" | \" (cat exec \"\\n\")))))             "))
+#
+#  (setq flp (cat flp " (setq result \"\")                                "))
+#  (setq flp (cat flp " (while (! (len result))                           "))
+#  (setq flp (cat flp "   (while (== (len (setq str (file_read            "))
+#  (setq flp (cat flp "      Driven2Driving_pipe_descr 1))) 1)            "))
+#  (setq flp (cat flp "     (if (== str \"\\n\")                          "))
+#  (setq flp (cat flp "       (break)                                     "))
+#  (setq flp (cat flp "       (setq result (cat result str))              "))
+#  (setq flp (cat flp "     )                                             "))
+#  (setq flp (cat flp "   )                                               "))
+#  (setq flp (cat flp " )                                                 "))
+#
+#  (setq flp (cat flp " (file_close Driving2Driven_pipe_descr)            "))
+#  (setq flp (cat flp " (file_close Driven2Driving_pipe_descr)            "))
+#
+#  (setq flp (cat flp " result                                            "))
+#
+#  (setq flp (fastlisp flp))
+#  (if (== (at "[Run-time error " flp) 1)
+#    (rise_error_info (ival (rightl flp 16)) (rightl flp (+ (at "]: " flp) 2)))
+#    flp
+#  )
+#))
+
+(defun FibonacciCoordinator  # to be placed into .flp
+  (progn
+    (setq n (+ 0 $1))
+    (setq spawn (+ 0 $2))
+    (if (< n 2)
+      n
+      (if (> spawn 0)
+        (+ (FibonacciCoordinator (-- n) (>> spawn 1))
+           (FibonacciCoordinator (- n 2) (>> spawn 1))
+        )
+        (+ (ival (bmdfm2bmdfm_offload "Fibonacci" (str (-- n))))
+           (ival (bmdfm2bmdfm_offload "Fibonacci" (str (- n 2))))
+        )
+      )
+    )
+  )
+)
+
+(defun Fibonacci
+  (progn
+    (setq n (+ 0 $1))
+    (setq spawn (n_cpuproc))
+    (FibonacciCoordinator n spawn)
+  )
+)
+
+# main() begins here
+(setq n (+ 0 $1))
+(Fibonacci n)
+

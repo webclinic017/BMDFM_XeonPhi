@@ -1,0 +1,214 @@
+# dhtpipe.flp - Pipeline calculation of the 2D nonseparative Hartley transform
+#
+#  Direct Hartley transform:
+#
+#            N-1  M-1              2Pi      2Pi
+#   H[p,q] =  E    E  x[n,m] cas ( --- pn + --- qm ), p=0..N-1, q=0..M-1.
+#            n=0  m=0               N        M
+#
+#  Reverse Hartley transform:
+#
+#                 1
+#   Hrev[p,q] =  --- H[p,q].
+#                N*M
+
+(progn
+
+  (defun GENERATE_ARRAY  # $1=m, $2=n.
+    (progn
+      (setq m (+ 0 $1))
+      (setq n (+ 0 $2))
+      (setq m_1 (-- m))
+      (setq n_1 (-- n))
+      (for i 0 1 n_1
+        (for j 0 1 m_1
+          (arsetq array (*+ m i j) (frnd 1.))
+        )
+      )
+      (alindex array (* m n))
+    )
+  )
+
+  (defun DHT_ARRAY  # $1=m, $2=n, $3=source_matrix.
+    (progn
+      (setq m (+ 0 $1))
+      (setq n (+ 0 $2))
+      (setq c1 (/. (*. 2. (pi)) n))
+      (setq s1 (/. (*. 2. (pi)) m))
+      (setq m_1 (-- m))
+      (setq n_1 (-- n))
+      (for p 0 1 n_1
+        (for q 0 1 m_1 (progn
+          (setq s 0.)
+          (for i 0 1 n_1
+            (for j 0 1 m_1
+              (setq s (*+. (index $3 (*+ m i j))
+                (cas (*+. c1 (*. p i) (*. s1 (*. q j)))) s))
+            )
+          )
+          (arsetq array (*+ m p q) s)
+        ))
+      )
+      (alindex array (* m n))
+    )
+  )
+
+  (defun IDHT_ARRAY  # $1=m, $2=n, $3=source_matrix.
+    (progn
+      (setq m (+ 0 $1))
+      (setq n (+ 0 $2))
+      (setq c1 (/. (*. 2. (pi)) n))
+      (setq s1 (/. (*. 2. (pi)) m))
+      (setq m_1 (-- m))
+      (setq n_1 (-- n))
+      (for p 0 1 n_1
+        (for q 0 1 m_1 (progn
+          (setq s 0.)
+          (for i 0 1 n_1
+            (for j 0 1 m_1
+              (setq s (*+. (index $3 (*+ m i j))
+                (cas (*+. c1 (*. p i) (*. s1 (*. q j)))) s))
+            )
+          )
+          (arsetq array (*+ m p q) (/. (/. s n) m))
+        ))
+      )
+      (alindex array (* m n))
+    )
+  )
+
+  (defun COMPARE_ARRAY  # $1=m, $2=n, $3=source_matrix, $4=target_matrix.
+    (progn
+      (setq m (+ 0 $1))
+      (setq n (+ 0 $2))
+      (|| (> (fabs (-. (index $3 0) (index $4 0))) 1e-10) (> (fabs (-. (index
+        $3 (*+ m (-- n) (-- m))) (index $4 (*+ m (-- n) (-- m))))) 1e-10))
+    )
+  )
+
+  (defun GENERATE_AHEAP  # $1=array, $2=m, $3=n.
+    (progn
+      (setq array (+ 0 $1))
+      (setq m (+ 0 $2))
+      (setq n (+ 0 $3))
+      (setq m_1 (-- m))
+      (setq n_1 (-- n))
+      (for i 0 1 n_1
+        (for j 0 1 m_1
+          (asyncheap_putfloat array (*+ m i j) (frnd 1.))
+        )
+      )
+      array
+    )
+  )
+
+  (defun DHT_AHEAP  # $1=target_array, $2=m, $3=n, $4=source_array.
+    (progn
+      (setq target_array (+ 0 $1))
+      (setq m (+ 0 $2))
+      (setq n (+ 0 $3))
+      (setq source_array (+ 0 $4))
+      (setq c1 (/. (*. 2. (pi)) n))
+      (setq s1 (/. (*. 2. (pi)) m))
+      (setq m_1 (-- m))
+      (setq n_1 (-- n))
+      (for p 0 1 n_1
+        (for q 0 1 m_1 (progn
+          (setq s 0.)
+          (for i 0 1 n_1
+            (for j 0 1 m_1
+              (setq s (*+. (asyncheap_getfloat source_array (*+ m i j))
+                (cas (*+. c1 (*. p i) (*. s1 (*. q j)))) s))
+            )
+          )
+          (asyncheap_putfloat target_array (*+ m p q) s)
+        ))
+      )
+      target_array
+    )
+  )
+
+  (defun IDHT_AHEAP  # $1=target_array, $2=m, $3=n, $4=source_array.
+    (progn
+      (setq target_array (+ 0 $1))
+      (setq m (+ 0 $2))
+      (setq n (+ 0 $3))
+      (setq source_array (+ 0 $4))
+      (setq c1 (/. (*. 2. (pi)) n))
+      (setq s1 (/. (*. 2. (pi)) m))
+      (setq m_1 (-- m))
+      (setq n_1 (-- n))
+      (for p 0 1 n_1
+        (for q 0 1 m_1 (progn
+          (setq s 0.)
+          (for i 0 1 n_1
+            (for j 0 1 m_1
+              (setq s (*+. (asyncheap_getfloat source_array (*+ m i j))
+                (cas (*+. c1 (*. p i) (*. s1 (*. q j)))) s))
+            )
+          )
+          (asyncheap_putfloat target_array (*+ m p q) (/. (/. s n) m))
+        ))
+      )
+      target_array
+    )
+  )
+
+  (defun COMPARE_AHEAP  # $1=array0, $2=array1, $3=m, $4=n.
+    (progn
+      (setq array0 (+ 0 $1))
+      (setq array1 (+ 0 $2))
+      (setq m (+ 0 $3))
+      (setq n (+ 0 $4))
+      (|| (> (fabs (-. (asyncheap_getfloat array0 0) (asyncheap_getfloat
+        array1 0))) 1e-10) (> (fabs (-. (asyncheap_getfloat array0 (*+ m
+        (-- n) (-- m))) (asyncheap_getfloat array1 (*+ m (-- n) (-- m)))))
+        1e-10))
+    )
+  )
+
+  (outf
+    "Pipeline calculation of the 2D nonseparative Hartley transform.\n\n" 0)
+
+  (outf "M-value of M*N-matrix: " nil)
+  # (setq m (ival (accept "")))
+  (setq m 32) (outf "%ld\n" m)
+
+  (outf "N-value of M*N-matrix: " nil)
+  # (setq n (ival (accept "")))
+  (setq n 32) (outf "%ld\n" n)
+
+  (outf "How many input data packs: " nil)
+  # (setq numb (ival (accept "")))
+  (setq numb 10) (outf "%ld\n" numb)
+
+  # Choose algorithm implementation: 0=asyncheaps; 1=arrays.
+  (setq ALGORITHM_SELECTOR__0==ASYNCHEAPS__or__1==ARRAYS 1)
+
+  (if ALGORITHM_SELECTOR__0==ASYNCHEAPS__or__1==ARRAYS
+
+    # ARRAY IMPLEMENTATION
+    (for i 1 1 numb (progn
+      (outf "Sequence %ld:" i)
+      (outf " %s.\n" (if (COMPARE_ARRAY m n (setq array (GENERATE_ARRAY m n))
+        (IDHT_ARRAY m n (DHT_ARRAY m n array))) "Fail" "Ok"))
+    ))
+
+    # ASYNCHEAP IMPLEMENTATION
+    (for i 1 1 numb (progn
+      (setq inp_array_addr  (asyncheap_create (* (* m n) (len (dump_f2s 0.)))))
+      (setq dht_array_addr  (asyncheap_create (* (* m n) (len (dump_f2s 0.)))))
+      (setq idht_array_addr (asyncheap_create (* (* m n) (len (dump_f2s 0.)))))
+      (outf "Sequence %ld:" i)
+      (outf " %s.\n" (if (setq cmp_res (COMPARE_AHEAP (setq inp_array_addr
+        (GENERATE_AHEAP inp_array_addr m n)) (IDHT_AHEAP idht_array_addr m n
+        (DHT_AHEAP dht_array_addr m n inp_array_addr)) m n)) "Fail" "Ok"))
+      (asyncheap_delete (| (& 0 cmp_res) inp_array_addr))
+      (asyncheap_delete (| (& 0 cmp_res) dht_array_addr))
+      (asyncheap_delete (| (& 0 cmp_res) idht_array_addr))
+    ))
+  )
+
+  ""
+)
+

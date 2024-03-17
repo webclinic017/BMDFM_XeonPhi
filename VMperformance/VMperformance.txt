@@ -1,0 +1,164 @@
+$ date
+Fri Aug 13 13:19:43 CEST 2021
+
+
+$ cat /proc/cpuinfo
+processor       : 0
+vendor_id       : GenuineIntel
+cpu family      : 6
+model           : 79
+model name      : Intel(R) Xeon(R) CPU E5-2680 v4 @ 2.40GHz
+stepping        : 1
+microcode       : 0xb000014
+cpu MHz         : 2399.998
+cache size      : 35840 KB
+physical id     : 0
+siblings        : 1
+core id         : 0
+cpu cores       : 1
+apicid          : 0
+initial apicid  : 0
+fpu             : yes
+fpu_exception   : yes
+cpuid level     : 20
+wp              : yes
+flags           : fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts mmx fxsr sse sse2 ss syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts nopl xtopology tsc_reliable nonstop_tsc aperfmperf pni pclmulqdq ssse3 fma cx16 pcid sse4_1 sse4_2 x2apic movbe popcnt aes xsave avx f16c rdrand hypervisor lahf_lm 3dnowprefetch ida arat epb pln pts dtherm fsgsbase smep cqm_llc cqm_occup_llc
+bogomips        : 4799.99
+clflush size    : 64
+cache_alignment : 64
+address sizes   : 40 bits physical, 48 bits virtual
+power management:
+
+. . .
+
+
+$ uname -a
+Linux RedHatELS73VM 3.10.0-514.26.2.el7.x86_64 #1 SMP Fri Jun 30 05:26:04 UTC 2017 x86_64 x86_64 x86_64 GNU/Linux
+
+
+$ cat /etc/redhat-release
+Red Hat Enterprise Linux Server release 7.3 (Maipo)
+
+
+$ gcc -v
+Using built-in specs.
+COLLECT_GCC=gcc
+COLLECT_LTO_WRAPPER=/usr/libexec/gcc/x86_64-redhat-linux/4.8.5/lto-wrapper
+Target: x86_64-redhat-linux
+Configured with: ../configure --prefix=/usr --mandir=/usr/share/man --infodir=/usr/share/info --with-bugurl=http://bugzilla.redhat.com/bugzilla --enable-bootstrap --enable-shared --enable-threads=posix --enable-checking=release --with-system-zlib --enable-__cxa_atexit --disable-libunwind-exceptions --enable-gnu-unique-object --enable-linker-build-id --with-linker-hash-style=gnu --enable-languages=c,c++,objc,obj-c++,java,fortran,ada,go,lto --enable-plugin --enable-initfini-array --disable-libgcj --with-isl=/builddir/build/BUILD/gcc-4.8.5-20150702/obj-x86_64-redhat-linux/isl-install --with-cloog=/builddir/build/BUILD/gcc-4.8.5-20150702/obj-x86_64-redhat-linux/cloog-install --enable-gnu-indirect-function --with-tune=generic --with-arch_32=x86-64 --build=x86_64-redhat-linux
+Thread model: posix
+gcc version 4.8.5 20150623 (Red Hat 4.8.5-11) (GCC)
+
+
+$ java -version
+java version "1.8.0_111"
+Java(TM) SE Runtime Environment (build 1.8.0_111-b14)
+Java HotSpot(TM) 64-Bit Server VM (build 25.111-b14, mixed mode)
+
+
+$ fastlisp
+fastlisp ==> stderr:
+/* fastlisp.c - FastLisp Compiler with Runtime Environment.
+                -----------------------------------------------------------
+                Original 32-bit version for UNIX was founded && written by:
+                                     Sancho Mining 05-05-1996 10:10:29.18pm */
+  Usage0: fastlisp -h|--help
+  Usage1: fastlisp -V|--versions
+  Usage2: fastlisp [-q|--quiet] <FastLisp_file_name> [args...]
+  Usage3: fastlisp [-sd|--showDebugInfo] <FastLisp_file_name> [args...]
+  Usage4: fastlisp [-c|--compile2disk] <FastLisp_file_name> [args...]
+  Usage5: fastlisp [-cm|--compileMinimized2disk] <FastLisp_file_name> [args...]
+  Usage6: fastlisp [-q|--quiet] <Precompiled_FastLisp_file_name>
+  Usage7: fastlisp [-sd|--showDebugInfo] <Precompiled_FastLisp_file_name>
+
+Runtime environment variable dump:
+  FAST_LISP_CODE_PRINT__TERM_WIDE=0;
+  FAST_LISP_CODE_PRINT__CFG_UDF=1;
+  FAST_LISP_CODE_PRINT__MODIFIED_SRC=1;
+  FAST_LISP_CODE_PRINT__DUMPED_SRC=1;
+  FAST_LISP_CODE_PRINT__COMPILED=1;
+  FAST_LISP_CODE_PRINT__LINKED=1;
+  FAST_LISP_CODE_PRINT__DECOMPILED=1;
+  FAST_LISP_MAPCAR_WITH_DECOMPILER=1;
+  FAST_LISP_COMPILE_WITH_DEBUGINFO=1;
+
+The following environment variable:
+  FAST_LISP_CFGPROFILE_path="fastlisp.cfg"
+specifies a configuration profile that can be used for the Global FastLisp
+function definitions. The format of the configuration profile is:
+  <(DEFUN ...)>{ <(DEFUN ...)>}  # <EOF>.
+
+Compiled on: "Linux RedHatELS72VM 3.10.0-327.el7.x86_64 #1 SMP Thu Oct 29 17:29:29 EDT 2015 x86_64".
+Compiled by: "gcc version 4.8.5 20150623 (Red Hat 4.8.5-4) (GCC) as [ELF 64-bit LSB executable, x86-64, version 1 (SYSV), dynamically linked (uses shared libs), for GNU/Linux 2.6.32, stripped] at systime Fri Aug 13 13:01:10 CEST 2021".
+RETURNED STATUS: ABNORMAL PROGRAM TERMINATION.
+
+
+$ RunBenchmark
+
+C:
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Pipeline calculation of the 2D nonseparative Hartley transform.
+
+M-value of M*N-matrix: 32
+N-value of M*N-matrix: 32
+How many input data packs: 10
+Sequence 1: Ok.
+Sequence 2: Ok.
+Sequence 3: Ok.
+Sequence 4: Ok.
+Sequence 5: Ok.
+Sequence 6: Ok.
+Sequence 7: Ok.
+Sequence 8: Ok.
+Sequence 9: Ok.
+Sequence 10: Ok.
+
+real    0m3.02s
+user    0m3.00s
+sys     0m0.01s
+
+Java:
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Pipeline calculation of the 2D nonseparative Hartley transform.
+
+M-value of M*N-matrix: 32
+N-value of M*N-matrix: 32
+How many input data packs: 10
+Sequence 1: Ok
+Sequence 2: Ok
+Sequence 3: Ok
+Sequence 4: Ok
+Sequence 5: Ok
+Sequence 6: Ok
+Sequence 7: Ok
+Sequence 8: Ok
+Sequence 9: Ok
+Sequence 10: Ok
+
+real    0m3.45s
+user    0m3.45s
+sys     0m0.02s
+
+fastlisp:
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Pipeline calculation of the 2D nonseparative Hartley transform.
+
+M-value of M*N-matrix: 32
+N-value of M*N-matrix: 32
+How many input data packs: 10
+Sequence 1: Ok.
+Sequence 2: Ok.
+Sequence 3: Ok.
+Sequence 4: Ok.
+Sequence 5: Ok.
+Sequence 6: Ok.
+Sequence 7: Ok.
+Sequence 8: Ok.
+Sequence 9: Ok.
+Sequence 10: Ok.
+
+
+real    0m6.82s
+user    0m6.81s
+sys     0m0.01s
+

@@ -1,0 +1,34 @@
+# Fibonacci.flp
+# Recursive Fibonacci calculation.
+# FastLisp program example by Sancho Mining.
+
+(defun FibonacciCoordinator  # to be placed into .flp
+  (progn
+    (setq n (+ 0 $1))
+    (setq spawn (+ 0 $2))
+    (if (< n 2)
+      n
+      (if (> spawn 0)
+        (+ (FibonacciCoordinator (-- n) (>> spawn 1))
+           (FibonacciCoordinator (- n 2) (>> spawn 1))
+        )
+        (+ (FibonacciSeamless (-- n))
+           (FibonacciSeamless (- n 2))
+        )
+      )
+    )
+  )
+)
+
+(defun Fibonacci
+  (progn
+    (setq n (+ 0 $1))
+    (setq spawn (n_cpuproc))
+    (FibonacciCoordinator n spawn)
+  )
+)
+
+# main() begins here
+(setq n (ival (accept "")))  # reads from stdin
+(Fibonacci n)
+

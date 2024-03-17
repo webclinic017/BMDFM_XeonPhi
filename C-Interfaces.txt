@@ -1,0 +1,175 @@
+# C-Interfaces.txt
+
+
+####################
+##                ##
+##  C-Interfaces  ##
+##                ##
+####################
+
+This release contains separate distributions for two interchangeable
+C-Interfaces (conventional C-interface and extended C-interface):
+
+  - Build/
+  - Build_MultiProcess/
+      fastlisp.doc - description of conventional C-interface;
+      cflp_udf.h   - definition of conventional C-interface;
+      cflp_udf.c   - examples on how to implement functions;
+      cflp_udf_.h  - definition of both C-interfaces via "#define" macros;
+      cflp_udf_.c  - examples on how to implement functions for both
+                     C-interfaces via "#define" macros.
+
+  - Build_ExtendedInterface/
+      fastlisp.doc - description of extended C-interface;
+      cflp_udf.h   - definition of extended C-interface;
+      cflp_udf.c   - examples on how to implement functions;
+      cflp_udf_.h  - definition of both C-interfaces via "#define" macros;
+      cflp_udf_.c  - examples on how to implement functions for both
+                     C-interfaces via "#define" macros.
+
+Conventional C-interface provides functionality with the minimal number of
+function arguments:
+
+  - typedef void (*fcall)(const ULO*, struct fastlisp_data*);
+  - void ret_ival(const ULO *dat_ptr, SLO *targ);
+  - void ret_fval(const ULO *dat_ptr, DFL *targ);
+  - void ret_sval(const ULO *dat_ptr, CHR **targ);
+
+  - ULO get_id_cpuproc(void);
+  - ULO get_id_taskjob(void);
+
+  - UCH noterror(void);
+  - CHR *set_error(CHR **targ_errtext);
+  - CHR *set_error_dbg(CHR **targ_errtext, const ULO *dat_ptr);
+  - CHR *set_error_info(UCH errcode, CHR **targ_errtext,
+      const CHR *src_errtext);
+  - CHR *set_error_info_dbg(UCH errcode, CHR **targ_errtext,
+      const CHR *src_errtext, const ULO *dat_ptr);
+  - UCH get_error_code(void);
+  - CHR *get_error_text(CHR **targ_errtext);
+
+Extended C-interface provides exactly the same functionality, however, having
+one additional const void *rt_ctrl function argument:
+
+  - typedef void (*fcall)(const void*, const ULO*, struct fastlisp_data*);
+  - void ret_ival(const void *rt_ctrl, const ULO *dat_ptr, SLO *targ);
+  - void ret_fval(const void *rt_ctrl, const ULO *dat_ptr, DFL *targ);
+  - void ret_sval(const void *rt_ctrl, const ULO *dat_ptr, CHR **targ);
+
+  - ULO get_id_cpuproc(void);
+  - ULO get_id_cpuproc_fast(const void *rt_ctrl);
+  - ULO get_id_taskjob(void);
+  - ULO get_id_taskjob_fast(const void *rt_ctrl);
+
+  - UCH noterror(void);
+  - UCH noterror_fast(const void *rt_ctrl);
+  - CHR *set_error(CHR **targ_errtext);
+  - CHR *set_error_fast(const void *rt_ctrl, CHR **targ_errtext);
+  - CHR *set_error_dbg(CHR **targ_errtext, const ULO *dat_ptr);
+  - CHR *set_error_dbg_fast(const void *rt_ctrl, CHR **targ_errtext,
+      const ULO *dat_ptr);
+  - CHR *set_error_info(UCH errcode, CHR **targ_errtext,
+      const CHR *src_errtext);
+  - CHR *set_error_info_fast(const void *rt_ctrl, UCH errcode,
+      CHR **targ_errtext, const CHR *src_errtext);
+  - CHR *set_error_info_dbg(UCH errcode, CHR **targ_errtext,
+      const CHR *src_errtext, const ULO *dat_ptr);
+  - CHR *set_error_info_dbg_fast(const void *rt_ctrl, UCH errcode,
+      CHR **targ_errtext, const CHR *src_errtext, const ULO *dat_ptr);
+  - UCH get_error_code(void);
+  - UCH get_error_code_fast(const void *rt_ctrl);
+  - CHR *get_error_text(CHR **targ_errtext);
+  - CHR *get_error_text_fast(const void *rt_ctrl, CHR **targ_errtext);
+
+This additional function argument allows VM to avoid using global variables
+allocated in TLS (Thread Local Storage) resulting in better runtime
+performance, e.g.:
+
+$ uname -a
+Linux RedHatELS72VM 3.10.0-327.36.3.el7.x86_64 #1 SMP Thu Oct 20 04:56:07 EDT
+ 2016 x86_64 x86_64 x86_64 GNU/Linux
+
+$ cat /proc/cpuinfo | grep CPU | head -1
+model name      : Intel(R) Xeon(R) CPU E5-2680 v4 @ 2.40GHz
+
+$ ./Build/x86-64_Linux_64/fastlisp VMperformance/dhtpipe.flx
+. . .
+===============================================================================
+Pipeline calculation of the 2D nonseparative Hartley transform.
+
+M-value of M*N-matrix: 32
+N-value of M*N-matrix: 32
+How many input data packs: 10
+Sequence 1: Ok.
+Sequence 2: Ok.
+Sequence 3: Ok.
+Sequence 4: Ok.
+Sequence 5: Ok.
+Sequence 6: Ok.
+Sequence 7: Ok.
+Sequence 8: Ok.
+Sequence 9: Ok.
+Sequence 10: Ok.
+
+===============================================================================
+Time spent to run the task:
+   Used by process: 6.820932sec.
+   Used by  system: 0.000667sec.
+   Total used time: 6.821599000000E+00sec.
+Real absolute time: 6.822111787796E+00sec.
+
+$ ./Build_ExtendedInterface/x86-64_Linux_64/fastlisp VMperformance/dhtpipe.flx
+. . .
+===============================================================================
+Pipeline calculation of the 2D nonseparative Hartley transform.
+
+M-value of M*N-matrix: 32
+N-value of M*N-matrix: 32
+How many input data packs: 10
+Sequence 1: Ok.
+Sequence 2: Ok.
+Sequence 3: Ok.
+Sequence 4: Ok.
+Sequence 5: Ok.
+Sequence 6: Ok.
+Sequence 7: Ok.
+Sequence 8: Ok.
+Sequence 9: Ok.
+Sequence 10: Ok.
+
+===============================================================================
+Time spent to run the task:
+   Used by process: 6.129916sec.
+   Used by  system: 0.000000sec.
+   Total used time: 6.129916000000E+00sec.
+Real absolute time: 6.129844093323E+00sec.
+
+$ echo "6.13*100/6.82" | bc
+89
+
+==> ~11% faster (For this test, for this build, for this CPU, for this system.)
+
+    Note that other tests can demonstrate even larger performance gain,
+    e.g. the following loop runs ~20%..30% faster:
+
+      (setq sum 0)
+      (for i 1 1 100000000
+        (setq sum (+ sum i))
+      )
+      sum
+
+
+#                         \\|//                         #
+#                         (@ @)                         #
+#  .-----------------oOO---(_)---OOo-----------------.  #
+#  |                                                 |  #
+#  |                  BMDFM PROJECT                  |  #
+#  |      Oleksandr Pochayevets (aka Sancho M.)      |  #
+#  |                                                 |  #
+#  `-------------------------------------------------'  #
+#                        |__|__|                        #
+#                         || ||                         #
+#                        ooO Ooo                        #
+
+# <EOF>
+

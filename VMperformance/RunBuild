@@ -1,0 +1,7 @@
+gcc -m64 -O3 -o dhtpipe dhtpipe.c -lm
+strip dhtpipe
+
+javac dhtpipe.java
+
+../fastlisp -c dhtpipe.flp
+

@@ -1,0 +1,24 @@
+# Example of a simple producer.
+
+
+(setq sync 0)
+
+(for i 1 1 100 (progn
+
+  (setq str
+    (str_fmt "Hello, world %s!\n" (cat i (cat " on CPU " (id_cpuproc))))
+  )
+
+  (setq sync (simple_comm_buff_write str sync))
+
+  (if (! sync)
+    (break)
+    nil
+  )
+
+))
+
+(setq sync (simple_comm_buff_write "" sync))
+
+(cat "Producer done.\n" (space (& 0 sync)))
+

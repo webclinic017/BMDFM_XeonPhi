@@ -1,0 +1,1492 @@
+# fastlisp.doc
+
+
+FastLisp Language description:
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+ 1. A program is a function:
+
+      .-----------------------------------------------------------------------.
+      | "<FuncName>"                                                          |
+      |   (<FuncName> <Val_argument1> <Val_argument2> ...  <Val_argumentN>)   |
+      |     --> <Val_calculated_value>                                        |
+      `-----------------------------------------------------------------------'
+
+    It returns its calculated value as a result. It is possible to specify a
+    formal argument, a constant value, a variable name or some other function
+    at the place of the function argument. Formal arguments appear like
+    $1 ... $N. All argument types will be automatically converted to the
+    required types when the function is called.
+    `#' is a comment symbol. It indicates that all text following the `#'
+    symbol (until the carriage return) is a comment. All symbols in the same
+    line after the `#' symbol will be ignored.
+    Use (comments|comment|remarks|remark|rem ...) for multiple line comments.
+
+
+ 2. Constant definition:
+
+    Integer constants:
+
+      .-----------------------------------------------------------------------.
+      | [<+|->]<digit>[{<digit>}]                                             |
+      `-----------------------------------------------------------------------'
+
+    Float constants:
+
+      .-----------------------------------------------------------------------.
+      | [<+|->][{<digit>}][.{<digit>}][e[<+|->]{<digit>}]                     |
+      `-----------------------------------------------------------------------'
+
+    String constants:
+
+      .-----------------------------------------------------------------------.
+      | "<char>{<char>}"                                                      |
+      | Special symbols are:                                                  |
+      |   \a    - beep;                                                       |
+      |   \b    - back space;                                                 |
+      |   \e    - escape;                                                     |
+      |   \f    - page feed;                                                  |
+      |   \n    - new line;                                                   |
+      |   \r    - return;                                                     |
+      |   \t    - tab;                                                        |
+      |   \v    - vertical tab;                                               |
+      |   \\    - \;                                                          |
+      |   \"    - ";                                                          |
+      |   \0xNN - symbol by its hex code (e.g.: \0x25 == `%', \0x5C == `\').  |
+      |                                                                       |
+      | Use ("<string>"{ "<string>"}) concatenation for a long string.        |
+      `-----------------------------------------------------------------------'
+
+    Special void type constant:
+
+      .-----------------------------------------------------------------------.
+      | nil                                                                   |
+      `-----------------------------------------------------------------------'
+
+
+ 3. Variables:
+
+    Variable names are not case sensitive. A variable name starts with a letter
+    followed by letters, numbers and other symbols except `(', `)', `"', `@'
+    and `:' symbols. Variables change their types dynamically among integers,
+    floats, strings and nil.
+    Boolean `TRUE' is considered to be an integer non-zero value.
+    Boolean `FALSE' is considered to be an integer zero value.
+    A variable can also be an array. An array changes its own size (number of
+    members) dynamically. Array members can be integers, floats, strings, NIL's
+    and arrays themselves that allows one creating list and tree structures.
+    First(zero) array member cannot be an array itself.
+
+    Predefined terminal control variables (same names like the corresponding
+    terminal capabilities functions) are:
+
+      .-----------------------------------------------------------------------.
+      |  Variable Name   | Type    | Value                                    |
+      | -----------------+---------+----------------------                    |
+      |  TERM_TYPE       | String  | <`TERM'_environment>                     |
+      |  LINES_TERM      | Integer | <termcap(li)>                            |
+      |  COLUMNS_TERM    | Integer | <termcap(co)>                            |
+      |  CLRSCR_TERM     | String  | <termcap(cl)>                            |
+      |  REVERSE_TERM    | String  | <termcap(mr)>                            |
+      |  BLINK_TERM      | String  | <termcap(mb)>                            |
+      |  BOLD_TERM       | String  | <termcap(md)>                            |
+      |  NORMAL_TERM     | String  | <termcap(me)>                            |
+      |  HIDECURSOR_TERM | String  | <termcap(vi)>                            |
+      |  SHOWCURSOR_TERM | String  | <termcap(ve)>                            |
+      |  GOTOCURSOR_TERM | String  | <termcap(cm)>                            |
+      `-----------------------------------------------------------------------'
+
+    Variable assignment and index functions:
+
+      .-----------------------------------------------------------------------.
+      | "setq" "alsetq"                                                       |
+      |   (setq <VarName> <Val_to_be_assigned_single_value_or_array>)         |
+      |     --> <Val_assigned_single_value_or_array>                          |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | "arsetq"                                                              |
+      |   (arsetq <VarName> <IVal_index>                                      |
+      |           <Val_to_be_assigned_single_value_or_array>)                 |
+      |     --> <Val_assigned_single_value_or_array>                          |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | "index"                                                               |
+      |   (index <VarName> <IVal_index>)                                      |
+      |     --> <Val_array_member_value_by_array_member_index>                |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | "alindex"                                                             |
+      |   (alindex <VarName> <IVal_indices>)                                  |
+      |     --> <Val_array_of_values_by_number_of_indices>                    |
+      `-----------------------------------------------------------------------'
+
+
+ 4. Special construction functions (argument types will be casted):
+
+    Ordered grouping:
+
+      .-----------------------------------------------------------------------.
+      | "progn"                                                               |
+      |   (progn <Val_to_be_evaluated_value1> <Val_to_be_evaluated_value2>    |
+      |          ... <Val_to_be_evaluated_valueN>)                            |
+      |     --> <Val_evaluated_valueN>                                        |
+      `-----------------------------------------------------------------------'
+
+    Conditional execution:
+
+      .-----------------------------------------------------------------------.
+      | "if"                                                                  |
+      |   (if <IVal_condition> <Val_to_be_evaluated_if_true>                  |
+      |                        <Val_to_be_evaluated_if_false>)                |
+      |     --> <Val_evaluated_on_true_or_false>                              |
+      `-----------------------------------------------------------------------'
+
+    While-loop:
+
+      .-----------------------------------------------------------------------.
+      | "while"                                                               |
+      |   (while <IVal_condition> <Val_to_be_evaluated_while_true>)           |
+      |     --> <IVal_0>                                                      |
+      `-----------------------------------------------------------------------'
+
+    For-loop:
+
+      .-----------------------------------------------------------------------.
+      | "for"                                                                 |
+      |   (for <VarName_control_variable> <IVal_start_value>                  |
+      |        <IVal_increment> <IVal_end_value>                              |
+      |        <Val_to_be_evaluated_iteratively>)                             |
+      |     --> <IVal_0>                                                      |
+      `-----------------------------------------------------------------------'
+
+    User Defined Function (UDF). UDF names are not case sensitive. A UDF name
+    may consist of letters, numbers and other symbols except `(', `)', `"',
+    `@' and `:' symbols. A UDF can be nested inside of another UDF. Formal
+    arguments appear like $1 ... $N in the UDF body. A UDF may access only its
+    own private local variables, or in other words, all variables that are
+    referenced in the UDF body are private local variables of this UDF.
+
+      .-----------------------------------------------------------------------.
+      | "defun"                                                               |
+      |   (defun <FuncName> <Val_to_be_evaluated>)                            |
+      |     --> <SVal_empty_string>                                           |
+      `-----------------------------------------------------------------------'
+
+    Break iteration loop or UDF execution of the current nested level:
+
+      .-----------------------------------------------------------------------.
+      | "break"                                                               |
+      |   (break)                                                             |
+      |     --> <SVal_empty_string>                                           |
+      `-----------------------------------------------------------------------'
+
+    Cancel program execution and exit:
+
+      .-----------------------------------------------------------------------.
+      | "exit"                                                                |
+      |   (exit)                                                              |
+      |     --> <SVal_empty_string>                                           |
+      `-----------------------------------------------------------------------'
+
+
+ 5. Input/Output functions (argument types will be casted):
+
+      .-----------------------------------------------------------------------.
+      | "accept"                                                              |
+      |   (accept <SVal_prompt_message_for_console_or_empty_for_stdin>)       |
+      |     --> <SVal_input_string>                                           |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | "scan_console"                                                        |
+      |   (scan_console <IVal_wait_key_forever_if_1_or_useconds_if_positive>) |
+      |     --> <SVal_keypressed_string>                                      |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | "outf"                                                                |
+      |   (outf <SVal_printf_format> <Val_value>)                             |
+      |     --> <SVal_printf_formatted_string_that_was_printed_to_stdout>     |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | "file_create"                                                         |
+      |   (file_create <SVal_file_name>)                                      |
+      |     --> <IVal_file_descriptor_or_-1>                                  |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | "file_open"                                                           |
+      |   (file_open <SVal_file_name>)                                        |
+      |     --> <IVal_file_descriptor_or_-1>                                  |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | "file_write"                                                          |
+      |   (file_write <IVal_file_descriptor> <SVal_string_to_be_written>)     |
+      |     --> <IVal_number_of_bytes_written_or_-1>                          |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | "file_read"                                                           |
+      |   (file_read <IVal_file_descriptor> <IVal_number_of_bytes_to_be_read>)|
+      |     --> <SVal_string_read_or_empty_string>                            |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | "file_seek_beg"                                                       |
+      |   (file_seek_beg <IVal_file_descriptor>                               |
+      |                  <IVal_offset_in_bytes_from_file_beginning>)          |
+      |     --> <IVal_offset_in_bytes_from_file_beginning_or_-1>              |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | "file_seek_cur"                                                       |
+      |   (file_seek_cur <IVal_file_descriptor>                               |
+      |                  <IVal_offset_in_bytes_from_file_current_offset>)     |
+      |     --> <IVal_offset_in_bytes_from_file_beginning_or_-1>              |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | "file_seek_end"                                                       |
+      |   (file_seek_end <IVal_file_descriptor>                               |
+      |                  <IVal_offset_in_bytes_from_file_end>)                |
+      |     --> <IVal_offset_in_bytes_from_file_beginning_or_-1>              |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | "file_close"                                                          |
+      |   (file_close <IVal_file_descriptor>)                                 |
+      |     --> <IVal_0_or_-1>                                                |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | "file_remove"                                                         |
+      |   (file_remove <SVal_file_name>)                                      |
+      |     --> <IVal_0_or_-1>                                                |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | "user_io"                                                             |
+      |   (user_io <IVal_user_defined_integer> <IVal_user_defined_string>)    |
+      |     --> <SVal_string_returned_by_user_defined_io_c_function>          |
+      `-----------------------------------------------------------------------'
+
+
+ 6. Built-in comparison functions (second argument type will be casted to first
+    argument type):
+
+      .-----------------------------------------------------------------------.
+      | "==" "equal"                                                          |
+      |   (== <Val_value1> <Val_value2>)                                      |
+      |     --> <IVal_true_if_value1_and_value2_are_equal_otherwise_false>    |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | "!=" "notequal"                                                       |
+      |   (!= <Val_value1> <Val_value2>)                                      |
+      |     --> <IVal_true_if_value1_and_value2_are_not_equal_otherwise_false>|
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | "<" "less"                                                            |
+      |   (< <Val_value1> <Val_value2>)                                       |
+      |     --> <IVal_true_if_value1_is_less_than_value2_otherwise_false>     |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | ">" "greater"                                                         |
+      |   (> <Val_value1> <Val_value2>)                                       |
+      |     --> <IVal_true_if_value1_is_greater_than_value2_otherwise_false>  |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | "<=" "lessorequal"                                                    |
+      |   (<= <Val_value1> <Val_value2>)                                      |
+      |     --> <IVal_true_if_value1_is_less_than_value2_or_                  |
+      |                   _if_value1_and_value2_are_equal_otherwise_false>    |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | ">=" "greaterorequal"                                                 |
+      |   (>= <Val_value1> <Val_value2>)                                      |
+      |     --> <IVal_true_if_value1_is_greater_than_value2_or_               |
+      |                   _if_value1_and_value2_are_equal_otherwise_false>    |
+      `-----------------------------------------------------------------------'
+
+
+ 7. Built-in boolean functions (argument types will be casted):
+
+      .-----------------------------------------------------------------------.
+      | "&&" "and"                                                            |
+      |   (&& <IVal_boolean1> <IVal_boolean2_short_circuit_evaluation>)       |
+      |     --> <IVal_boolean_AND>                                            |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | "||" "or"                                                             |
+      |   (|| <IVal_boolean1> <IVal_boolean2_short_circuit_evaluation>)       |
+      |     --> <IVal_boolean_OR>                                             |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | "!" "not"                                                             |
+      |   (! <IVal_boolean>)                                                  |
+      |     --> <IVal_boolean_NOT>                                            |
+      `-----------------------------------------------------------------------'
+
+
+ 8. Built-in integer functions (argument types will be casted):
+
+      .-----------------------------------------------------------------------.
+      | "ival"                                                                |
+      |   (ival <Val_value>)                                                  |
+      |     --> <IVal_integer>                                                |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | "indices"                                                             |
+      |   (indices <Val_value>)                                               |
+      |     --> <IVal_number_of_array_indices>                                |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | "irnd"                                                                |
+      |   (irnd <IVal_maxrange_or_negative_to_reset_random_generator>)        |
+      |     --> <IVal_random_value_within_the_range_of_0_to_maxrange>         |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | "+" "iadd"                                                            |
+      |   (+ <IVal_integer1> <IVal_integer2>)                                 |
+      |     --> <IVal_addition_integer1+integer2>                             |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | "-" "isub"                                                            |
+      |   (- <IVal_integer1> <IVal_integer2>)                                 |
+      |     --> <IVal_subtraction_integer1-integer2>                          |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | "*" "imul"                                                            |
+      |   (* <IVal_integer1> <IVal_integer2>)                                 |
+      |     --> <IVal_multiplication_integer1*integer2>                       |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | "/" "idiv"                                                            |
+      |   (/ <IVal_integer1> <IVal_integer2>)                                 |
+      |     --> <IVal_division_integer1/integer2>                             |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | "*+" "ima"                                                            |
+      |   (*+ <IVal_integer1> <IVal_integer2> <IVal_integer3>)                |
+      |     --> <IVal_MultiplyAccumulateOperation_integer1*integer2+integer3> |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | "%" "imod"                                                            |
+      |   (% <IVal_integer1> <IVal_integer2>)                                 |
+      |     --> <IVal_modulo_integer_remainder_integer1%integer2>             |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | "++" "iincr"                                                          |
+      |   (++ <IVal_integer>)                                                 |
+      |     --> <IVal_increment>                                              |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | "--" "idecr"                                                          |
+      |   (-- <IVal_integer>)                                                 |
+      |     --> <IVal_decrement>                                              |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | "0-" "ineg"                                                           |
+      |   (0- <IVal_integer>)                                                 |
+      |     --> <IVal_additive_inverse>                                       |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | "iabs"                                                                |
+      |   (iabs <IVal_integer>)                                               |
+      |     --> <IVal_absolute_value>                                         |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | "&" "iand"                                                            |
+      |   (& <IVal_integer1> <IVal_integer2>)                                 |
+      |     --> <IVal_bitwise_AND>                                            |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | "|" "ior"                                                             |
+      |   (| <IVal_integer1> <IVal_integer2>)                                 |
+      |     --> <IVal_bitwise_OR>                                             |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | "^" "ixor"                                                            |
+      |   (^ <IVal_integer1> <IVal_integer2>)                                 |
+      |     --> <IVal_bitwise_exclusive_OR>                                   |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | "~" "inot"                                                            |
+      |   (~ <IVal_integer>)                                                  |
+      |     --> <IVal_bitwise_inversion>                                      |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | ">>" "ishr"                                                           |
+      |   (>> <IVal_integer> <IVal_shift_positions>)                          |
+      |     --> <IVal_bitwise_right_shift>                                    |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | "<<" "ishl"                                                           |
+      |   (<< <IVal_integer> <IVal_shift_positions>)                          |
+      |     --> <IVal_bitwise_left_shift>                                     |
+      `-----------------------------------------------------------------------'
+
+
+ 9. Built-in float functions (argument types will be casted):
+
+      .-----------------------------------------------------------------------.
+      | "fval"                                                                |
+      |   (fval <Val_value>)                                                  |
+      |     --> <FVal_float>                                                  |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | "frnd"                                                                |
+      |   (frnd <FVal_maxrange_or_negative_to_reset_random_generator>)        |
+      |     --> <FVal_random_value_within_the_range_of_0_to_maxrange>         |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | "+." "fadd"                                                           |
+      |   (+. <FVal_float1> <FVal_float2>)                                    |
+      |     --> <FVal_addition_float1+float2>                                 |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | "-." "fsub"                                                           |
+      |   (-. <FVal_float1> <FVal_float2>)                                    |
+      |     --> <FVal_subtraction_float1-float2>                              |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | "*." "fmul"                                                           |
+      |   (*. <FVal_float1> <FVal_float2>)                                    |
+      |     --> <FVal_multiplication_float1*float2>                           |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | "/." "fdiv"                                                           |
+      |   (/. <FVal_float1> <FVal_float2>)                                    |
+      |     --> <FVal_division_float1/float2>                                 |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | "*+." "fma"                                                           |
+      |   (*+. <FVal_float1> <FVal_float2> <FVal_float3>)                     |
+      |     --> <FVal_MultiplyAccumulateOperation_float*float2+float3>        |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | "fabs"                                                                |
+      |   (fabs <FVal_float>)                                                 |
+      |     --> <FVal_absolute_value>                                         |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | "fint" "int"                                                          |
+      |   (fint <FVal_float>)                                                 |
+      |     --> <FVal_integer_part>                                           |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | "fround" "round"                                                      |
+      |   (fround <FVal_float>)                                               |
+      |     --> <FVal_rounded_value>                                          |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | "fcos" "cos"                                                          |
+      |   (fcos <FVal_radians>)                                               |
+      |     --> <FVal_cosine>                                                 |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | "fsin" "sin"                                                          |
+      |   (fsin <FVal_radians>)                                               |
+      |     --> <FVal_sine>                                                   |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | "fcas" "cas"                                                          |
+      |   (fcas <FVal_radians>)                                               |
+      |     --> <FVal_sine+cosine>                                            |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | "fatn" "atn"                                                          |
+      |   (fatn <FVal_float>)                                                 |
+      |     --> <FVal_arctangent_radians>                                     |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | "fexp" "exp"                                                          |
+      |   (fexp <FVal_float>)                                                 |
+      |     --> <FVal_exponential>                                            |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | "fpow" "pow" "^." "**"                                                |
+      |   (fpow <FVal_base> <FVal_exponent>)                                  |
+      |     --> <FVal_base_raised_to_the_power_of_exponent>                   |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | "fln" "ln"                                                            |
+      |   (fln <FVal_float>)                                                  |
+      |     --> <FVal_natural_logarithm_base_E>                               |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | "fsqrt" "sqrt" "sqr"                                                  |
+      |   (fsqrt <FVal_float>)                                                |
+      |     --> <FVal_square_root>                                            |
+      `-----------------------------------------------------------------------'
+
+
+10. Built-in string functions (argument types will be casted):
+
+      .-----------------------------------------------------------------------.
+      | "str"                                                                 |
+      |   (str <Val_value>)                                                   |
+      |     --> <SVal_string>                                                 |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | "chr"                                                                 |
+      |   (chr <IVal_integer>)                                                |
+      |     --> <SVal_one_character_string>                                   |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | "asc"                                                                 |
+      |   (asc <SVal_string>)                                                 |
+      |     --> <IVal_code_of_first_character>                                |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | "crcsum"                                                              |
+      |   (crcsum <SVal_string>)                                              |
+      |     --> <IVal_CRC_of_string>                                          |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | "type"                                                                |
+      |   (type <Val_value>)                                                  |
+      |     --> <SVal_type_among_I_F_S_Z>                                     |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | "dump_i2s"                                                            |
+      |   (dump_i2s <IVal_integer>)                                           |
+      |     --> <SVal_memory_dump_of_integer>                                 |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | "dump_f2s"                                                            |
+      |   (dump_f2s <FVal_float>)                                             |
+      |     --> <SVal_memory_dump_of_float>                                   |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | "dump_s2i"                                                            |
+      |   (dump_s2i <SVal_string>)                                            |
+      |     --> <IVal_integer_dumped_from_string>                             |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | "dump_s2f"                                                            |
+      |   (dump_s2f <SVal_string>)                                            |
+      |     --> <FVal_float_dumped_from_string>                               |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | "notempty"                                                            |
+      |   (notempty <SVal_string>)                                            |
+      |     --> <IVal_true_if_not_empty>                                      |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | "len"                                                                 |
+      |   (len <SVal_string>)                                                 |
+      |     --> <IVal_length>                                                 |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | "at"                                                                  |
+      |   (at <SVal_substring_to_be_found> <SVal_string_to_be_searched_in>)   |
+      |     --> <IVal_found_first_occurrence_position_from_left_or_zero>      |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | "rat"                                                                 |
+      |   (rat <SVal_substring_to_be_found> <SVal_string_to_be_searched_in>)  |
+      |     --> <IVal_found_first_occurrence_position_from_right_or_zero>     |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | "cat"                                                                 |
+      |   (cat <SVal_string1> <SVal_string2>)                                 |
+      |     --> <SVal_concatenation_string1+string2>                          |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | "space"                                                               |
+      |   (space <IVal_length>)                                               |
+      |     --> <SVal_empty_string_filled_with_spaces>                        |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | "replicate"                                                           |
+      |   (replicate <SVal_pattern> <IVal_number_of_copies>)                  |
+      |     --> <SVal_string_filled_with_patterns>                            |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | "left"                                                                |
+      |   (left <SVal_string> <IVal_position_from_left>)                      |
+      |     --> <SVal_left_part_of_string>                                    |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | "leftr"                                                               |
+      |   (leftr <SVal_string> <IVal_position_from_right>)                    |
+      |     --> <SVal_left_part_of_string>                                    |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | "right"                                                               |
+      |   (right <SVal_string> <IVal_position_from_right>)                    |
+      |     --> <SVal_right_part_of_string>                                   |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | "rightl"                                                              |
+      |   (rightl <SVal_string> <IVal_position_from_left>)                    |
+      |     --> <SVal_right_part_of_string>                                   |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | "substr"                                                              |
+      |   (substr <SVal_string> <IVal_position_from_left> <IVal_length>)      |
+      |     --> <SVal_substring_derived_from_string>                          |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | "strtran"                                                             |
+      |   (strtran <SVal_string> <SVal_pattern> <SVal_substitution>)          |
+      |     --> <SVal_string_where_patterns_are_replaced_with_substitutions>  |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | "str_raw"                                                             |
+      |   (str_raw <SVal_string>)                                             |
+      |     --> <SVal_string_with_no_escape_characters_for_special_symbols>   |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | "str_unraw"                                                           |
+      |   (str_unraw <SVal_string>)                                           |
+      |     --> <SVal_string_with_escape_characters_for_special_symbols>      |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | "str_dump"                                                            |
+      |   (str_dump <SVal_string>)                                            |
+      |     --> <SVal_semihexadecimal_string_dump>                            |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | "str_fmt"                                                             |
+      |   (str_fmt <SVal_printf_format> <Val_value>)                          |
+      |     --> <SVal_printf_formatted_string>                                |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | "ltrim"                                                               |
+      |   (ltrim <SVal_string>)                                               |
+      |     --> <SVal_string_with_no_leading_blanks>                          |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | "rtrim"                                                               |
+      |   (rtrim <SVal_string>)                                               |
+      |     --> <SVal_string_with_no_ending_blanks>                           |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | "alltrim"                                                             |
+      |   (alltrim <SVal_string>)                                             |
+      |     --> <SVal_string_with_neither_leading_nor_ending_blanks>          |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | "pack"                                                                |
+      |   (pack <SVal_string>)                                                |
+      |     --> <SVal_string_with_no_redundant_blanks>                        |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | "head"                                                                |
+      |   (head <SVal_string>)                                                |
+      |     --> <SVal_first_token>                                            |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | "tail"                                                                |
+      |   (tail <SVal_string>)                                                |
+      |     --> <SVal_remaining_tokens>                                       |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | "lsp_head"                                                            |
+      |   (lsp_head <SVal_string>)                                            |
+      |     --> <SVal_first_FastLisp_token>                                   |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | "lsp_tail"                                                            |
+      |   (lsp_tail <SVal_string>)                                            |
+      |     --> <SVal_remaining_FastLisp_tokens>                              |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | "upper"                                                               |
+      |   (upper <SVal_string>)                                               |
+      |     --> <SVal_upper_case_string>                                      |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | "lower"                                                               |
+      |   (lower <SVal_string>)                                               |
+      |     --> <SVal_lower_case_string>                                      |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | "upper_utf8"                                                          |
+      |   (upper <SVal_UTF8_string>)                                          |
+      |     --> <SVal_upper_case_UTF8_string>                                 |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | "lower_utf8"                                                          |
+      |   (lower <SVal_UTF8_string>)                                          |
+      |     --> <SVal_lower_case_UTF8_string>                                 |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | "is_utf8char"                                                         |
+      |   (is_utf8char <SVal_string>)                                         |
+      |     --> <IVal_size_of_first_UTF8_character_or_zero>                   |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | "ltrim_utf8"                                                          |
+      |   (ltrim_utf8 <SVal_string>)                                          |
+      |     --> <SVal_string_with_legal_leading_UTF8_character>               |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | "rtrim_utf8"                                                          |
+      |   (rtrim_utf8 <SVal_string>)                                          |
+      |     --> <SVal_string_with_legal_ending_UTF8_character>                |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | "alltrim_utf8"                                                        |
+      |   (alltrim_utf8 <SVal_string>)                                        |
+      |     --> <SVal_string_with_legal_leading_and_ending_UTF8_characters>   |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | "rev"                                                                 |
+      |   (rev <SVal_string>)                                                 |
+      |     --> <SVal_reverse_ordered_string>                                 |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | "padl"                                                                |
+      |   (padl <SVal_string> <IVal_length>)                                  |
+      |     --> <SVal_left_justified_string>                                  |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | "padr"                                                                |
+      |   (padr <SVal_string> <IVal_length>)                                  |
+      |     --> <SVal_right_justified_string>                                 |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | "padc"                                                                |
+      |   (padc <SVal_string> <IVal_length>)                                  |
+      |     --> <SVal_centered_string>                                        |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | "time"                                                                |
+      |   (time)                                                              |
+      |     --> <SVal_current_system_time>                                    |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | "getenv"                                                              |
+      |   (getenv <SVal_environment_variable_name>)                           |
+      |     --> <SVal_environment_variable_value>                             |
+      `-----------------------------------------------------------------------'
+
+
+11. Built-in asynchronous memory heap functions (argument types will be
+    casted):
+
+      .-----------------------------------------------------------------------.
+      | "asyncheap_create"                                                    |
+      |   (asyncheap_create <IVal_size_bytes>)                                |
+      |     --> <IVal_descriptor_or_0>                                        |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | "asyncheap_getaddress"                                                |
+      |   (asyncheap_getaddress <IVal_descriptor>)                            |
+      |     --> <IVal_address>                                                |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | "asyncheap_putint"                                                    |
+      |   (asyncheap_putint <IVal_descriptor> <IVal_offset> <IVal_integer>)   |
+      |     --> <IVal_1>                                                      |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | "asyncheap_getint"                                                    |
+      |   (asyncheap_getint <IVal_descriptor> <IVal_offset>)                  |
+      |     --> <IVal_integer>                                                |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | "asyncheap_putfloat"                                                  |
+      |   (asyncheap_putfloat <IVal_descriptor> <IVal_offset> <FVal_float>)   |
+      |     --> <IVal_1>                                                      |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | "asyncheap_getfloat"                                                  |
+      |   (asyncheap_getfloat <IVal_descriptor> <IVal_offset>)                |
+      |     --> <FVal_float>                                                  |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | "asyncheap_putstring"                                                 |
+      |   (asyncheap_putstring <IVal_descriptor> <IVal_offset> <SVal_string>) |
+      |     --> <IVal_1>                                                      |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | "asyncheap_getstring"                                                 |
+      |   (asyncheap_getstring <IVal_descriptor> <IVal_offset> <IVal_length>) |
+      |     --> <SVal_string>                                                 |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | "asyncheap_reallocate"                                                |
+      |   (asyncheap_reallocate <IVal_descriptor> <IVal_new_size_bytes>)      |
+      |     --> <IVal_new_descriptor>                                         |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | "asyncheap_replicate"                                                 |
+      |   (asyncheap_replicate <IVal_descriptor>)                             |
+      |     --> <IVal_new_descriptor>                                         |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | "asyncheap_delete"                                                    |
+      |   (asyncheap_delete <IVal_descriptor>)                                |
+      |     --> <IVal_1>                                                      |
+      `-----------------------------------------------------------------------'
+
+
+12. Built-in mapcar function (argument types will be casted):
+
+      .-----------------------------------------------------------------------.
+      | "mapcar"                                                              |
+      |   (mapcar <SVal_FastLisp_function_or_compiled_bytecode>)              |
+      |     --> (<SVal_preprinted_info>                                       |
+      |          <Val_result_of_execution_that_can_be_list_or_tree_as_well>   |
+      |          <IVal_syntax_error_code>                                     |
+      |          <SVal_syntax_error_message>                                  |
+      |          <IVal_runtime_error_code>                                    |
+      |          <SVal_runtime_error_message>                                 |
+      |          <SVal_processed_FastLisp_function_code>                      |
+      |          <SVal_processed_FastLisp_function_justified_code>            |
+      |          <SVal_processed_FastLisp_function_compiled_bytecode>         |
+      |          <SVal_processed_FastLisp_function_linked_bytecode>           |
+      |          <SVal_processed_FastLisp_function_decompiled_bytecode>       |
+      |          <FVal_time_spent_seconds>                                    |
+      |         )                                                             |
+      `-----------------------------------------------------------------------'
+
+
+13. Built-in terminal capabilities functions (argument types will be casted):
+
+      .-----------------------------------------------------------------------.
+      | "reinit_terminal"                                                     |
+      |   (reinit_terminal <SVal_terminal_type_or_empty_for_default_terminal>)|
+      |     --> <SVal_terminal_capabilities_status>                           |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | "term_type"                                                           |
+      |   (term_type)                                                         |
+      |     --> <SVal_TERM_environment_configured_terminal_name>              |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | "lines_term"                                                          |
+      |   (lines_term)                                                        |
+      |     --> <IVal_terminal_capability_li>                                 |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | "columns_term"                                                        |
+      |   (columns_term)                                                      |
+      |     --> <IVal_terminal_capability_co>                                 |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | "clrscr_term"                                                         |
+      |   (clrscr_term)                                                       |
+      |     --> <SVal_terminal_capability_cl>                                 |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | "reverse_term"                                                        |
+      |   (reverse_term)                                                      |
+      |     --> <SVal_terminal_capability_mr>                                 |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | "blink_term"                                                          |
+      |   (blink_term)                                                        |
+      |     --> <SVal_terminal_capability_mb>                                 |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | "bold_term"                                                           |
+      |   (bold_term)                                                         |
+      |     --> <SVal_terminal_capability_md>                                 |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | "normal_term"                                                         |
+      |   (normal_term)                                                       |
+      |     --> <SVal_terminal_capability_me>                                 |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | "hidecursor_term"                                                     |
+      |   (hidecursor_term)                                                   |
+      |     --> <SVal_terminal_capability_vi>                                 |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | "showcursor_term"                                                     |
+      |   (showcursor_term)                                                   |
+      |     --> <SVal_terminal_capability_ve>                                 |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | "gotocursor_term"                                                     |
+      |   (gotocursor_term <IVal_y_coordinate> <IVal_x_coordinate>)           |
+      |     --> <SVal_filled_with_coordinates_terminal_capability_cm_         |
+      |          _or_unfilled_terminal_capability_cm_if_input_is_negative>    |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | "gotocursor1_term"                                                    |
+      |   (gotocursor1_term <SVal_unfilled_terminal_capability_cm>            |
+      |                     <IVal_y_coordinate> <IVal_x_coordinate>)          |
+      |     --> <SVal_filled_with_coordinates_terminal_capability_cm>         |
+      `-----------------------------------------------------------------------'
+
+
+14. Built-in constant and info functions:
+
+      .-----------------------------------------------------------------------.
+      | "ee"                                                                  |
+      |   (ee)                                                                |
+      |     --> <FVal_base_of_natural_logarithm_e>                            |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | "gamma"                                                               |
+      |   (gamma)                                                             |
+      |     --> <FVal_Euler_Mascheroni_constant_gamma>                        |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | "phi"                                                                 |
+      |   (phi)                                                               |
+      |     --> <FVal_golden_ratio_constant_phi>                              |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | "pi"                                                                  |
+      |   (pi)                                                                |
+      |     --> <FVal_constant_pi>                                            |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | "prn_integer_fmt"                                                     |
+      |   (prn_integer_fmt)                                                   |
+      |     --> <SVal_preconfigured_printf_format_for_integer>                |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | "prn_float_fmt"                                                       |
+      |   (prn_float_fmt)                                                     |
+      |     --> <SVal_preconfigured_printf_format_for_float>                  |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | "prn_string_fmt"                                                      |
+      |   (prn_string_fmt)                                                    |
+      |     --> <SVal_preconfigured_printf_format_for_string>                 |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | "version_fstlisp"                                                     |
+      |   (version_fstlisp)                                                   |
+      |     --> <SVal_FastLisp_version>                                       |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | "version_termcap"                                                     |
+      |   (version_termcap)                                                   |
+      |     --> <SVal_termcap_library_version>                                |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | "version_strglib"                                                     |
+      |   (version_strglib)                                                   |
+      |     --> <SVal_string_library_version>                                 |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | "version_mempool"                                                     |
+      |   (version_mempool)                                                   |
+      |     --> <SVal_memory_pool_library_version>                            |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | "compiled_on"                                                         |
+      |   (compiled_on)                                                       |
+      |     --> <SVal_compilation_related_machine_os_kernel_specific_info>    |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | "compiled_by"                                                         |
+      |   (compiled_by)                                                       |
+      |     --> <SVal_compilation_related_machine_compiler_specific_info>     |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | "n_cpuproc"                                                           |
+      |   (n_cpuproc)                                                         |
+      |     --> <IVal_number_of_configured_parallel_processing_units>         |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | "id_cpuproc"                                                          |
+      |   (id_cpuproc)                                                        |
+      |     --> <IVal_id_of_current_parallel_processing_unit>                 |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | "n_taskjob"                                                           |
+      |   (n_taskjob)                                                         |
+      |     --> <IVal_number_of_maximal_parallel_task_jobs>                   |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | "id_taskjob"                                                          |
+      |   (id_taskjob)                                                        |
+      |     --> <IVal_id_of_current_task_job>                                 |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | "am_I_in_the_fastlisp_module"                                         |
+      |   (am_I_in_the_fastlisp_module)                                       |
+      |     --> <IVal_true_if_running_in_the_fastlisp_module>                 |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | "am_I_in_the_BMDFMldr_module"                                         |
+      |   (am_I_in_the_BMDFMldr_module)                                       |
+      |     --> <IVal_true_if_running_in_the_BMDFMldr_module>                 |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | "am_I_in_the_BMDFMsrv_module"                                         |
+      |   (am_I_in_the_BMDFMsrv_module)                                       |
+      |     --> <IVal_true_if_running_in_the_BMDFMsrv_module>                 |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | "am_I_in_the_CPUPROC_module"                                          |
+      |   (am_I_in_the_CPUPROC_module)                                        |
+      |     --> <IVal_true_if_running_in_the_CPUPROC_module>                  |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | "am_I_in_the_multithreaded_module"                                    |
+      |   (am_I_in_the_multithreaded_module)                                  |
+      |     --> <IVal_true_if_running_in_the_multithreaded_module>            |
+      `-----------------------------------------------------------------------'
+
+
+15. Built-in rise runtime error functions (argument types will be casted):
+
+      .-----------------------------------------------------------------------.
+      | "set_error"                                                           |
+      |   (set_error)                                                         |
+      |     --> <SVal_error_text>                                             |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | "rise_error"                                                          |
+      |   (rise_error)                                                        |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | "set_error_dbg"                                                       |
+      |   (set_error_dbg)                                                     |
+      |     --> <SVal_error_text>                                             |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | "rise_error_dbg"                                                      |
+      |   (rise_error_dbg)                                                    |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | "set_error_info"                                                      |
+      |   (set_error_info <IVal_error_code> <SVal_error_text>)                |
+      |     --> <SVal_error_text>                                             |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | "rise_error_info"                                                     |
+      |   (rise_error_info <IVal_error_code> <SVal_error_text>)               |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | "set_error_info_dbg"                                                  |
+      |   (set_error_info_dbg <IVal_error_code> <SVal_error_text>)            |
+      |     --> <SVal_error_text>                                             |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | "rise_error_info_dbg"                                                 |
+      |   (rise_error_info_dbg <IVal_error_code> <SVal_error_text>)           |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | "get_error_code"                                                      |
+      |   (get_error_code)                                                    |
+      |     --> <IVal_error_code>                                             |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | "get_error_text"                                                      |
+      |   (get_error_text)                                                    |
+      |     --> <SVal_error_text>                                             |
+      `-----------------------------------------------------------------------'
+
+
+16. C Interface (see cflp_udf.h/cflp_udf.c for details):
+
+    In order to simplify declaration constructions the following abbreviations
+    are used for the standard types:
+
+      .-----------------------------------------------------------------------.
+      | #define CHR char                                                      |
+      | #define UCH unsigned char                                             |
+      | #define SCH signed char                                               |
+      | #define USH unsigned short int                                        |
+      | #define SSH signed short int                                          |
+      | #define ULO unsigned long int                                         |
+      | #define SLO signed long int                                           |
+      | #define DFL double                                                    |
+      `-----------------------------------------------------------------------'
+
+    Each variable is stored in a universal structure that enables it to change
+    data types dynamically and to have a single value or an array with
+    different types of members, thus supporting lists and trees.
+    The declaration of a variable of the universal structure type allocates a
+    single value on the stack and an array in the heap that is very convenient
+    assuming most variables store only single values. No memory overhead is
+    needed for storing arrays with members of the same type.
+
+      .-----------------------------------------------------------------------.
+      | struct fastlisp_data{                                                 |
+      |   UCH disable_ptr; /* 1 stores value, 0 ptr to a variable possible */ |
+      |   UCH single;      /* 1 single value, 0 array                      */ |
+      |   UCH type;        /* 0 undef, 'I'int, 'F'float, 'S'string, 'Z'nil */ |
+      |   UCH arraytype;   /* 0 undef, 'I'int, 'F'float, 'S'string, 'Z'nil */ |
+      |   union{                                                              |
+      |     SLO ival;      /* integer value */                                |
+      |     DFL fval;      /* float value */                                  |
+      |   } value;                                                            |
+      |   CHR *svalue;     /* string value */                                 |
+      |   ULO indices_numb;/* number of indices in the array */               |
+      |   UCH *aready_tags;/* member flags '0IFSZ' for arraytype!=0 */        |
+      |   union{                                                              |
+      |     struct fastlisp_data *mix;/* array members of mixed types */      |
+      |     SLO *ival;                /* array members of integer type */     |
+      |     DFL *fval;                /* array members of float type */       |
+      |     CHR **svalue;             /* array members of string type */      |
+      |   } array;                                                            |
+      | };                                                                    |
+      `-----------------------------------------------------------------------'
+
+    A user C function can be defined through the following type declaration:
+
+      .-----------------------------------------------------------------------.
+      | typedef void (*fcall)(const void*, const ULO*, struct fastlisp_data*);|
+      `-----------------------------------------------------------------------'
+
+    The first argument is a pointer to the passed function arguments and the
+    second argument is a pointer to the result structure. Passed arguments can
+    be obtained from inside the function via the following set:
+
+      .-----------------------------------------------------------------------.
+      | /* get universal data structure (see ret_val implementation below) */ |
+      |   void (*fcall)(const void*, const ULO*, struct fastlisp_data*);      |
+      |                                                                       |
+      | /* get integer or pointer value */                                    |
+      |   void ret_ival(const void *rt_ctrl, const ULO *dat_ptr, SLO *targ);  |
+      |                                                                       |
+      | /* get float value */                                                 |
+      |   void ret_fval(const void *rt_ctrl, const ULO *dat_ptr, DFL *targ);  |
+      |                                                                       |
+      | /* get string value */                                                |
+      |   void ret_sval(const void *rt_ctrl, const ULO *dat_ptr, CHR **targ); |
+      `-----------------------------------------------------------------------'
+
+    Additionally, there are:
+      - two helper functions to be called from each created user thread;
+      - two functions for copying and deleting the universal data structure;
+      - three callback functions;
+      - four info functions for the processing units and task jobs;
+      - five info functions for the modules;
+      - five functions to handle runtime errors.
+
+      .-----------------------------------------------------------------------.
+      | /* helper functions to be called from each created user thread        |
+      |    (if this thread uses BMDFM functionality) */                       |
+      |                                                                       |
+      |   void setup_bmdfm_thread_safe_functionality_for_local_thread(void);  |
+      |                                                                       |
+      |   void cleanup_bmdfm_thread_safe_functionality_for_local_thread(void);|
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | /* copy the universal data structure */                               |
+      |   void copy_flp_data(struct fastlisp_data *dest,                      |
+      |                      const struct fastlisp_data *source,              |
+      |                      ULO indices_numb);                               |
+      |                                                                       |
+      | /* delete the universal data structure */                             |
+      |   void free_flp_data(struct fastlisp_data *ret_dat);                  |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | /* called at startup */                                               |
+      |   void startup_callback(void);                                        |
+      |                                                                       |
+      | /* called at task job end */                                          |
+      |   void taskjob_end_callback(ULO id_taskjob);                          |
+      |                                                                       |
+      | /* (user_io <IVal> <SVal>) callee */                                  |
+      |   void user_io_callback(SLO usr_id, CHR **usr_buff);                  |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | /* get the number of configured parallel processing units             |
+      |    ('N_CPUPROC' configuration parameter) */                           |
+      |   ULO get_n_cpuproc(void);                                            |
+      |                                                                       |
+      | /* get ID of the current parallel processing unit                     |
+      |    (within the range of [0; 'N_CPUPROC'[) */                          |
+      |   ULO get_id_cpuproc(void);                                           |
+      |   ULO get_id_cpuproc_fast(const void *rt_ctrl);                       |
+      |                                                                       |
+      | /* get the number of maximal parallel task jobs                       |
+      |    ('N_IORBP' configuration parameter) */                             |
+      |   ULO get_n_taskjob(void);                                            |
+      |                                                                       |
+      | /* get ID of the current task job                                     |
+      |    (within the range of [0; 'N_IORBP'[) */                            |
+      |   ULO get_id_taskjob(void);                                           |
+      |   ULO get_id_taskjob_fast(const void *rt_ctrl);                       |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | /* info functions for the modules */                                  |
+      |                                                                       |
+      |   UCH am_I_in_the_fastlisp_module(void);                              |
+      |                                                                       |
+      |   UCH am_I_in_the_BMDFMldr_module(void);                              |
+      |                                                                       |
+      |   UCH am_I_in_the_BMDFMsrv_module(void);                              |
+      |                                                                       |
+      |   UCH am_I_in_the_CPUPROC_module(void);                               |
+      |                                                                       |
+      |   UCH am_I_in_the_multithreaded_module(void);                         |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | /* check whether no runtime error occurred */                         |
+      |   UCH noterror(void);                                                 |
+      |   UCH noterror_fast(const void *rt_ctrl);                             |
+      |                                                                       |
+      | /* set runtime error */                                               |
+      |   CHR *set_error(CHR **targ_errtext);                                 |
+      |   CHR *set_error_fast(const void *rt_ctrl, CHR **targ_errtext);       |
+      |                                                                       |
+      | /* rise runtime error */                                              |
+      |   void rise_error(void);                                              |
+      |                                                                       |
+      | /* set runtime error with dbg info */                                 |
+      |   CHR *set_error_dbg(CHR **targ_errtext, const ULO *dat_ptr);         |
+      |   CHR *set_error_dbg_fast(const void *rt_ctrl, CHR **targ_errtext,    |
+      |     const ULO *dat_ptr);                                              |
+      |                                                                       |
+      | /* rise runtime error with dbg info */                                |
+      |   void rise_error_dbg(const ULO *dat_ptr);                            |
+      |                                                                       |
+      | /* set runtime error with info */                                     |
+      |   CHR *set_error_info(UCH errcode, CHR **targ_errtext,                |
+      |     const CHR *src_errtext);                                          |
+      |   CHR *set_error_info_fast(const void *rt_ctrl, UCH errcode,          |
+      |     CHR **targ_errtext, const CHR *src_errtext);                      |
+      |                                                                       |
+      | /* rise runtime error with info */                                    |
+      |   void rise_error_info(UCH errcode, const CHR *src_errtext);          |
+      |                                                                       |
+      | /* set runtime error with info and with dbg info */                   |
+      |   CHR *set_error_info_dbg(UCH errcode, CHR **targ_errtext,            |
+      |     const CHR *src_errtext, const ULO *dat_ptr);                      |
+      |   CHR *set_error_info_dbg_fast(const void *rt_ctrl, UCH errcode,      |
+      |     CHR **targ_errtext, const CHR *src_errtext, const ULO *dat_ptr);  |
+      |                                                                       |
+      | /* rise runtime error with info and with dbg info */                  |
+      |   void rise_error_info_dbg(UCH errcode, const CHR *src_errtext,       |
+      |     const ULO *dat_ptr);                                              |
+      |                                                                       |
+      | /* get runtime error code */                                          |
+      |   UCH get_error_code(void);                                           |
+      |   UCH get_error_code_fast(const void *rt_ctrl);                       |
+      |                                                                       |
+      | /* get runtime error text */                                          |
+      |   CHR *get_error_text(CHR **targ_errtext);                            |
+      |   CHR *get_error_text_fast(const void *rt_ctrl, CHR **targ_errtext);  |
+      |                                                                       |
+      | /* Reserved runtime error codes:                                      |
+      |   ECODE_RT__INT_DIVZERO        1                                      |
+      |   ECODE_RT__INT_MODZERO        2                                      |
+      |   ECODE_RT__FLOAT_DIVZERO      3                                      |
+      |   ECODE_RT__FLOAT_POWER        4                                      |
+      |   ECODE_RT__FLOAT_LOGARITHM    5                                      |
+      |   ECODE_RT__FLOAT_SQRT         6                                      |
+      |   ECODE_RT__AHEAP_WRONGDESCR   7                                      |
+      |   ECODE_RT__AHEAP_OUTOFRANGE   8                                      |
+      |   ECODE_RT__WRONG_FMT_STRING   9                                      |
+      |   ECODE_RT__VAR_NOTINIT       10                                      |
+      |   ECODE_RT__ARR_NOTINIT       11                                      |
+      |   ECODE_RT__ARR_MEMBSNOTINIT  12                                      |
+      |   ECODE_RT__ARR_NEGINDEX      13                                      |
+      |   ECODE_RT__ARR_ZEROMEMB      14                                      |
+      |   ECODE_RT__ARR_WRONGINDICES  15                                      |
+      |   ECODE_RT__ARR_TYPEMISMATCH  16                                      |
+      |   ECODE_RT__RESERVED6        249                                      |
+      |   ECODE_RT__RESERVED5        250                                      |
+      |   ECODE_RT__RESERVED4        251                                      |
+      |   ECODE_RT__RESERVED3        252                                      |
+      |   ECODE_RT__RESERVED2        253                                      |
+      |   ECODE_RT__RESERVED1        254                                      |
+      |   ECODE_RT__RESERVED0        255                                      |
+      | */                                                                    |
+      `-----------------------------------------------------------------------'
+
+    The final step, which should be performed after a user C function is
+    defined, is to fill the instruction database according to the following
+    structure:
+
+      .-----------------------------------------------------------------------.
+      | typedef struct{                                                       |
+      |   const CHR *fnc_name;  /* function name */                           |
+      |   const SSH operands;   /* number of arguments */                     |
+      |   const UCH ret_type;   /* result type: 'I', 'F', 'S', 'Z' */         |
+      |   const UCH *op_type;   /* flags 'IFSZ' for every argument */         |
+      |   const fcall func_ptr; /* pointer to the function */                 |
+      | } INSTRUCTION_STRU;                                                   |
+      `-----------------------------------------------------------------------'
+
+    See an example of a user defined C function below. Passed function
+    arguments are obtained sequentially through the incremented "dat_ptr".
+    Internal calls to "ret_ival", "ret_fval" and "ret_sval" provide dynamic
+    type casting if required. A direct "fcall" function invocation omits the
+    dynamic casting and returns a universal data structure.
+    Finally, "my_function" is registered in the instruction database. The
+    corresponding record states that the function has five arguments and
+    returns an integer value. Argument types are integer, integer, float,
+    string and integer respectively.
+
+      .-----------------------------------------------------------------------.
+      | "my_function"                                                         |
+      |   (my_function <IVal> <IVal> <FVal> <SVal> <IVal>)                    |
+      |     --> <IVal>                                                        |
+      `-----------------------------------------------------------------------'
+      .-----------------------------------------------------------------------.
+      | void my_function(const void *rt_ctrl, const ULO *dat_ptr,             |
+      |    struct fastlisp_data *ret_dat){                                    |
+      |   const ULO *tmp_ptr;                                                 |
+      |   SLO n,result=0;                                                     |
+      |   CHR *str=NULL;                                                      |
+      |   DFL *f_array,koef;                                                  |
+      |   struct fastlisp_data dat={0,1,0,0,{0},NULL,1,NULL,{NULL}};          |
+      |                                                                       |
+      |   ret_ival(rt_ctrl,dat_ptr,&n);              /* arg0: integer (n) */  |
+      |   ret_ival(rt_ctrl,dat_ptr+1,(SLO*)&f_array);/* arg1: ptr (f_array) */|
+      |   ret_fval(rt_ctrl,dat_ptr+2,&koef);         /* arg2: float (koef) */ |
+      |   ret_sval(rt_ctrl,dat_ptr+3,&str);          /* arg3: string (str) */ |
+      |   tmp_ptr=*((ULO**)(dat_ptr+4));             /* arg4: any data as */  |
+      |   (*(fcall)*tmp_ptr)(rt_ctrl,tmp_ptr+1,&dat);/*   univ. data (dat) */ |
+      |                                                                       |
+      |   if(noterror_fast(rt_ctrl)){                                         |
+      |     /* data processing to compute `result': */                        |
+      |     ret_dat->single=1;                                                |
+      |     ret_dat->type='I';                                                |
+      |     ret_dat->value.ival=result;                                       |
+      |                                                                       |
+      |     /* or an error occurred: */                                       |
+      |     rise_error_info_dbg(USER_DEFINED_UNRESERVED_ERRCODE,"ERROR_TEXT", |
+      |       dat_ptr);                                                       |
+      |   }                                                                   |
+      |                                                                       |
+      |   if(dat.disable_ptr)                                                 |
+      |     free_flp_data(&dat);                                              |
+      |   free_string(&str);                                                  |
+      |                                                                       |
+      |   return;                                                             |
+      | }                                                                     |
+      |                                                                       |
+      | /* Users may implement their own ret_val() like:                      |
+      |                                                                       |
+      |      void ret_val(const void *rt_ctrl, const ULO *dat_ptr,            |
+      |         struct fastlisp_data *ret_dat){                               |
+      |        dat_ptr=*((ULO**)dat_ptr);                                     |
+      |        (*(fcall)*dat_ptr)(rt_ctrl,dat_ptr+1,ret_dat);                 |
+      |        return;                                                        |
+      |      }                                                                |
+      |                                                                       |
+      |    or like:                                                           |
+      |                                                                       |
+      |      void ret_val(const void *rt_ctrl, const ULO *dat_ptr,            |
+      |         struct fastlisp_data *ret_dat){                               |
+      |        if(noterror_fast(rt_ctrl)){                                    |
+      |          dat_ptr=*((ULO**)dat_ptr);                                   |
+      |          (*(fcall)*dat_ptr)(rt_ctrl,dat_ptr+1,ret_dat);               |
+      |        }                                                              |
+      |        return;                                                        |
+      |      }                                                                |
+      |                                                                       |
+      |    in order to simplify reading universal data args, e.g.:            |
+      |                                                                       |
+      |      ret_val(rt_ctrl,dat_ptr+4,&dat);                                 |
+      | */                                                                    |
+      |                                                                       |
+      | INSTRUCTION_STRU INSTRUCTION_SET[]={                                  |
+      |   /* ... */                                                           |
+      |   {"MY_FUNCTION",5,'I',(UCH*)"IIFSI",&my_function},                   |
+      |   /* ... */                                                           |
+      | };                                                                    |
+      | const ULO INSTRUCTIONS=                                               |
+      |           sizeof(INSTRUCTION_SET)/sizeof(INSTRUCTION_STRU);           |
+      `-----------------------------------------------------------------------'
+
+    And last but not least is string processing. Internally, strings are
+    stored in the following format:
+
+      .-----------------------------------------------------------------------.
+      | <ULO string_size><string><zero_char><zero_char_alignment_to_ULO_size> |
+      |                  ^                                                    |
+      |                  |                                                    |
+      | CHR *string_ptr -'                                                    |
+      `-----------------------------------------------------------------------'
+
+    The implemented set of the string processing functions is basically equal
+    to the same set on the FastLisp level:
+
+      .-----------------------------------------------------------------------.
+      | CHR *mk_std_buff(CHR **buff, ULO size);                               |
+      | CHR *mk_std_buff_secure(CHR **buff, ULO size);                        |
+      | CHR *mk_fst_buff(CHR **buff, ULO size);                               |
+      | CHR *mk_fst_buff_secure(CHR **buff, ULO size);                        |
+      | CHR *get_std_buff(CHR **targ, const CHR *buff);                       |
+      | CHR *get_std_buff_secure(CHR **targ, const CHR *buff);                |
+      | UCH notempty(const CHR *string);                                      |
+      | ULO len(const CHR *string);                                           |
+      | ULO at(const CHR *pattern, const CHR *among);                         |
+      | ULO rat(const CHR *pattern, const CHR *among);                        |
+      | UCH cmp(const CHR *string1, const CHR *string2);                      |
+      | SCH cmp_s(const CHR *string1, const CHR *string2);                    |
+      | CHR *equ(CHR **targ, const CHR *source);                              |
+      | CHR *equ_secure(CHR **targ, const CHR *source);                       |
+      | CHR *equ_num(CHR **targ, SLO num);                                    |
+      | CHR *equ_unum(CHR **targ, ULO num);                                   |
+      | CHR *equ_numhex(CHR **targ, ULO num);                                 |
+      | CHR *equ_fnum(CHR **targ, DFL fnum);                                  |
+      | CHR *cat(CHR **targ, const CHR *source);                              |
+      | CHR *lcat(CHR **targ, const CHR *source);                             |
+      | CHR *space(CHR **targ, ULO pos);                                      |
+      | CHR *replicate(CHR **targ, const CHR *source, ULO num);               |
+      | CHR *left(CHR **targ, const CHR *source, ULO pos);                    |
+      | CHR *leftr(CHR **targ, const CHR *source, ULO posr);                  |
+      | CHR *right(CHR **targ, const CHR *source, ULO pos);                   |
+      | CHR *rightl(CHR **targ, const CHR *source, ULO posl);                 |
+      | CHR *substr(CHR **targ, const CHR *source, ULO from, ULO pos);        |
+      | CHR *strtran(CHR **targ, const CHR *source, const CHR *pattern,       |
+      |   const CHR *subst);                                                  |
+      | CHR *ltrim(CHR **targ, const CHR *source);                            |
+      | CHR *rtrim(CHR **targ, const CHR *source);                            |
+      | CHR *alltrim(CHR **targ, const CHR *source);                          |
+      | CHR *pack(CHR **targ, const CHR *source);                             |
+      | CHR *head(CHR **targ, const CHR *source);                             |
+      | CHR *tail(CHR **targ, const CHR *source);                             |
+      | CHR *lsp_head(CHR **targ, const CHR *source);                         |
+      | CHR *lsp_tail(CHR **targ, const CHR *source);                         |
+      | CHR *upper(CHR **targ, const CHR *source);                            |
+      | CHR *lower(CHR **targ, const CHR *source);                            |
+      | CHR *upper_utf8(CHR **targ, const CHR *source);                       |
+      | CHR *lower_utf8(CHR **targ, const CHR *source);                       |
+      | UCH is_utf8char(const CHR *utf8char);                                 |
+      | CHR *ltrim_utf8(CHR **targ, const CHR *source);                       |
+      | CHR *rtrim_utf8(CHR **targ, const CHR *source);                       |
+      | CHR *alltrim_utf8(CHR **targ, const CHR *source);                     |
+      | CHR *rev(CHR **targ, const CHR *source);                              |
+      | CHR *padl(CHR **targ, const CHR *source, ULO width);                  |
+      | CHR *padr(CHR **targ, const CHR *source, ULO width);                  |
+      | CHR *padc(CHR **targ, const CHR *source, ULO width);                  |
+      | CHR *strraw(CHR **targ, const CHR *source);                           |
+      | CHR *strunraw(CHR **targ, const CHR *source);                         |
+      | CHR *strdump(CHR **targ, const CHR *source);                          |
+      | CHR *string_time(CHR **targ);                                         |
+      | CHR *strings_version(CHR **targ);                                     |
+      | CHR *sch2str(CHR **targ, SCH num);                                    |
+      | CHR *ssh2str(CHR **targ, SSH num);                                    |
+      | CHR *slo2str(CHR **targ, SLO num);                                    |
+      | CHR *ptr2str(CHR **targ, void *ptr);                                  |
+      | CHR *dfl2str(CHR **targ, DFL num);                                    |
+      | SCH str2sch(const CHR *string);                                       |
+      | SSH str2ssh(const CHR *string);                                       |
+      | SLO str2slo(const CHR *string);                                       |
+      | void *str2ptr(const CHR *string);                                     |
+      | DFL str2dfl(const CHR *string);                                       |
+      | ULO crcsum(const CHR *string);                                        |
+      | CHR *free_string(CHR **targ);                                         |
+      `-----------------------------------------------------------------------'
+
+    An example of string processing is given below:
+
+      .-----------------------------------------------------------------------.
+      | CHR *str0=NULL,*str1=NULL,*str2=NULL;                                 |
+      | get_std_buff(&str0,"To be or not to be");                             |
+      | get_std_buff(&str1,"be");                                             |
+      | get_std_buff(&str2,"compute");                                        |
+      | upper(&str0,strtran(&str0,str0,str1,str2));                           |
+      | printf("`%s'\n",str0);  /* Result: `TO COMPUTE OR NOT TO COMPUTE' */  |
+      | free_string(&str0);                                                   |
+      | free_string(&str1);                                                   |
+      | free_string(&str2);                                                   |
+      `-----------------------------------------------------------------------'
+
+
+#                         \\|//                         #
+#                         (@ @)                         #
+#  .-----------------oOO---(_)---OOo-----------------.  #
+#  |                                                 |  #
+#  |                  BMDFM PROJECT                  |  #
+#  |      Oleksandr Pochayevets (aka Sancho M.)      |  #
+#  |                                                 |  #
+#  `-------------------------------------------------'  #
+#                        |__|__|                        #
+#                         || ||                         #
+#                        ooO Ooo                        #
+
+# <EOF>
+

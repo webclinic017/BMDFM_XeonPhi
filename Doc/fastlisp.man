@@ -1,0 +1,45 @@
+.. fastlisp.man
+..
+.TH fastlisp 1 "13-Aug-2021"
+
+.SH NAME
+ fastlisp \-
+  FastLisp Compiler with Runtime Environment.
+
+.SH SYNOPSIS
+  Usage0: fastlisp -h|--help
+  Usage1: fastlisp -V|--versions
+  Usage2: fastlisp [-q|--quiet] <FastLisp_file_name> [args...]
+  Usage3: fastlisp [-sd|--showDebugInfo] <FastLisp_file_name> [args...]
+  Usage4: fastlisp [-c|--compile2disk] <FastLisp_file_name> [args...]
+  Usage5: fastlisp [-cm|--compileMinimized2disk] <FastLisp_file_name>
+                   [args...]
+  Usage6: fastlisp [-q|--quiet] <Precompiled_FastLisp_file_name>
+  Usage7: fastlisp [-sd|--showDebugInfo]
+                   <Precompiled_FastLisp_file_name>
+
+Runtime environment variable dump:
+  FAST_LISP_CODE_PRINT__TERM_WIDE=0;
+  FAST_LISP_CODE_PRINT__CFG_UDF=1;
+  FAST_LISP_CODE_PRINT__MODIFIED_SRC=1;
+  FAST_LISP_CODE_PRINT__DUMPED_SRC=1;
+  FAST_LISP_CODE_PRINT__COMPILED=1;
+  FAST_LISP_CODE_PRINT__LINKED=1;
+  FAST_LISP_CODE_PRINT__DECOMPILED=1;
+  FAST_LISP_MAPCAR_WITH_DECOMPILER=1;
+  FAST_LISP_COMPILE_WITH_DEBUGINFO=1;
+
+The following environment variable:
+  FAST_LISP_CFGPROFILE_path="fastlisp.cfg"
+specifies a configuration profile that can be used for the Global
+FastLisp function definitions.
+The format of the configuration profile is:
+  <(DEFUN ...)>{ <(DEFUN ...)>}  # <EOF>.
+
+.SH SEE ALSO
+fastlisp.doc BMDFMdoc.pdf BMDFMfaq.pdf BMDFMbld.pdf BMDFMphd.pdf
+
+.SH AUTHOR
+Originally written by:
+ Oleksandr Pochayevets (aka Sancho Mining)
+

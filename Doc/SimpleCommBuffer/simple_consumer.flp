@@ -1,0 +1,20 @@
+# Example of a simple consumer.
+
+
+(setq sync "")
+
+(while 1 (progn
+
+  (setq sync 
+    (setq str (simple_comm_buff_read sync))
+  )
+
+  (if (len str)
+    (outf "%s" str)
+    (break)
+  )
+
+))
+
+"Consumer done.\n"
+

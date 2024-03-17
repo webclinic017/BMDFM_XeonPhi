@@ -1,0 +1,333 @@
+# worm.flp
+# FastLisp program example by Sancho Mining.
+
+# The famous `Worm' game.
+
+(progn
+  (defun RENDER_ENTIRE_WORM_GAME_SCENE
+    (progn
+      (defun RENDER_ONE_RASTER_FOR_WORM_GAME_SCENE  # defined in conf. profile
+        (progn
+          (setq worm_         (cat "" $1))
+          (setq linenum_      (+ 0    $2))
+          (setq num2eat_      (+ 0    $3))
+          (setq num2eatL_     (+ 0    $4))
+          (setq num2eatC_     (+ 0    $5))
+          (setq columns_term_ (+ 0    $6))
+          (setq blink_term_   (cat "" $7))
+          (setq bold_term_    (cat "" $8))
+          (setq normal_term_  (cat "" $9))
+          (setq out "|")
+          (setq ci (- columns_term_ 3))
+          (for c 0 1 ci (progn
+            (setq i (at (cat "|" (cat (str linenum_) (cat ":" (cat (str c) "|"
+              )))) worm_))
+            (if (== i 1)
+              (progn
+                (setq out (cat out bold_term_))
+                (setq out (cat out "@"))
+                (setq out (cat out normal_term_))
+              )
+              (if (> i 1)
+                (setq out (cat out "*"))
+                (if (&& (> num2eat_ 0) (&& (== num2eatL_ linenum_)
+                   (== num2eatC_ c)))
+                  (progn
+                    (setq out (cat out blink_term_))
+                    (setq out (cat out bold_term_))
+                    (setq out (cat out (str num2eat_)))
+                    (setq out (cat out normal_term_))
+                  )
+                  (setq out (cat out " "))
+                )
+              )
+            )
+          ))
+          (setq out (cat out "|"))
+        )
+      )  # end RENDER_ONE_RASTER_FOR_WORM_GAME_SCENE
+
+      (setq worm_            (cat "" $1))
+      (setq score_           (+ 0    $2))
+      (setq num2eat_         (+ 0    $3))
+      (setq num2eatL_        (+ 0    $4))
+      (setq num2eatC_        (+ 0    $5))
+      (setq lines_term_      (+ 0    $6))
+      (setq columns_term_    (+ 0    $7))
+      (setq hidecursor_term_ (cat "" $8))
+      (setq showcursor_term_ (cat "" $9))
+      (setq blink_term_      (cat "" $10))
+      (setq bold_term_       (cat "" $11))
+      (setq reverse_term_    (cat "" $12))
+      (setq normal_term_     (cat "" $13))
+      (setq gotocursor_term_ (cat "" $14))
+      (setq out "")
+      (setq out (cat out hidecursor_term_))
+      (setq out (cat out reverse_term_))
+      (setq out (cat out (gotocursor1_term gotocursor_term_ 0 0)))
+      (setq out (cat out (padc (cat "The `Worm' Game! "
+        "(FastLisp version for terminals by Sancho Mining)") columns_term_)))
+      (setq out (cat out normal_term_))
+      (setq li (- lines_term_ 4))
+      (for l 0 1 li (progn
+        (setq out (cat out (gotocursor1_term gotocursor_term_ (++ l) 0)))
+        (setq out (cat out (RENDER_ONE_RASTER_FOR_WORM_GAME_SCENE
+          worm_ l num2eat_ num2eatL_ num2eatC_
+          columns_term_ blink_term_ bold_term_ normal_term_)))
+      ))
+      (setq out (cat out reverse_term_))
+      (setq out (cat out (gotocursor1_term gotocursor_term_ (- lines_term_ 2)
+        0)))
+      (setq out (cat out (padr (cat (cat " I-Up K-Down J/N-Left L/M-Right"
+        " \"F\"aster \"S\"lower \"P\"ause \"Q\"uit | Score: ")
+        (cat (str score_) " ")) columns_term_)))
+      (setq out (cat out normal_term_))
+      (setq out (cat out (gotocursor1_term gotocursor_term_ (-- lines_term_)
+        0)))
+      (setq out (cat out (space (-- columns_term_))))
+      (setq out (cat out (gotocursor1_term gotocursor_term_ (-- lines_term_)
+        0)))
+      (setq out (cat out showcursor_term_))
+    )
+  )  # end RENDER_ENTIRE_WORM_GAME_SCENE
+
+  (if (|| (|| (!= term_type (term_type)) (!= lines_term (lines_term)))
+     (!= columns_term (columns_term)))
+    (while 1 (progn
+      (outf "\nChoose terminal:\n" nil)
+      (outf "  0 - TERM_TYPE=`%s';" term_type)
+      (outf " LINES_TERM=`%d';" lines_term)
+      (outf " COLUMNS_TERM=`%d';\n" columns_term)
+      (outf "  1 - TERM_TYPE=`%s';" (term_type))
+      (outf " LINES_TERM=`%d';" (lines_term))
+      (outf " COLUMNS_TERM=`%d'.\n" (columns_term))
+      (outf "Enter your choice (0 or 1) or press 'q' to quit:" nil)
+      (setq ch (upper (scan_console 5000000)))
+      (if (|| (== ch "Q") (== (asc ch) 3))
+        (exit)
+        (if (== ch "0")
+          (break)
+          (if (== ch "1")
+            (progn
+              (setq term_type (term_type))
+              (setq lines_term (lines_term))
+              (setq columns_term (columns_term))
+              (setq clrscr_term (clrscr_term))
+              (setq reverse_term (reverse_term))
+              (setq blink_term (blink_term))
+              (setq bold_term (bold_term))
+              (setq normal_term (normal_term))
+              (setq hidecursor_term (hidecursor_term))
+              (setq showcursor_term (showcursor_term))
+              (setq gotocursor_term (gotocursor_term -1 -1))
+              (break)
+            )
+            (if (== (asc ch) 0)
+              nil
+              (outf "\n\n*** Invalid selection ***\n" nil)
+            )
+          )
+        )
+      )
+    ))
+    nil
+  )
+  (if (|| (< lines_term 24) (< columns_term 80))
+    (progn
+      (outf "\n\n*** Terminal is too tiny ***\n" nil)
+      (exit)
+    )
+    nil
+  )
+  (setq headL 0)
+  (setq headC 3)
+  (setq worm "|0:3|0:2|0:1|0:0|")
+  (setq score 0)
+  (setq num2eat 0)
+  (setq num2eatL 0)
+  (setq num2eatC 0)
+  ############### Performance Test (Fragment 1 of 2) ###############
+  # (setq num2eat (<< (+ (- lines_term 10) (- columns_term 10)) 1))
+  # (setq num2eatL 1)
+  # (setq num2eatC 1)
+  ##################################################################
+  (setq still2eat 0)
+  (setq ch_prev "L")
+  (setq speed 100000)
+  (irnd -1)
+  (outf (prn_string_fmt) clrscr_term)
+  (while 1 (progn
+    (outf (prn_string_fmt)
+      (RENDER_ENTIRE_WORM_GAME_SCENE worm score num2eat num2eatL num2eatC
+      lines_term columns_term hidecursor_term showcursor_term
+      blink_term bold_term reverse_term normal_term gotocursor_term))
+    (setq ch (upper (scan_console speed)))
+    (if (== ch "P")
+      (setq ch (upper (scan_console 1)))
+      nil
+    )
+    (if (== ch "F")
+      (progn
+        (setq speed (>> speed 1))
+        (if (< speed 2)
+          (setq speed 0)
+          nil
+        )
+      )
+      (if (== ch "S")
+        (progn
+          (if (< speed 2)
+            (setq speed 1)
+            nil
+          )
+          (setq speed (<< speed 1))
+        )
+        (if (== ch "Q")
+          (break)
+          nil
+        )
+      )
+    )
+    (if (== ch "I")
+      (setq ch_prev "I")
+      (if (== ch "K")
+        (setq ch_prev "K")
+        (if (== ch "J")
+          (setq ch_prev "J")
+          (if (== ch "L")
+            (setq ch_prev "L")
+            nil
+          )
+        )
+      )
+    )
+    (if (== ch "N")
+      (if (== ch_prev "I")
+        (setq ch_prev "J")
+        (if (== ch_prev "K")
+          (setq ch_prev "L")
+          (if (== ch_prev "J")
+            (setq ch_prev "K")
+            (if (== ch_prev "L")
+              (setq ch_prev "I")
+              nil
+            )
+          )
+        )
+      )
+      (if (== ch "M")
+        (if (== ch_prev "I")
+          (setq ch_prev "L")
+          (if (== ch_prev "K")
+            (setq ch_prev "J")
+            (if (== ch_prev "J")
+              (setq ch_prev "I")
+              (if (== ch_prev "L")
+                (setq ch_prev "K")
+                nil
+              )
+            )
+          )
+        )
+        nil
+      )
+    )
+    ############### Performance Test (Fragment 2 of 2) ###############
+    # (while 1 (progn
+    #   (if (== headC (- columns_term 3))
+    #     (progn (setq ch_prev "K") (setq headC (-- headC)) (break))
+    #     nil
+    #   )
+    #   (if (== headL (- lines_term 4))
+    #     (progn (setq ch_prev "J") (setq headL (-- headL)) (break))
+    #     nil
+    #   )
+    #   (if (== headC 0)
+    #     (progn (setq ch_prev "I") (setq headC 1) (break))
+    #     nil
+    #   )
+    #   (if (== headL 0)
+    #     (progn (setq ch_prev "L") (setq headL 1) (break))
+    #     nil
+    #   )
+    #   (break)
+    # ))
+    ##################################################################
+    (if (== ch_prev "I")
+      (progn
+        (setq headL (-- headL))
+        (if (< headL 0)
+          (break)
+          nil
+        )
+      )
+      (if (== ch_prev "K")
+        (progn
+          (setq headL (++ headL))
+          (if (> headL (- lines_term 4))
+            (break)
+            nil
+          )
+        )
+        (if (== ch_prev "J")
+          (progn
+            (setq headC (-- headC))
+            (if (< headC 0)
+              (break)
+              nil
+            )
+          )
+          (if (== ch_prev "L")
+            (progn
+              (setq headC (++ headC))
+              (if (> headC (- columns_term 3))
+                (break)
+                nil
+              )
+            )
+            nil
+          )
+        )
+      )
+    )
+    (if (at (cat "|" (cat (str headL) (cat ":" (cat (str headC) "|")))) worm)
+      (break)
+      nil
+    )
+    (if (&& (== headL num2eatL) (== headC num2eatC))
+      (progn
+        (setq still2eat num2eat)
+        (setq num2eat 0)
+        (setq score (+ score still2eat))
+      )
+      nil
+    )
+    (if (> still2eat 0)
+      (setq still2eat (-- still2eat))
+      (progn
+        (setq worm (leftr worm 1))
+        (setq worm (left worm (rat "|" worm)))
+      )
+    )
+    (setq worm (cat (str headC) worm))
+    (setq worm (cat ":" worm))
+    (setq worm (cat (str headL) worm))
+    (setq worm (cat "|" worm))
+    (if (== num2eat 0)
+      (while 1 (progn
+        (setq num2eatL (irnd (- lines_term 4)))
+        (setq num2eatC (irnd (- columns_term 3)))
+        (if (at (cat "|" (cat (str num2eatL) (cat ":" (cat (str num2eatC) "|")
+           ))) worm)
+          nil
+          (progn
+            (setq num2eat (++ (irnd 8)))
+            (break)
+          )
+        )
+      ))
+      nil
+    )
+  ))
+  ""
+)

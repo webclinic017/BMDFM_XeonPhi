@@ -1,0 +1,203 @@
+In this example:
+~~~~~~~~~~~~~~~~
+    We create a C++ object in the Shared Memory Pool. This object
+    implements a simple communication buffer:
+
+               .-----------------------------------.
+    Producer:  | Buffer in the Shared Memory Pool: | Consumer:
+      WR(str); |   - str_data                      |   str=RD();
+    ---------->|   - WR_Sema4                      |------------>
+               |   - RD_Sema4                      |
+               |                                   |
+               |   - WR(){                         |
+               |        wait(WR_Sema4);            |
+               |        str_data=str;              |
+               |        post(RD_Sema4);            |
+               |     }                             |
+               |   - RD(){                         |
+               |        wait(RD_Sema4);            |
+               |        str=str_data;              |
+               |        post(WR_Sema4);            |
+               |     }                             |
+               `-----------------------------------'
+
+    BMDFM producer taskjob writes strings into the simple communication buffer
+    and BMDFM consumer taskjob reads them from the simple communication buffer.
+
+
+Files:
+~~~~~~
+    simple_comm_buff.txt - This file.
+
+    shmem_stub.c         - Shared Memory Pool stub for fastlisp.
+
+    simple_comm_buff.h   - Interface of the simple communication buffer.
+    simple_comm_buff.cpp - Implementation of the simple communication buffer.
+
+    cflp_udf.c           - Extension added to the BMDFM C/C++ interface.
+
+    Makefile             - Makefile to build the example.
+
+    simple_producer.flp  - Example of a simple producer.
+    simple_consumer.flp  - Example of a simple consumer.
+
+
+Output:
+~~~~~~~
+    $ fastlisp -q simple_consumer.flp
+
+    [RunTimeErrCode=0] No Shared Memory Pool is available!
+
+    $ fastlisp -q simple_producer.flp
+
+    [RunTimeErrCode=0] No Shared Memory Pool is available!
+
+    $ BMDFMsrv -d &
+    [2] 11851
+
+    $ ps
+      PID TTY          TIME CMD
+     2834 pts/0    00:00:00 bash
+    11851 pts/0    00:00:00 BMDFMsrv
+    11852 pts/0    00:00:00 PROCstat
+    11853 pts/0    00:00:00 CPUPROC
+    11854 pts/0    00:00:00 CPUPROC
+    11855 pts/0    00:00:00 CPUPROC
+    11856 pts/0    00:00:00 CPUPROC
+    11857 pts/0    00:00:00 CPUPROC
+    11858 pts/0    00:00:00 CPUPROC
+    11859 pts/0    00:00:00 CPUPROC
+    11860 pts/0    00:00:00 CPUPROC
+    11861 pts/0    00:00:00 OQPROC
+    11862 pts/0    00:00:00 OQPROC
+    11863 pts/0    00:00:00 OQPROC
+    11864 pts/0    00:00:00 OQPROC
+    11865 pts/0    00:00:00 OQPROC
+    11866 pts/0    00:00:00 OQPROC
+    11867 pts/0    00:00:00 OQPROC
+    11868 pts/0    00:00:00 OQPROC
+    11869 pts/0    00:00:00 IORBPROC
+    11870 pts/0    00:00:00 IORBPROC
+    11871 pts/0    00:00:00 IORBPROC
+    11872 pts/0    00:00:00 IORBPROC
+    11873 pts/0    00:00:00 IORBPROC
+    11874 pts/0    00:00:00 IORBPROC
+    11875 pts/0    00:00:00 IORBPROC
+    11876 pts/0    00:00:00 IORBPROC
+    11877 pts/0    00:00:00 ps
+
+    $ BMDFMldr -q simple_producer.flp &
+    [3] 11878
+
+    $ BMDFMldr -q simple_consumer.flp
+    Hello, world 1 on CPU 7!
+    Hello, world 2 on CPU 5!
+    Hello, world 3 on CPU 3!
+    Hello, world 4 on CPU 2!
+    Hello, world 5 on CPU 1!
+    Hello, world 6 on CPU 0!
+    Hello, world 7 on CPU 7!
+    Hello, world 8 on CPU 6!
+    Hello, world 9 on CPU 5!
+    Hello, world 10 on CPU 3!
+    Hello, world 11 on CPU 2!
+    Hello, world 12 on CPU 1!
+    Hello, world 13 on CPU 0!
+    Hello, world 14 on CPU 7!
+    Hello, world 15 on CPU 6!
+    Hello, world 16 on CPU 5!
+    Hello, world 17 on CPU 3!
+    Hello, world 18 on CPU 2!
+    Hello, world 19 on CPU 1!
+    Hello, world 20 on CPU 0!
+    Hello, world 21 on CPU 7!
+    Hello, world 22 on CPU 6!
+    Hello, world 23 on CPU 5!
+    Hello, world 24 on CPU 3!
+    Hello, world 25 on CPU 2!
+    Hello, world 26 on CPU 1!
+    Hello, world 27 on CPU 0!
+    Hello, world 28 on CPU 7!
+    Hello, world 29 on CPU 6!
+    Hello, world 30 on CPU 5!
+    Hello, world 31 on CPU 3!
+    Hello, world 32 on CPU 2!
+    Hello, world 33 on CPU 1!
+    Hello, world 34 on CPU 0!
+    Hello, world 35 on CPU 7!
+    Hello, world 36 on CPU 6!
+    Hello, world 37 on CPU 5!
+    Hello, world 38 on CPU 3!
+    Hello, world 39 on CPU 2!
+    Hello, world 40 on CPU 1!
+    Hello, world 41 on CPU 0!
+    Hello, world 42 on CPU 7!
+    Hello, world 43 on CPU 6!
+    Hello, world 44 on CPU 5!
+    Hello, world 45 on CPU 3!
+    Hello, world 46 on CPU 2!
+    Hello, world 47 on CPU 1!
+    Hello, world 48 on CPU 0!
+    Hello, world 49 on CPU 7!
+    Hello, world 50 on CPU 6!
+    Hello, world 51 on CPU 5!
+    Hello, world 52 on CPU 3!
+    Hello, world 53 on CPU 2!
+    Hello, world 54 on CPU 1!
+    Hello, world 55 on CPU 0!
+    Hello, world 56 on CPU 7!
+    Hello, world 57 on CPU 6!
+    Hello, world 58 on CPU 5!
+    Hello, world 59 on CPU 3!
+    Hello, world 60 on CPU 2!
+    Hello, world 61 on CPU 1!
+    Hello, world 62 on CPU 0!
+    Hello, world 63 on CPU 7!
+    Hello, world 64 on CPU 6!
+    Hello, world 65 on CPU 5!
+    Hello, world 66 on CPU 3!
+    Hello, world 67 on CPU 2!
+    Hello, world 68 on CPU 1!
+    Hello, world 69 on CPU 0!
+    Hello, world 70 on CPU 7!
+    Hello, world 71 on CPU 6!
+    Hello, world 72 on CPU 5!
+    Hello, world 73 on CPU 3!
+    Hello, world 74 on CPU 2!
+    Hello, world 75 on CPU 1!
+    Hello, world 76 on CPU 0!
+    Hello, world 77 on CPU 7!
+    Hello, world 78 on CPU 6!
+    Hello, world 79 on CPU 5!
+    Hello, world 80 on CPU 3!
+    Hello, world 81 on CPU 2!
+    Hello, world 82 on CPU 1!
+    Hello, world 83 on CPU 0!
+    Hello, world 84 on CPU 7!
+    Hello, world 85 on CPU 6!
+    Hello, world 86 on CPU 5!
+    Hello, world 87 on CPU 3!
+    Hello, world 88 on CPU 2!
+    Hello, world 89 on CPU 1!
+    Hello, world 90 on CPU 0!
+    Hello, world 91 on CPU 7!
+    Hello, world 92 on CPU 6!
+    Hello, world 93 on CPU 5!
+    Hello, world 94 on CPU 3!
+    Hello, world 95 on CPU 2!
+    Hello, world 96 on CPU 1!
+    Hello, world 97 on CPU 0!
+    Hello, world 98 on CPU 7!
+    Producer done.
+
+    Hello, world 99 on CPU 6!
+    Hello, world 100 on CPU 5!
+    Consumer done.
+
+    [3]+  Done                    BMDFMldr -q simple_producer.flp
+
+    $ echo command down down >/tmp/.BMDFMsrv_npipe
+
+    $
+    [2]+  Done                    BMDFMsrv -d
+

@@ -1,0 +1,76 @@
+# GMP_pi.flp
+# GMP Wrapper Test that Computes Pi.
+# FastLisp program example by Sancho Mining.
+
+# The Chudnovsky Algorithm:
+#                                _____
+#                     426880 * \/10005
+#  pi = ---------------------------------------------
+#         _Inf_
+#         \     (6*k)! * (13591409 + 545140134 * k)
+#          \    -----------------------------------
+#          /     (3*k)! * (k!)^3 * (-640320)^(3*k)
+#         /____
+#          k=0
+
+(defun chudnovsky
+  (progn
+    (setq digits (iabs $1))
+    (setq iterations (+ 1 (/. digits 14.1816474627254776555)))
+    (setq mpf_precision (+ 10 digits))  # in decimal digits
+
+    (setq mpf_sum (mpf (padl "0.0" mpf_precision)))
+    (setq mpf_con (mpf_mul (mpf_sqr (mpf (padl "10005.0" mpf_precision)))
+      (mpf (padl "426880.0" mpf_precision))))
+
+    (setq mpz_13591409 (mpz 13591409))
+    (setq mpz_545140134 (mpz 545140134))
+    (setq mpz_-640320 (mpz -640320))
+
+    (for k 0 1 iterations (progn
+      (setq k3 (* 3 k))
+      (setq mpz_a (mpz_fac_i (* 6 k)))
+      (setq mpz_b (mpz_add mpz_13591409 (mpz_mul mpz_545140134 (mpz k))))
+      (setq mpz_c (mpz_fac_i k3))
+      (setq mpz_d (mpz_pow_i (mpz_fac_i k) 3))
+      (setq mpz_e (mpz_pow_i mpz_-640320 k3))
+      (setq mpf_a (cat (mpz_tostr (mpz_mul mpz_a mpz_b)) ".0"))
+      (setq mpf_b (cat (mpz_tostr (mpz_mul mpz_c (mpz_mul mpz_d mpz_e)))
+        ".0"))
+      (setq mpf_a (mpf (if (< (len mpf_a) mpf_precision)
+        (padl mpf_a mpf_precision) mpf_a)))
+      (setq mpf_b (mpf (if (< (len mpf_b) mpf_precision)
+        (padl mpf_b mpf_precision) mpf_b)))
+      (setq mpf_f (mpf_div mpf_a mpf_b))
+      (setq mpf_sum (mpf_add mpf_sum mpf_f))
+    ))
+    (left (mpf_tostr (mpf_div mpf_con mpf_sum)) digits)
+  )
+)
+
+# Intel(R) Xeon(R) CPU E5-2680 v4 @ 2.40GHz
+# =========================================
+#
+# 1 CPU:
+# ~~~~~~
+# Time spent to run the task:
+#    Used by process: 164.049304sec.
+#    Used by  system: 2.480923sec.
+#    Total used time: 1.665302270000E+02sec.
+# Real absolute time: 1.665303559303E+02sec.
+#
+# 28 CPUs:
+# ~~~~~~~~
+# Time spent to run the task (by PARENT loader and CHILD listener):
+#    Used by process: 0.077351sec.
+#    Used by  system: 0.264873sec.
+#    Total used time: 3.422240000000E-01sec.
+# Real absolute time: 7.005654001236E+00sec.
+#
+(setq digits 100000)
+
+(setq pi (chudnovsky digits))
+(outf "%s\n" pi)
+(outf "(size=%ld)\n" (len pi))
+""
+

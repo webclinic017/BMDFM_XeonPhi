@@ -1,0 +1,271 @@
+# READ_ME.1ST
+
+
+################
+##            ##
+##  Welcome!  ##
+##            ##
+################
+
+This is release of BMDFM v.5.9.9 R25 (Revision 2025), build 20250613.
+Welcome!
+
+This release contains separate distributions for two interchangeable
+C-Interfaces (read C-Interfaces.txt file for more details):
+  - Build/                   - Conventional C-interface
+  - Build_MultiProcess/      - Conventional C-interface
+  - Build_ExtendedInterface/ - Extended C-interface
+
+Official web site: http://bmdfm.com
+          Support: bmdfm@bmdfm.de
+
+Use of enclosed software is subject to license restrictions. Carefully read
+End User License Agreement (EULA) before using this software. If you do not
+agree to the terms and conditions specified in the EULA, please destroy all
+your copies of this software from any drives, disks, tapes or other storage
+media and recycle all related printouts immediately.
+
+
+###########################
+##                       ##
+##  Quick startup guide  ##
+##                       ##
+###########################
+
+  0. Choose a BMDFM build by linking Bin directory to the right target
+     directory (default link is Bin -> Build/x86_Linux_32_gccV485/), e.g.:
+
+       $ rm Bin
+       $ ln -s Build_ExtendedInterface/x86-64_Linux_64_gccV485 Bin
+
+  1. Start the BM_DFM Server:
+
+       $ BMDFMsrv
+
+  2. Shut down the BM_DFM Server immediately by typing DOWN DOWN at the BM_DFM
+     Server console:
+
+       : DOWN DOWN
+
+  3. If there are issues with terminal capabilities then verify/set your
+     termcap environment, e.g.:
+
+       $ echo $TERM
+       dummy
+       $ export TERM=vt100
+       $ export TERMCAP=`pwd`/termcap
+
+
+#####################################################
+##                                                 ##
+##  Running a parallel "Hello, world!" with BMDFM  ##
+##                                                 ##
+#####################################################
+
+  0. Create a parallel "Hello, world!", e.g.:
+
+       $ ed
+       a
+       (for i 1 1 5 (outf "Hello, world %ld!\n" i)) ""
+       .
+       w hello.flp
+       48
+       q
+
+  1. Check whether your "Hello, world!" works:
+
+       $ fastlisp -q hello.flp
+       Hello, world 1!
+       Hello, world 2!
+       Hello, world 3!
+       Hello, world 4!
+       Hello, world 5!
+
+  2. In order to see what is executed in parallel, let our parallel processing
+     units log their activities. Edit your BMDFMsrv.cfg file:
+
+       PROC_CPU_LOGS = Yes
+
+  3. Start the BM_DFM Server as a daemon:
+
+       $ BMDFMsrv -d &
+
+  4. Run your "Hello, world!" in parallel. You will also see a reorganized
+     version of your program:
+
+       $ BMDFMldr hello.flp
+       . . .
+       (PROGN
+         (SETQ@S MAIN:TERM_TYPE@S "vt100")
+         (SETQ@I MAIN:LINES_TERM@I 47)
+         (SETQ@I MAIN:COLUMNS_TERM@I 113)
+         (SETQ@S MAIN:CLRSCR_TERM@S "\e[H\e[J")
+         (SETQ@S MAIN:REVERSE_TERM@S "\e[7m")
+         (SETQ@S MAIN:BLINK_TERM@S "\e[5m")
+         (SETQ@S MAIN:BOLD_TERM@S "\e[1m")
+         (SETQ@S MAIN:NORMAL_TERM@S "\e[m\0x0F")
+         (SETQ@S MAIN:HIDECURSOR_TERM@S "")
+         (SETQ@S MAIN:SHOWCURSOR_TERM@S "")
+         (SETQ@S MAIN:GOTOCURSOR_TERM@S "\e[%i%d;%dH")
+         (FOR@J
+           MAIN:I@I 1 1 5
+           (SETQ@S MAIN:TMP__000000001@S (OUTF "Hello, world %ld!\n" MAIN:I@I))
+         )
+         (SETQ@S MAIN:TMP__000000001@S (OUTF (PRN_STRING_FMT) (CAT@J "" "")))
+         (SETQ@S MAIN:TMP__000000000@S "")
+       )
+       . . .
+       Hello, world 1!
+       Hello, world 2!
+       Hello, world 3!
+       Hello, world 4!
+       Hello, world 5!
+
+  5. Modify and re-run your "Hello, world!":
+
+       $ ed
+       a
+       (for i 1 1 5
+         (outf "Hello, world %s!\n" (cat i (cat " on CPU " (id_cpuproc))))
+       )
+       ""
+       .
+       w hello.flp
+       86
+       q
+
+       $ fastlisp -q hello.flp
+       Hello, world 1 on CPU 0!
+       Hello, world 2 on CPU 0!
+       Hello, world 3 on CPU 0!
+       Hello, world 4 on CPU 0!
+       Hello, world 5 on CPU 0!
+
+       $ BMDFMldr -q hello.flp
+       Hello, world 1 on CPU 1!
+       Hello, world 2 on CPU 7!
+       Hello, world 3 on CPU 2!
+       Hello, world 4 on CPU 0!
+       Hello, world 5 on CPU 3!
+
+       $ BMDFMldr -q hello.flp
+       Hello, world 1 on CPU 4!
+       Hello, world 2 on CPU 2!
+       Hello, world 3 on CPU 4!
+       Hello, world 4 on CPU 6!
+       Hello, world 5 on CPU 7!
+
+  6. Shut down the BM_DFM Server:
+
+       $ echo command down down >/tmp/.BMDFMsrv_npipe
+
+  7. Check generated log:
+
+       $ cat PROCs.log
+       . . .
+       [IORBPPROC#0]: BEGIN at (sec=XXXXXXXXXX, usec=XXXXX)
+         TaskCntx_ID = #10
+         SrcAddrRefs = <6:3:0>[0](#3) = 4 /* MAIN:I@I */
+       END_OF_IORBPPROC_ENTRY at (sec=XXXXXXXXXX, usec=XXXXX)
+
+       [IORBPPROC#2]: BEGIN at (sec=XXXXXXXXXX, usec=XXXXX)
+         TaskCntx_ID = #10
+         SrcAddrRefs = <6:4:0>[0](#4) = 5 /* MAIN:I@I */
+       END_OF_IORBPPROC_ENTRY at (sec=XXXXXXXXXX, usec=XXXXX)
+
+       [CPUPROC#5]: BEGIN at (sec=XXXXXXXXXX, usec=XXXXX)
+         TastCntx_ID = #10
+         FstLispCode = `(SETQ@S MAIN:TMP__000000001@S (OUTF "Hello, world %ld!
+                       \n" MAIN:I@I))'
+         AddressRefs = <13:4:0>[0](#4){CHR16}, <6:4:0>[0](#4){SLO8}
+                       /* MAIN:TMP__000000001@S, MAIN:I@I */
+         OutputOrder = {4(Ls)}
+       END_OF_CPUPROC_ENTRY at (sec=XXXXXXXXXX, usec=XXXXX)
+
+       [IORBPPROC#4]: BEGIN at (sec=XXXXXXXXXX, usec=XXXXX)
+         TaskCntx_ID = #10
+         SrcAddrRefs = <6:5:0>[0](#5) = 6 /* MAIN:I@I */
+       END_OF_IORBPPROC_ENTRY at (sec=XXXXXXXXXX, usec=XXXXX)
+
+       [CPUPROC#4]: BEGIN at (sec=XXXXXXXXXX, usec=XXXXX)
+         TastCntx_ID = #10
+         FstLispCode = `(SETQ@S MAIN:TMP__000000001@S (OUTF "Hello, world %ld!
+                       \n" MAIN:I@I))'
+         AddressRefs = <13:3:0>[0](#3){CHR16}, <6:3:0>[0](#3){SLO8}
+                       /* MAIN:TMP__000000001@S, MAIN:I@I */
+         OutputOrder = {3(Ls)}
+       END_OF_CPUPROC_ENTRY at (sec=XXXXXXXXXX, usec=XXXXX)
+
+       [CPUPROC#6]: BEGIN at (sec=XXXXXXXXXX, usec=XXXXX)
+         TastCntx_ID = #10
+         FstLispCode = `(SETQ@S MAIN:TMP__000000001@S (OUTF (PRN_STRING_FMT)
+                       (CAT@J "" "")))'
+         AddressRefs = <13:5:0>[0](#5){CHR0} /* MAIN:TMP__000000001@S */
+         OutputOrder = {5(Ls)}
+       END_OF_CPUPROC_ENTRY at (sec=XXXXXXXXXX, usec=XXXXX)
+       . . .
+
+  8. Do not forget to undo changes in your BMDFMsrv.cfg file:
+
+       PROC_CPU_LOGS = No
+
+
+##########################
+##                      ##
+##  SVR4 IPC resources  ##
+##                      ##
+##########################
+
+Please, ensure suitable amount of SVR4 IPC resources when running BMDFM (note
+that BMDFM can be configured with POSIX/SVR4-IPC-synchronization).
+
+Example for SunOS:
+
+/etc/system
+  set shmsys:shminfo_shmmax=2147483647
+  set semsys:seminfo_semmni=128
+  set semsys:seminfo_semmsl=256
+  set semsys:seminfo_semmns=32768
+
+Note that 2147483647 (2GB) shmmax value is normally a limit for 32-bit mode.
+Run 64-bit BMDFM that allows you to configure more shared memory space.
+
+On Linux, the shared memory limits (both SHMMAX and SHMALL) might be set to
+a low value by default. However, they can be changed on the /proc file system
+(no reboot needed).
+For example, to allow one 64GB:
+
+   $ su root
+   # echo 68719476736 >/proc/sys/kernel/shmall
+   # echo 68719476736 >/proc/sys/kernel/shmmax
+
+You could also add these commands into a script that is executed at boot time.
+
+Alternatively, you can use sysctl, if available, to control these parameters.
+Search for a file like /etc/sysctl.conf and add the following lines:
+
+   kernel.shmall = 68719476736
+   kernel.shmmax = 68719476736
+
+This file is usually processed at boot time, but sysctl can be called from the
+command line as well.
+
+   $ su root
+   # sysctl -w kernel.shmall=68719476736
+   # sysctl -w kernel.shmmax=68719476736
+
+
+#                         \\|//                         #
+#                         (@ @)                         #
+#  .-----------------oOO---(_)---OOo-----------------.  #
+#  |                                                 |  #
+#  |                  BMDFM PROJECT                  |  #
+#  |      Oleksandr Pochayevets (aka Sancho M.)      |  #
+#  |                                                 |  #
+#  `-------------------------------------------------'  #
+#                        |__|__|                        #
+#                         || ||                         #
+#                        ooO Ooo                        #
+
+# <EOF>
+

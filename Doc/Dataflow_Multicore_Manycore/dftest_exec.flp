@@ -1,0 +1,132 @@
+# dftest_exec.flp
+# Refer to the BMDFM comprehensive manual for more information.
+
+
+# This program reads multiple data clusters from the prepared input test file:
+#
+# <SequenceId><TrailingSpaces>                ^
+# <RecordsPerDataCluster><TrailingSpaces>     |R
+# AOJJYPICIMGNENDSADMMPABZLALVZFNAUWJSLSV  ^  |e
+# UFCIJPLCPPPCFQDEBDQWDWJDQFNJRFELKHTUWFX  |R |c
+# MVNOADSFEWVBZRKCIQPRHVWTGDNAZSYMOLAPPTU  |e |o
+# TPQVOIFQQWGHEBEXHHKIHDGTRSUGHNBBCSWQACH  |c |r
+# RZOZDPDAXKKGRONKFFEMNSNPUGMLGOSXNGXRWAR  |o |d
+# ULCACQNNWTSIHKWWFCIQJXIGLPECLEUFPWGSNUG  |r |s
+# JNYRVJORPQAFZYOGKDKMPPHVFEBXRVDAJCSEMGW  |d |P
+# BXWGXVUEFYPSOEZJJDLHUHLVQNNVZURBROHOJCT  |s |e
+# PBIHPNGZWKKEERPZICNECHVDZKLNUOHJPPQFCXE  |P |r
+# ZHPDMGTMPWZTYGPCFZOTUCBDSQUXSSCSZRVMYPY  |e |D
+# NLXGJEWMKWAEQDFUWWPTOHWHHNDTMSRZDPGNTDZ  |r |a
+# EZAJPDOKZKZTZGQHNEKGQCYQFNXSHASMZSVPWJZ  |D |t
+# VUYPUFFBSJLZAOYQTLOMTOEFOXADTKDPFBEZGKA  |a |a
+# ZUMZUAXLUJZGCOLICIIGCTJRYKWXRHYRBLQWMNI  |t |C
+# GWHNZWZHYIPEKJNBHYYFQFEHHPXDBKMIHUWGQVN  |a |l
+# ODDTNMHPUFNZWSDDZTBDVLPETJAZAVMOYPIMCPB  |C |u
+# WVOWRHAVGUWKPIATBKTAKPNZNDHAFWBCSQZJXZF  |l |s
+# ETBOJKPCMZWMJLAJZDQZJNBMGRLPOKVSEXHNHXQ  |u |t
+# TWNGGYGPYKGYTUZGAQRQFBLYFIFTQCJKZWQGVXV  |s |e
+# UHCSBXSHXIYOOAZMGISAZVJJUGZACXWXFZQGWIO  |t |r
+# URNIFOIRUQJUPEEYZLYAOWXLBWBITKXNBKVGYEY  |e |+
+# TUIOKNTJMFINTEKFFHHOARLOSVKZUOYOJGCTTWC  |r |2
+#
+# <------------- RecordSize ------------->
+#
+#
+# The multiple data clusters are processed and written to an output test file.
+
+
+(progn
+  # Configuration parameters:
+  (setq RecordSize                                40)
+  (setq InputTestFileName            "dftest_in.dat")
+  (setq OutputTestFileName          "dftest_out.dat")
+
+  # Sanity checks:
+  (setq InputTestFileName (cat InputTestFileName
+    (if (at "." InputTestFileName) "" ".dat")))
+  (setq InputTestFileName (strtran InputTestFileName "."
+    (cat (if (id_taskjob) (str (id_taskjob)) "") ".")))
+  (if (== -1 (setq fdescr_ (file_open InputTestFileName)))
+    (progn
+      (outf "Error opening file %s\n" InputTestFileName)
+      (exit)
+    )
+    (file_close fdescr_)
+  )
+  (setq OutputTestFileName (cat OutputTestFileName
+    (if (at "." OutputTestFileName) "" ".dat")))
+  (setq OutputTestFileName (strtran OutputTestFileName "."
+    (cat (if (id_taskjob) (str (id_taskjob)) "") ".")))
+  (if (== -1 (setq fdescr (file_create OutputTestFileName)))
+    (progn
+      (outf "Error creating file %s\n" OutputTestFileName)
+      (exit)
+    )
+    (setq fdescr (file_close fdescr))
+  )
+  (if (< RecordSize 40)
+    (setq RecordSize 40)
+    nil
+  )
+
+  # Processing begins here:
+  (setq InputFilePosition 0)
+  (setq SequenceId 0)
+  (setq OutputTestFileOrdering_sync fdescr)
+
+  # main processing while-loop
+  # while(0<(DataClusterSize=get_next_cluster_size())){
+  (while (< 0
+    (setq DataClusterSize
+      (get_next_cluster_size InputTestFileName
+                             InputFilePosition
+                             RecordSize)
+    )
+  ) (progn
+
+    (setq SequenceId (++ SequenceId))
+    (outf "Processing data cluster %ld\n" SequenceId)
+
+    (setq DataClusterInMemory_ptr
+      (asyncheap_create DataClusterSize)  # allocate memory with malloc()
+    )
+
+    # We re-assign DataClusterInMemory_ptr in order to prevent the situation
+    # where a dataflow engine might call e.g. asyncheap_delete earlier than
+    # needed.
+
+    (setq DataClusterInMemory_ptr
+      (read_data_to_cluster DataClusterInMemory_ptr
+                            InputTestFileName
+                            InputFilePosition
+                            DataClusterSize)
+    )
+
+    (setq InputFilePosition (+ InputFilePosition DataClusterSize))
+
+    (setq DataClusterInMemory_ptr
+      (process_data_cluster DataClusterInMemory_ptr
+                            RecordSize
+                            DataClusterSize)
+    )
+
+    # We re-assign OutputTestFileOrdering_sync in order to prevent the situation
+    # where a dataflow engine might create an out-of-order output.
+
+    (setq OutputTestFileOrdering_sync (setq DataClusterInMemory_ptr
+      (write_cluster_to_file DataClusterInMemory_ptr
+                             DataClusterSize
+                             OutputTestFileName
+                             OutputTestFileOrdering_sync)
+    ))
+
+    (asyncheap_delete DataClusterInMemory_ptr)  # free memory with free()
+
+  )) # } end main processing while-loop
+
+  # Processing ends here:
+  (space (& 0 OutputTestFileOrdering_sync))
+)
+
+# <EOF>
+
